@@ -1,44 +1,49 @@
 <body>
-<h1>Odyssey Project Proposal Form</h1>
-<div>
-	<p>Project Title:
-		<input type="text" id="title">
-	</p>
-	<p>Participants:		
-		<select>
-			<option id="individual">Individual</option>  
-			<option id="group">Group</option>
-		</select>	
-	</p>
-	<p>Supervisor:				
-		<select>			
-			<option id="goadrich">Dr. Goadrich</option>  			
-			<option id="yorgey">Dr. Yorgey</option>
-			<option id="ferrer">Dr. Ferrer</option>
-			<option id="auto">needs automation</option>		
-		</select>		
-	</p>
-	<p>Category:
-		<select>
-			<option id="ac">Artistic Creativity</option>
-			<option id="ga">Global Awareness</option>
-			<option id="pl">Professional and Leadership Development</option>
-			<option id="sp">Special Projects</option>
-			<option id="sw">Service to the World</option>
-			<option id="ur">Undergraduate Research</option>
-		</select>
-	</p>
-	<p>Start Date:
-		<input type="date" id="startdate">
-		End Date:
-		<input type="date" id="enddate">
-	</p>
-	<p>Please attach a copy of your narrative:</p>
-	<button>Choose a file to upload.</button> 
-	<p>or</p> 
-	<textarea rows="20" cols="50" id="narrative"></textarea>
-</div>
-<button id="ss">Submit (& Save)</button>
-<button id="save">Save Only</button>
-<button id="delete">Delete Form</button>
-</body>
+    <h1>Odyssey Project Proposal Form</h1>
+    <div>
+        <form action="">
+            Project Title:
+            <input type="text" id="title">
+                <br><br>
+                Participants:
+                <select>
+                    <option id="individual">Individual</option>
+                    <option id="group">Group</option>
+                </select>
+                <br><br>
+                Supervisor:
+                <select>
+                    <option id="goadrich">Dr. Goadrich</option>
+                    <option id="yorgey">Dr. Yorgey</option>
+                    <option id="ferrer">Dr. Ferrer</option>
+                    <option id="auto">needs automation</option>
+                </select>
+                <br><br>
+                Category:
+                <select>
+                    <option id="ac">Artistic Creativity</option>
+                    <option id="ga">Global Awareness</option>
+                    <option id="pl">Professional and Leadership Development</option>
+                    <option id="sp">Special Projects</option>
+                    <option id="sw">Service to the World</option>
+                    <option id="ur">Undergraduate Research</option>
+                </select>
+                <br><br>
+                Start Date:
+                <input type="date" id="startdate">
+                    End Date:
+                    <input type="date" id="enddate">
+                        <br><br>
+                        Please attach a copy of your narrative:
+                        <br>
+                        <input type="file" id="file">
+                            <br> 
+                            or
+                            <br> 
+                            <textarea rows="20" cols="50" id="narrative"></textarea>
+                            </form>
+    </div>
+    <button id="ss">Submit (& Save)</button>
+        <button id="save">Save Only</button>
+        <button id="delete">Delete Form</button>
+        </body>
