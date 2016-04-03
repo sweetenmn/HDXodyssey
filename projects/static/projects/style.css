@@ -1,0 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=EB+Garamond);
+body {
+    font-family: 'EB Garamond', serif;
+}
+h1 {
+    color: #f5822a;
+}
+h3 {
+    color: #f5822a;
+    text-decoration: underline;
+}
+h5 {
+    color: #f5822a;
+}
