@@ -13,27 +13,25 @@
 </div>
 <div class="body">
     <div class="container">
-        <h3>
-            Project Title <span class="small">CATEGORY</span>
+        <h3 id="projectTitle">
+            Project Title
         </h3>
+        <h4 id="projectCategory">CATEGORY</h4>
         <div>
-            <p>
+            <p id="supervisor">
             Supervisior:
             </p>
-            <p>
-            Group Member:
+            <p id="group">
+            Group Member(s):
             </p>
-            <p>
+            <form action="">
             Start Date: <input type="text", id="startdate"/>
+            <br><br>
             End Date: <input type="date", id="enddate"/>
-            </p>
-        </div>
-        <div>
-            <p>
-            Hours: <input type="text", id="hours"/> & Hours Log: <input type="file" id="file">
-            </p>
-        </div>
-        <form>
+            <br><br>
+            
+            Total Hours: <input type="text", id="hours"/> & Hours Log: <input type="file" id="file">
+            <br><br>
             Project Desciption/Transcript Notation:
             <br>
             <input type="file" id="file">
@@ -45,19 +43,24 @@
             
     </div>
 </div>
-<div class="bot">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <button id="ss">Save</button>
-            </div>
-            <div class="col-md-3">
-                <button id="save">Submit for Supervisior Approval</button>
-            </div>
-            <div class="col-md-4">
-                <button id="delete">Delete Form</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+<button id="ss">Submit to Supervisor (& Save)</button>
+<button id="save">Save Only</button>
+<button id="delete">Delete Form</button>
+
+<!--<div class="bot">-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-2">-->
+<!--                <button id="ss">Save</button>-->
+<!--            </div>-->
+<!--            <div class="col-md-3">-->
+<!--                <button id="save">Submit for Supervisior Approval</button>-->
+<!--            </div>-->
+<!--            <div class="col-md-4">-->
+<!--                <button id="delete">Delete Form</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 {% endblock %}
