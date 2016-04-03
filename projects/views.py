@@ -11,5 +11,9 @@ from django.contrib.auth.models import User, Group
 def index(request):
     template = loader.get_template('projects/index.html')
     supervisors = User.objects.filter(groups__name='Supervisors')
-    
+
     return render(request, 'projects/index.html', {'supervisors':supervisors})
+
+def landing(request):
+
+    return render(request, 'projects/landing.html', {})

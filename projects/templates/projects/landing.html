@@ -6,7 +6,22 @@
 <button>Completion Form</button>
 <h3>Proposals</h3>
 <table id="proposalsTable" border="0">
-    <tr>
+    {% for proposal in projects %}
+      {% if proposal.status == 'COMPLETED'}
+        <tr>
+          <td>
+            <a href="#">{{project.title}}</a>
+          </td>
+          <td>
+            <a href="#">Status</a>
+          </td>
+          <td>
+            <a href="#">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    {% endfor %}
+    <!-- <tr>
         <td><a href="">Project 1 Title</a></td>
         <td>Status</td>
         <td><a href="">Delete</a></td>
@@ -15,7 +30,7 @@
         <td><a href="">Project 2 Title</a></td>
         <td>Status</td>
         <td><a href="">Delete</a></td>
-    </tr>
+    </tr> -->
 </table>
 <h3>In Progress</h3>
 <table id="progressTable" border="0">
@@ -24,10 +39,10 @@
         <td>Status</td>
         <td><a href="">Delete</a></td>
     </tr>
-    
+
     <tr>
         <td><a href="">Project 2</a></td>
-        <td>Status</td>		
+        <td>Status</td>
         <td><a href="">Delete</a></td>
     </tr>
 </table>
