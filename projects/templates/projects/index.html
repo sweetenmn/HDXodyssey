@@ -1,5 +1,7 @@
-<body>
-    <h1>Odyssey Project Proposal Form</h1>
+{% extends "projects/base.html" %}
+{% block title %}Odyssey Project Proposal Form{% endblock %}
+{% block content %} 
+<h1>Odyssey Project Proposal Form</h1>
     <div>
         <form action="">
             Project Title:
@@ -44,6 +46,6 @@
                             </form>
     </div>
     <button id="ss">Submit (& Save)</button>
-        <button id="save">Save Only</button>
-        <button id="delete">Delete Form</button>
-        </body>
+    <button id="save">Save Only</button>
+    <button id="delete">Delete Form</button>
+{% endblock %}

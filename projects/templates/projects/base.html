@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load static %}
+    <link rel="stylesheet" type="text/css" href= {% static 'projects/style.css' %} />
+    <title>{% block title %}Your Hendrix Odyssey{% endblock %}</title>
+</head>
+<body>
+	<div id="content">
+	{% block content %}{% endblock %}
+	</div>
+</body>
+</html>
