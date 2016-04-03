@@ -8,12 +8,13 @@ from django.template import loader
 from .models import *
 from django.contrib.auth.models import User, Group
 
-def index(request):
-    template = loader.get_template('projects/index.html')
+def proposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
-
-    return render(request, 'projects/index.html', {'supervisors':supervisors})
+    return render(request, 'projects/proposal.html', {'supervisors':supervisors})
 
 def landing(request):
+    projects = Project.objects.all()
+    return render(request, 'projects/landing.html', {'projects':projects})
 
-    return render(request, 'projects/landing.html', {})
+def completion(request):
+    return render(request, 'projects/completion.html')

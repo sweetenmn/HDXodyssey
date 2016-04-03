@@ -2,25 +2,23 @@
 {% block title %}Odyssey Project Proposal Form{% endblock %}
 {% block content %}
 <h1>Your Hendrix Odyssey</h1>
-<button>Proposal Form</button>
-<button>Completion Form</button>
+<a href="{% url 'projects:proposal' %}">Proposal Form</a>
+<a href="{% url 'projects:completion' %}">Completion Form</a>
 <h3>Proposals</h3>
 <table id="proposalsTable" border="0">
     {% for proposal in projects %}
-      {% if proposal.status == 'COMPLETED'}
         <tr>
           <td>
-            <a href="#">{{project.title}}</a>
+            <a href="#">{{proposal.title}}</a>
           </td>
           <td>
-            <a href="#">Status</a>
+            <p>Status</p>
           </td>
           <td>
             <a href="#">Delete</a>
           </td>
         </tr>
       {% endfor %}
-    {% endfor %}
     <!-- <tr>
         <td><a href="">Project 1 Title</a></td>
         <td>Status</td>
