@@ -14,11 +14,11 @@
                 </select>
                 <br><br>
                 Supervisor:
+                {% csrf_token %}
                 <select>
-                    <option id="goadrich">Dr. Goadrich</option>
-                    <option id="yorgey">Dr. Yorgey</option>
-                    <option id="ferrer">Dr. Ferrer</option>
-                    <option id="auto">needs automation</option>
+                {% for user in supervisors %}
+                    <option id="sv{{ forloop.counter }}">{{ user.first_name }} {{ user.last_name }}</option>
+                {% endfor %}
                 </select>
                 <br><br>
                 Category:

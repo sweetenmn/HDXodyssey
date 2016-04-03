@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
-    
+##should be using get_user_model()
+##https://docs.djangoproject.com/en/1.9/topics/auth/customizing/#referencing-the-user-model
 class Project(models.Model):
     title = models.CharField(max_length=200)
     category = models.CharField(max_length=20)
