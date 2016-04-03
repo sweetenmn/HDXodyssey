@@ -1,0 +1,61 @@
+{% extends "projects/base.html" %}
+{% block title %}Odyssey Project Proposal Form{% endblock %}
+{% block content %}
+<div class="top">
+    <div class="container">
+        <h1>
+            Project Completion and Transcript Notation Form
+        </h1>
+        <p>
+        Your experience will not be considered complete, and it will not appear on you Odyssey transcript until you submit this form.
+        </p>
+    </div>
+</div>
+<div class="body">
+    <div class="container">
+        <h3>
+            Project Title <span class="small">CATEGORY</span>
+        </h3>
+        <div>
+            <p>
+            Supervisior:
+            </p>
+            <p>
+            Group Member:
+            </p>
+            <p>
+            Start Date: <input type="text", id="startdate"/>
+            End Date: <input type="date", id="enddate"/>
+            </p>
+        </div>
+        <div>
+            <p>
+            Hours: <input type="text", id="hours"/> & <button>Attach Hours Log</button>
+            </p>
+        </div>
+        <p>
+            Project Desciption/Transcript Notation:
+            <span><button>Upload File</button></span>
+        </p>
+        <textarea rows="20" cols="50" id="narrative"></textarea>
+            <p>
+                <a href="#">Description Requirements</a>
+            </p>
+    </div>
+</div>
+<div class="bot">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <button id="ss">Save</button>
+            </div>
+            <div class="col-md-3">
+                <button id="save">Submit for Supervisior Approval</button>
+            </div>
+            <div class="col-md-4">
+                <button id="delete">Delete Form</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
