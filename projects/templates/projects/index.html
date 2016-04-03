@@ -15,7 +15,6 @@
                 <button>Add Group Members</button>
                 <br><br>
                 Supervisor:
-                {% csrf_token %}
                 <select>
                 {% for user in supervisors %}
                     <option id="sv{{ user.id }}"> {{ user.first_name }} {{ user.last_name }}</option>
