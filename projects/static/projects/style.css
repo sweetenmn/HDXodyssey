@@ -12,3 +12,21 @@ h3 {
 h5 {
     color: #f5822a;
 }
+
+tr:nth-child(even) {background-color: #d4d4d4}
+
+td {
+
+	border-bottom: 1px solid #f5822a;
+	border-top: 1px solid #f5822a;
+	padding: 15px;
+
+}
+
+.btn {
+	color: #f5822a;
+}
+
+.titlecol{
+	width: 300px;
+}

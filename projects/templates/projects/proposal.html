@@ -1,8 +1,9 @@
 {% extends "projects/base.html" %}
 {% block title %}Odyssey Project Proposal Form{% endblock %}
 {% block content %} 
+<div class="container">
 <h1>Odyssey Project Proposal Form</h1>
-    <div>
+<div>
         <form action="">
             Project Title:
             <input type="text" id="title">
@@ -44,8 +45,10 @@
                             <br> 
                             <textarea rows="20" cols="50" id="narrative"></textarea>
                             </form>
-    </div>
+                            </div>
+
     <button id="ss">Save &amp; Submit to Supervisor</button>
     <button id="save">Save Form</button>
     <button id="delete">Delete Form</button>
+    </div>
 {% endblock %}
