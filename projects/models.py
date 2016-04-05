@@ -6,6 +6,7 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
     category = models.CharField(max_length=20)
     advisor = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20)
     def __str__(self):
         return self.title
     
@@ -25,4 +26,14 @@ class Proposal(models.Model):
     status = models.CharField(max_length=20)
     updated_date = models.DateTimeField('updated on')
     def __str__(self):
-        return self.project_id.title
+        return "Proposal: " + self.project_id.title
+
+class Completion(models.Model):
+    project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
+    status = models.CharField(max_length=20)
+    created_date = models.DateTimeField('created on')
+    updated_date = models.DateTimeField('updated on')
+    notation = models.CharField(max_length=500)
+    def __str__(self):
+        return "Completion: " + self.project.id.title
+        
