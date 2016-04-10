@@ -1,0 +1,32 @@
+{% extends "projects/base.html" %}
+{% block title %}Odyssey Project Proposal Form{% endblock %}
+{% block content %}
+<body>
+    <div class="body">
+        <div class="container">
+            <h1 id="projectTitle"> Project Title
+            </h1>
+            <h4 id="projectCategory">CATEGORY</h4>
+            <div>
+                <p id="supervisor">Supervisor:
+                </p>
+                <p id="group">Group Member(s):</p>
+                <p id="startdate">Start Date: </p>
+                <p id="enddate">End Date: </p>
+                
+            </div>
+        </div>
+    </div>
+    <div class="updates">
+        <h2>Updates</h2>
+        <h3>Proposal</h3>
+        <p id="submitProp"> Submitted <input type="checkbox" onclick="return false" checked="checked"/></p>
+        <p id="supProp"> Supervisor Approval <input type="checkbox" onclick="return false" checked="checked"/></p>
+        <p id="odyProp"> Odyssey Approval <input type="checkbox" onclick="return false" checked="checked"/></p>
+        <h3>Completion Form</h3>
+        <p id="submitComp"> Submitted <input type="checkbox" onclick="return false" checked="checked"/></p>
+        <p id="supComp"> Supervisor Approval <input type="checkbox" onclick="return false" checked="checked"/></p>
+        <p id="odyComp"> Odyssey Approval <input type="checkbox" onclick="return false" checked="checked"/></p>
+    </div>
+</body>
+{% endblock %}
