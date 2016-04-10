@@ -12,12 +12,19 @@
 	<!-- Latest compiled JavaScript -->
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href= {% static 'projects/style.css' %} />
-	<script type="text/javascript" src= {% static 'projects/script.js' %}></script>
 
 </head>
 <body>
+<div class="container">
+	<div id="header">
+	<a class="btn btn-default" href="/odyssey">Odyssey Home</a>
+	<a class="btn btn-default" href="{% url 'projects:proposal' %}">Proposal Form</a>
+	<a class="btn btn-default" href="{% url 'projects:completion' %}">Completion Form</a>
+	</div>
+	</div>
 	<div id="content">
 	{% block content %}{% endblock %}
 	</div>
+
 </body>
 </html>

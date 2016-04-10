@@ -13,6 +13,10 @@ def proposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
     return render(request, 'projects/proposal.html', {'supervisors':supervisors})
 
+def status(request):
+    return render(request,'projects/status.html')
+    
+    
 def submit_proposal(request):
     print('submit')
     if request.method == 'POST':
