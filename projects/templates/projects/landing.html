@@ -6,34 +6,25 @@
 <h3>Proposals</h3>
 <div class="row">
 <table id="proposalsTable" class="col-md-6">
-    {% for proposal in projects %}
-        <tr>
-          <td class="titlecol">
-            <a href="#">{{proposal.title}}</a>
-          </td>
-          <td>Status</td>
-          <td>
-            <a class="btn btn-default btn-sm" href=#>Delete</a>
-          </td>
-        </tr>
-      {% endfor %}
+
 
 </table>
 </div>
 <h3>In Progress</h3>
 <div class="row">
 <table id="progressTable" class="col-md-6">
-    <tr>
-        <td class="titlecol"><a href="{% url 'projects:status' %}">Project 1</a></td>
-        <td>Status</td>
-        <td><a class="btn btn-default btn-sm" href=#>Delete</a></td>
-    </tr>
+    {% for proposal in projects %}
+        <tr>
+          <td class="titlecol">
+            <a href="{% url 'projects:status' proposal.id %}">{{proposal.title}}</a>
+          </td>
+          <td>Status</td>
+          <td>
+            <a class="btn btn-default btn-sm" href=#>Delete</a>
+          </td>
+        </tr>
+    {% endfor %}
 
-    <tr>
-        <td class="titlecol"><a href="{% url 'projects:status' %}">Project 2</a></td>
-        <td>Status</td>
-        <td><a class="btn btn-default btn-sm" href=#>Delete</a></td>
-    </tr>
 </table>
 </div>
 </div>

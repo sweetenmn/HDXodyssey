@@ -13,12 +13,12 @@ def proposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
     return render(request, 'projects/proposal.html', {'supervisors':supervisors})
 
-def status(request):
-    return render(request,'projects/status.html')
+def status(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    return render(request, 'projects/status.html', {'project':project})
     
     
 def submit_proposal(request):
-    print('submit')
     if request.method == 'POST':
         new_title = request.POST.get('title')
         adv = request.POST.get('super')
@@ -47,5 +47,6 @@ def landing(request):
     projects = Project.objects.all()
     return render(request, 'projects/landing.html', {'projects':projects})
 
-def completion(request):
-    return render(request, 'projects/completion.html')
+def completion(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    return render(request, 'projects/completion.html', {'project':project})

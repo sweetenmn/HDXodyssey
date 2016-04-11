@@ -4,7 +4,7 @@ from . import views
 app_name = 'projects'
 urlpatterns = [url(r'^$', views.landing, name = 'landing'),
                url(r'^proposal/', views.proposal, name = 'proposal'),
-               url(r'^completion/', views.completion, name = 'completion'),
-               url(r'^status/',views.status, name='status'),
+               url(r'^complete-project/(?P<project_id>[0-9]+)', views.completion, name = 'completion'),
+               url(r'^project-status/(?P<project_id>[0-9]+)',views.status, name='status'),
                url(r'^proposal/submit_proposal/$', views.submit_proposal, name='submit_proposal'),
                ]
