@@ -30,10 +30,7 @@ $(document).ready(function(){
 				break;
 		}
 	});
-<<<<<<< HEAD
-=======
-    
->>>>>>> Working-on-Popups
+
                   
 	function submit_proposal(){
 		$.ajax({
@@ -111,8 +108,3 @@ $(document).ready(function(){
     });
 });
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> Working-on-Popups
