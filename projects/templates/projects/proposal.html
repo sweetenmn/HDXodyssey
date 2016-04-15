@@ -46,12 +46,19 @@
         <button type="submit" formaction="/submit_proposal/" name="propose" class="btn btn-default btn-sm" value="ss">Save &amp; Submit to Supervisor</button>
         <button type="submit" name="propose" class="btn btn-default btn-sm" value="save">Save Form</button>
         <button type="submit" name="propose" class="btn btn-default btn-sm" value="del">Delete Form</button>
-        <dialog id="window">
-            <h3>Sample Dialog!</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, inventore!</p>
-            <button id="exit">Close Dialog </button>
-        </dialog>
-        <button id="show">Show Dialog</button>
+        <div id="dialog-overlay"></div>
+        <div id="dialog-box">
+            <div class="dialog-content">
+                <div id="dialog-message"></div>
+                <a href="#" class="button">Close</a>
+            </div>
+        </div>
+<!--        <dialog id="window">-->
+<!--            <h3>Sample Dialog!</h3>-->
+<!--            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum, inventore!</p>-->
+<!--            <button id="exit">Close Dialog </button>-->
+<!--        </dialog>-->
+<!--        <button id="show">Show Dialog</button>-->
     </form>
 </div>
 </div>
