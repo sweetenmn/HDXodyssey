@@ -1,0 +1,35 @@
+{% extends "projects/base.html" %}
+{% block title %}
+Odyssey Project Proposal Form
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 id="title">Proposal: {{ project.title }}</h1>
+    <div>
+        {% csrf_token %}
+        
+        <br><br>
+        Type: {{ individual/group }}
+        Participants: {{ project.students }}
+        <br><br>
+        Supervisor:  {{ project.supervisor }}
+        <br><br>
+        Category:   {{ project.category }}
+        <br><br>
+        Start Date: {{ project.startdate }}
+        <br><br>
+        End Date: {{ project.enddate }}
+        
+        <br><br>
+        Narrative:
+        <br>
+        <textarea rows="20" cols="50" id="narrative" placeholder="Here is an example narrative." readonly>
+        </textarea>
+        <br>
+        <button type="submit" formaction="/submit_proposal/" name="propose" class="btn btn-default btn-sm" value="ss">Approve Proposal</button>
+        <button type="revise" name="propose" class="btn btn-default btn-sm" value="del">Submit for Revisal</button>
+        <button type="reject" name="propose" class="btn btn-default btn-sm" value="del">Reject Proposal</button>
+        
+    </div>
+</div>
+{% endblock %}

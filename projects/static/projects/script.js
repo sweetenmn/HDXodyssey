@@ -2,6 +2,8 @@ var clicked = '';
 
 $(document).ready(function(){
 
+    $('#progress_table').DataTable();
+
 	$(":submit").click(function() { 
 		clicked = this.value 
 	});
@@ -29,6 +31,7 @@ $(document).ready(function(){
 		}
 	});
 
+                  
 	function submit_proposal(){
 		$.ajax({
 			url : "submit_proposal/",
@@ -65,7 +68,7 @@ $(document).ready(function(){
     /*
     The functions below will create a header with csrftoken
     */
-
+                 
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -95,3 +98,4 @@ $(document).ready(function(){
         }
     });
 });
+
