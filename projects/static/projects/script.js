@@ -2,6 +2,10 @@ var clicked = '';
 
 $(document).ready(function(){
 
+    $('#progressTable').DataTable({
+        select: true
+    });
+
 	$(":submit").click(function() { 
 		clicked = this.value 
 	});

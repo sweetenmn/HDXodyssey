@@ -12,7 +12,16 @@
 </div>
 <h3>In Progress</h3>
 <div class="row">
-<table id="progressTable" class="col-md-6">
+<table id="progressTable" class="display">
+    
+    <thead>
+        <tr>
+        <th>Project</th>
+        <th>Status</th>
+        <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for proposal in projects %}
         <tr>
           <td class="titlecol">
@@ -20,10 +29,11 @@
           </td>
           <td>Status</td>
           <td>
-            <a class="btn btn-default btn-sm" href=#>Delete</a>
+            <a href=#>Delete</a>
           </td>
         </tr>
     {% endfor %}
+    </tbody>
 
 </table>
 </div>
