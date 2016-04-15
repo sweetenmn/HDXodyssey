@@ -68,16 +68,7 @@ $(document).ready(function(){
     /*
     The functions below will create a header with csrftoken
     */
-    function myFunction() {
-        confirm("Here are the description requirements!");
-//        if (confirm("Press a button!") == true) {
-//            x = "You pressed OK!";
-//        } else {
-//            x = "You pressed Cancel!";
-//        }
-//        document.getElementById("demo").innerHTML = x;
-    }
-                  
+                 
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
