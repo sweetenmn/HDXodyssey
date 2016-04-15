@@ -12,7 +12,7 @@
 </div>
 <h3>In Progress</h3>
 <div class="row">
-<table id="progressTable" class="display">
+<table id="progress_table" class="display">
     
     <thead>
         <tr>
@@ -24,10 +24,10 @@
     <tbody>
     {% for proposal in projects %}
         <tr>
-          <td class="titlecol">
+          <td>
             <a href="{% url 'projects:status' proposal.id %}">{{proposal.title}}</a>
           </td>
-          <td>Status</td>
+          <td>{{proposal.status}}</td>
           <td>
             <a href=#>Delete</a>
           </td>

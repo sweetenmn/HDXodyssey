@@ -2,9 +2,7 @@ var clicked = '';
 
 $(document).ready(function(){
 
-    $('#progressTable').DataTable({
-        select: true
-    });
+    $('#progress_table').DataTable();
 
 	$(":submit").click(function() { 
 		clicked = this.value 
@@ -32,16 +30,6 @@ $(document).ready(function(){
 				break;
 		}
 	});
-    
-    function() {
-        var dialog = document.getElementById('window');
-        document.getElementById('show').onclick = function() {
-            dialog.show();
-        };
-        document.getElementById('exit').onclick = function() {
-            dialog.close();
-        };
-    };
                   
 	function submit_proposal(){
 		$.ajax({
