@@ -10,6 +10,7 @@ from django.contrib.auth.models import User, Group
 from .forms import *
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from os.path import basename
+import datetime
 
 import logging
 logger = logging.getLogger(__name__)
@@ -39,30 +40,33 @@ def handle_uploaded_file(f):
 def success(request):
     return render(request, 'projects/success.html')
     
-def submit_proposal(request):
+
+@csrf_protect
+def submit(request):
+    now=datetime.datetime.now()
     if request.method == 'POST':
-        new_title = request.POST.get('title')
-        adv = request.POST.get('super')
-        new_advisor = User.objects.get(pk=adv[3:])
-        new_category = request.POST.get('category')
-        response_data = {}
-        project = Project(title=new_title, category=new_category,
-                          advisor=new_advisor, status="Incomplete")
-        project.save()
-        response_data['result'] = 'Create project successful'
-        response_data['projectpk'] = project.pk
-        response_data['title']=project.title
-        response_data['advisor']=project.advisor
-        response_data['category']=project.category
-        return HttpResponse(
-            json.dumps(response_data),
-            content_type="application/json"
-            )
-    else:
-        return HttpResponse(
-            json.dumps({"nothing to see": "this isn't happening"}),
-            content_type="application/json"
-        )
+        if 'narfile' in request.FILES:
+            handle_uploaded_file(request.FILES['narfile'])
+        data = request.POST
+        new_title = data.get('title')
+        adv = data.get('super')
+        new_adv = User.objects.get(pk=adv)
+        new_category = data.get('cat')
+        new_project=Project(title=new_title, category=new_category,
+                        advisor=new_adv, status="Proposed", start_date="4/16/2016",
+                            end_date="4/16/2016", update_date="4/16/2016")
+        new_project.save()
+        new_prop=Proposal(project_id=new_project, narrative=data.get('narrative'),
+                          created_date=now, status="Submitted to super",
+                          updated_date=now)
+        new_prop.save()
+        new_grp = ProjectGroup(student=User.objects.get(username='jepsencr'),
+                               project=new_project)
+        new_grp.save()
+                          
+        return HttpResponseRedirect('success')
+    return render(request, 'projects/success.html')
+    
 
 def landing(request):
     projects = Project.objects.all()
