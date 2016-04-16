@@ -27,12 +27,19 @@
             <br><br>
             Project Desciption/Transcript Notation:
             <br>
-            <input type="file" name="descfile" id="descfile" class="inputdesc"/>
-            <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>
+            <!--<input type="file" name="descfile" id="descfile" class="inputdesc"/>
+            <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>-->
             <br>
             <p>or</p>
             <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
-            <a href="#" id="require">Description Requirements</a>
+            <a href="" id="require">Description Requirements</a>
+            </form>
+            <form action="/odyssey/upload/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="descfile" id="descfile" class="inputdesc"/>
+            <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>
+            <input type="text" name="text" id="text"/>
+            <input type="submit" value="Submit">
             </form>
 
 
