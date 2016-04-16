@@ -34,6 +34,10 @@ li {
     float: left;
 }
 
+a{
+    color: #f5822a;
+}
+
 li a {
     display: block;
     color: white;
@@ -55,20 +59,44 @@ li a:active{
     color: white;
 }
 
-/*table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
-    background-color: #f5822a; }
+table.dataTable.display tbody tr.odd.selected > .sorting_1,
+    table.dataTable.order-column.stripe tbody tr.odd.selected > .sorting_1,
+    table.dataTable.display tbody tr.even.selected > .sorting_1,
+    table.dataTable.order-column.stripe tbody tr.even.selected > .sorting_1 {
+        background-color: #f5822a; 
+        color: white;
+}
 
-table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
-      background-color: #f5822a; }*/
+
+table.dataTable.hover tbody tr:hover.selected,
+    table.dataTable.display tbody tr:hover.selected,
+    table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected,
+    table.dataTable.stripe tbody tr.even.selected, table.dataTable.display tbody tr.even.selected
+     {
+      background-color: #bcbcbc;
+
+}
+table.dataTable.hover tbody tr:hover.selected a,
+    table.dataTable.display tbody tr:hover.selected a,
+    table.dataTable.stripe tbody tr.odd.selected a, table.dataTable.display tbody tr.odd.selected a,
+    table.dataTable.stripe tbody tr.even.selected a, table.dataTable.display tbody tr.even.selected a
+     {
+      color: white;
+      
+}
+
+
+table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+    background-color: #d6d6d6;
+}
 
 .btn {
 	color: #f5822a;
 }
 
-.titlecol{
-	width: 300px;
-}
 
-
-
+table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.hover tbody tr:hover>.sorting_1{
+    background-color: #f8ad73;
+    color: white;
+} 
 

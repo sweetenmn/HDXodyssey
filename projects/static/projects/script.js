@@ -1,8 +1,16 @@
 var clicked = '';
 
 $(document).ready(function(){
+	$("tr").dblclick(function(){
+		location.href = "project-status/" + $(this).attr("id");
+	});
 
-    $('#progress_table').DataTable();
+	$(".paginate_button current").addClass('btn btn-default');
+
+    $('#progress_table').DataTable( {
+    	select: 'single'
+
+    } );
 
 	$(":submit").click(function() { 
 		clicked = this.value 
