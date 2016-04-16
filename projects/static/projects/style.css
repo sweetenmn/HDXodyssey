@@ -119,7 +119,7 @@ table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.h
     color: white;
 } 
 
-.inputnar, .inputhr {
+.inputnar, .inputhr, .inputdesc {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;

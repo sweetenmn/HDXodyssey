@@ -7,6 +7,7 @@ $(document).ready(function(){
 
 	$(".inputnar + label").addClass('btn btn-default btn-sm');
 	$(".inputhr + label").addClass('btn btn-default btn-sm');
+	$(".inputdesc + label").addClass('btn btn-default btn-sm');
 
     $('#progress_table').DataTable( {
     	select: 'single'
