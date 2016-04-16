@@ -1,8 +1,8 @@
 {% extends "projects/base.html" %}
 {% block title %}Odyssey Project Proposal Form{% endblock %}
+{% block header %}Odyssey Project Proposal Form{% endblock %}
 {% block content %} 
-<div class="container">
-<h1>Odyssey Project Proposal Form</h1>
+
 <div>
     <form action="" method="POST" id="post-project">
         {% csrf_token %}
@@ -50,6 +50,5 @@
     
     
     </form>
-</div>
 </div>
 {% endblock %}

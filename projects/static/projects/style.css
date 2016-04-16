@@ -1,13 +1,25 @@
 @import url(https://fonts.googleapis.com/css?family=EB+Garamond);
+@import url(https://fonts.googleapis.com/css?family=Merriweather:900,400);
+@import url(https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700);
 body {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+hr {
+    border-color: #f5822a;
 }
 h1 {
-    color: #f5822a;
+    font-family: 'Merriweather', serif;
+    font-weight: 900;
+    color: black;
 }
 h3 {
+    font-family: 'Merriweather', serif;
     color: #f5822a;
-    text-decoration: underline;
+    font-weight: 700;
+}
+#center {
+    text-align: center;
 }
 h5 {
     color: #f5822a;
@@ -39,6 +51,7 @@ a{
 }
 
 li a {
+    font-family: 'Merriweather', serif;
     display: block;
     color: white;
     text-align: center;
@@ -88,6 +101,9 @@ table.dataTable.hover tbody tr:hover.selected a,
 
 table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
     background-color: #d6d6d6;
+}
+table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover a:hover {
+    color: white;
 }
 
 .btn {

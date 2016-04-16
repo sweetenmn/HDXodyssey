@@ -1,8 +1,6 @@
 {% extends "projects/base.html" %}
+{% block header %} Your Hendrix Odyssey {% endblock %}
 {% block content %}
-<div class="container">
-<h1>Your Hendrix Odyssey</h1>
-
 <h3>Proposals</h3>
 <div class="row">
 <table id="proposalsTable" class="col-md-6">
@@ -11,7 +9,6 @@
 </table>
 </div>
 <h3>In Progress</h3>
-<div class="row">
 <table id="progress_table" class="display">
     
     <thead>
@@ -34,6 +31,4 @@
     </tbody>
 
 </table>
-</div>
-</div>
 {% endblock %}

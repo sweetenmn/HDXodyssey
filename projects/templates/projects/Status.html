@@ -1,11 +1,9 @@
 {% extends "projects/base.html" %}
 {% block title %}Odyssey Project Status{% endblock %}
+{% block header %}{{project.title}}{% endblock %}
 {% block content %}
 <body>
     <div class="body">
-        <div class="container">
-            <h1 id="projectTitle"> {{project.title}}
-            </h1>
             <h4 id="projectCategory">{{project.category}}</h4>
             <div>
                 <p id="supervisor">Supervisor: {{project.advisor.first_name}} {{project.advisor.last_name}}
@@ -26,7 +24,6 @@
         <p id="supComp"> Supervisor Approval <input type="checkbox" onclick="return false" checked="checked"/></p>
         <p id="odyComp"> Odyssey Approval <input type="checkbox" onclick="return false" checked="checked"/></p>
         <a class="btn btn-default" href="{% url 'projects:completion' project.id %}">Project Completion Form</a>
-    </div>
     </div>
     </div>
 </body>
