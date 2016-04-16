@@ -5,6 +5,10 @@ $(document).ready(function(){
 		location.href = "project-status/" + $(this).attr("id");
 	});
 
+	$("#require").click(function(){
+		alert("These are the requirements...");
+	});
+
 	$(".inputnar + label").addClass('btn btn-default btn-sm');
 	$(".inputhr + label").addClass('btn btn-default btn-sm');
 	$(".inputdesc + label").addClass('btn btn-default btn-sm');
@@ -69,8 +73,6 @@ $(document).ready(function(){
 
 		});
 	};
-
-
 
     // This function gets cookie with a given name
     function getCookie(name) {
