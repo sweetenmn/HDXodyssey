@@ -5,7 +5,8 @@ $(document).ready(function(){
 		location.href = "project-status/" + $(this).attr("id");
 	});
 
-	$(".paginate_button current").addClass('btn btn-default');
+	$(".inputnar + label").addClass('btn btn-default btn-sm');
+	$(".inputhr + label").addClass('btn btn-default btn-sm');
 
     $('#progress_table').DataTable( {
     	select: 'single'
@@ -15,6 +16,19 @@ $(document).ready(function(){
 	$(":submit").click(function() { 
 		clicked = this.value 
 	});
+
+	$('input[type="file"]').change(function(e){
+        var fileName = e.target.files[0].name;
+        if ($(this).attr('id') == 'narfile'){
+        	$("#narlabel").text(" " + fileName);
+        } else if ($(this).attr('id') == 'hrfile'){
+        	$("#hrlabel").text(" " + fileName);
+        } else if ($(this).attr('id') == 'descfile'){
+        	$("#desclabel").text(" " + fileName);
+        }
+		
+        
+    });
 
 	$('#post-project').on('submit', function(event){
 		event.preventDefault();
@@ -54,6 +68,8 @@ $(document).ready(function(){
 
 		});
 	};
+
+
 
     // This function gets cookie with a given name
     function getCookie(name) {
@@ -105,5 +121,6 @@ $(document).ready(function(){
             }
         }
     });
+
 });
 

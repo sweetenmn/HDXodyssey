@@ -14,7 +14,7 @@
             <option id="ind">Individual</option>
             <option id="grp">Group</option>
         </select>
-        <button>Add Group Members</button>
+        <button class="btn btn-default btn-sm">Add Group Members</button>
         <br><br>
         Supervisor:
         <select id="super">
@@ -37,8 +37,10 @@
         <input type="date" id="startdate">
         End Date:
         <input type="date" id="enddate">
-        <br><br>Please attach a copy of your narrative:<br>
-        <input type="file" id="file">
+        <br><br>Please attach a copy of your narrative:<br><br>
+        <input type="file" name="narfile" id="narfile" class="inputnar"/>
+        <label for="narfile">Choose a file</label><p id="narlabel"> No file selected</p>
+        <br>
         or
         <br>
         <textarea rows="20" cols="50" id="narrative" placeholder="Type your narrative here, or attach a file above."></textarea>

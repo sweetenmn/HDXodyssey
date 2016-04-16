@@ -3,6 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700);
 body {
     font-family: 'Merriweather Sans', sans-serif;
+    padding-bottom: 10px;
 }
 
 hr {
@@ -13,6 +14,7 @@ h1 {
     font-weight: 900;
     color: black;
 }
+
 h3 {
     font-family: 'Merriweather', serif;
     color: #f5822a;
@@ -117,3 +119,26 @@ table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.h
     color: white;
 } 
 
+.inputnar, .inputhr {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputnar + label, .inputhr + label, .inputdesc + label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+#narlabel, #hrlabel, #desclabel {
+    display: inline;
+    font-style: italic;
+}
+
+.inputnar:focus + label, .inputhr:focus + label, .inputdesc:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}

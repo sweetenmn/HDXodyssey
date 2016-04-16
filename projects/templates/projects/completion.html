@@ -3,7 +3,7 @@
 {% block header %}Project Completion and Transcript Notation Form{% endblock %}
 {% block content %}
 <div class="body">
-<p>Your experience will not be considered complete, and it will not appear on you Odyssey transcript until you submit this form.</p>
+<p>Your experience will not be considered complete, and it will not appear on your Odyssey transcript until you submit this form.</p>
 </div>
         <h3>{{project.title}}</h3>
         <h4 id="projectCategory">Category: {{project.category}}</h4>
@@ -20,16 +20,19 @@
             End Date: <input type="date", id="enddate"/>
             <br><br>
             
-            Total Hours: <input type="text", id="hours"/> &amp; Hours Log: <input type="file" id="file">
+            Total Hours: <input type="text", id="hours"/><br><br>
+            Hours Log:
+            <input type="file" name="hrfile" id="hrfile" class="inputhr"/>
+            <label for="hrfile">Choose a file</label><p id="hrlabel"> No file selected</p>
             <br><br>
             Project Desciption/Transcript Notation:
             <br>
-            <input type="file" id="file">
+            <input type="file" name="descfile" id="descfile" class="inputdesc"/>
+            <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>
             <br>
-            or
-            <br>
-            <textarea rows="20" cols="50" id="narrative" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
-            <a href="#">Description Requirements</a>
+            <p>or</p>
+            <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
+            <a href="#" id="require">Description Requirements</a>
             </form>
 
 
