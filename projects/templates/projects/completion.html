@@ -1,22 +1,12 @@
 {% extends "projects/base.html" %}
 {% block title %}Odyssey Project Completion Form{% endblock %}
+{% block header %}Project Completion and Transcript Notation Form{% endblock %}
 {% block content %}
-<div class="top">
-    <div class="container">
-        <h1>
-            Project Completion and Transcript Notation Form
-        </h1>
-        <p>
-        Your experience will not be considered complete, and it will not appear on you Odyssey transcript until you submit this form.
-        </p>
-    </div>
-</div>
 <div class="body">
-    <div class="container">
-        <h3 id="projectTitle">
-            {{project.title}}
-        </h3>
-        <h4 id="projectCategory">{{project.category}}</h4>
+<p>Your experience will not be considered complete, and it will not appear on you Odyssey transcript until you submit this form.</p>
+</div>
+        <h3>{{project.title}}</h3>
+        <h4 id="projectCategory">Category: {{project.category}}</h4>
         <div>
             <p id="supervisor">
             Supervisor: {{project.advisor.first_name}} {{project.advisor.last_name}}
@@ -41,13 +31,11 @@
             <textarea rows="20" cols="50" id="narrative" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
             <a href="#">Description Requirements</a>
             </form>
-    </div>
 
 
 <button id="ss" class="btn btn-default btn-sm">Save &amp; Submit to Supervisor</button>
 <button id="save" class="btn btn-default btn-sm">Save Form</button>
 <button id="delete" class="btn btn-default btn-sm">Delete Form</button>
-</div>
 <!--<div class="bot">-->
 <!--    <div class="container">-->
 <!--        <div class="row">-->
