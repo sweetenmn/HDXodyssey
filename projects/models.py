@@ -6,7 +6,10 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
     category = models.CharField(max_length=20)
     advisor = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=20)
+    status = models.CharField(max_length=60)
+    start_date = models.CharField(max_length=50)
+    end_date = models.CharField(max_length=50)
+    update_date = models.CharField(max_length=50)
     def __str__(self):
         return self.title
     
@@ -23,7 +26,7 @@ class Proposal(models.Model):
     project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
     narrative = models.CharField(max_length=500)
     created_date = models.DateTimeField('created on')
-    status = models.CharField(max_length=20)
+    status = models.CharField(max_length=60)
     updated_date = models.DateTimeField('updated on')
     def __str__(self):
         return "Proposal: " + self.project_id.title

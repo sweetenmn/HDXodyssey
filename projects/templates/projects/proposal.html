@@ -1,30 +1,30 @@
 {% extends "projects/base.html" %}
 {% block title %}Odyssey Project Proposal Form{% endblock %}
+{% block header %}Odyssey Project Proposal Form{% endblock %}
 {% block content %} 
-<div class="container">
-<h1>Odyssey Project Proposal Form</h1>
+
 <div>
-    <form action="" method="POST" id="post-project">
+    <form action='submit/' method="POST" id="proposal-form" enctype="multipart/form-data">
         {% csrf_token %}
         Project Title:
-        <input type="text" id="title">
+        <input type="text" id="title" name="title">
         <br><br>
         Participants:
         <select id="party">
             <option id="ind">Individual</option>
             <option id="grp">Group</option>
         </select>
-        <button>Add Group Members</button>
+        <button class="btn btn-default btn-sm">Add Group Members</button>
         <br><br>
         Supervisor:
-        <select id="super">
+        <select id="super" name="super">
         {% for user in supervisors %}
-           <option id="sv{{ user.id }}"> {{ user.first_name }} {{ user.last_name }}</option>
+           <option id="sv{{ user.id }}" name="sv{{ user.id }}" value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }}</option>
         {% endfor %}
         </select>
         <br><br>
         Category:
-        <select id="cat">
+        <select id="cat" name="cat">
             <option id="ac">Artistic Creativity</option>
             <option id="ga">Global Awareness</option>
             <option id="pl">Professional and Leadership Development</option>
@@ -37,19 +37,20 @@
         <input type="date" id="startdate">
         End Date:
         <input type="date" id="enddate">
-        <br><br>Please attach a copy of your narrative:<br>
-        <input type="file" id="file">
+        <br><br>Please attach a copy of your narrative:<br><br>
+        <input type="file" name="narfile" id="narfile" class="inputnar"/>
+        <label for="narfile">Choose a file</label><p id="narlabel"> No file selected</p>
+        <br>
         or
         <br>
-        <textarea rows="20" cols="50" id="narrative" placeholder="Type your narrative here, or attach a file above."></textarea>
+        <textarea rows="20" cols="50" id="narrative" name='narrative' placeholder="Type your narrative here, or attach a file above."></textarea>
         <br>
-        <button type="submit" formaction="/submit_proposal/" name="propose" class="btn btn-default btn-sm" value="ss">Save &amp; Submit to Supervisor</button>
-        <button type="submit" name="propose" class="btn btn-default btn-sm" value="save">Save Form</button>
-        <button type="submit" name="propose" class="btn btn-default btn-sm" value="del">Delete Form</button>
+        <input type="submit" name="propose" class="btn btn-default btn-sm" value="Save &amp; Submit to Supervisor">
+        <!-- <button type="submit" name="propose" class="btn btn-default btn-sm" value="save">Save Form</button>
+        <button type="submit" name="propose" class="btn btn-default btn-sm" value="del">Delete Form</button> -->
         <div id="dialog-overlay"></div>
     
     
     </form>
-</div>
 </div>
 {% endblock %}
