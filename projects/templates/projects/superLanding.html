@@ -1,0 +1,74 @@
+{% extends "projects/base.html" %}
+{% block header %} Your Hendrix Odyssey {% endblock %}
+{% block content %}
+<h3>Awaiting Approval</h3>
+<div class="row">
+    <table id="waiting_table" class="col-md-6">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Student</th>
+                <th>Form Type</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for proposal in projects %}
+            <tr id="{{proposal.id}}">
+                <td>{{proposal.title}}</td>
+                <th>{{proposal.student}}</td>
+                <td>{{form type}}</td>
+                <td>{{proposal.update}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+</div>
+<h3>In Progress</h3>
+<table id="progress_table" class="display">
+    
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Student</th>
+            <th>Status</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for proposal in projects %}
+        <tr id="{{proposal.id}}">
+            <td>{{proposal.title}}</td>
+            <th>{{proposal.student}}</td>
+            <td>{{proposal.status}}</td>
+            <td>{{proposal.update}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+<h3>Completed Projects</h3>
+<table id="completion_table" class="display">
+    
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Category</th>
+            <th>Student</th>
+            <th>Completed</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for proposal in projects %}
+        <tr id="{{proposal.id}}">
+            <td>{{proposal.title}}</td>
+            <td>{{proposal.category}}</td>
+            <td>{{proposal.student}}</td>
+            <td>{{proposal.update}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+{% endblock %}
