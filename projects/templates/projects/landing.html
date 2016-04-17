@@ -16,8 +16,8 @@
         {% for proposal in projects %}
         <tr id="{{proposal.id}}">
             <td>{{proposal.title}}</td>
-            <td>{{form type}}</td>
-            <td>{{proposal.update}}</td>
+            <td>"{{form type}}"</td>
+            <td>"{{proposal.update}}"</td>
             <td>
                 <a href=#>Delete</a>
             </td>
@@ -43,7 +43,7 @@
         <tr id="{{proposal.id}}">
           <td>{{proposal.title}}</td>
           <td>{{proposal.status}}</td>
-          <td>{{proposal.update}}</td>
+          <td>"{{proposal.update}}"</td>
           <td>
             <a href=#>Delete</a>
           </td>
@@ -69,7 +69,7 @@
             <td>{{proposal.title}}</td>
             <td>{{proposal.category}}</td>
             <td>{{proposal.supervisor}}</td>
-            <td>{{proposal.update}}</td>
+            <td>"{{proposal.update}}"</td>
         </tr>
         {% endfor %}
     </tbody>
