@@ -17,6 +17,19 @@ $(document).ready(function(){
     	select: 'single'
 
     } );
+                  
+    $('#completion_table').DataTable( {
+        select: 'single'
+                                   
+    } );
+    $('#saved_forms_table').DataTable( {
+        select: 'single'
+                                                   
+    } );
+                  
+    $('#waiting_table').DataTable( {
+        select:'single'
+    });
 
 	$(":submit").click(function() { 
 		clicked = this.value 
