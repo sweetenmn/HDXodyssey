@@ -11,10 +11,14 @@ from .forms import *
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from os.path import basename
 import datetime
+import pypandoc
+from io import *
+from docx import Document
 
 import logging
 logger = logging.getLogger(__name__)
 
+WORD_EXTENSION = '.docx'
 def proposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
     return render(request, 'projects/proposal.html', {'supervisors':supervisors})
@@ -33,9 +37,20 @@ def upload(request):
 
 def handle_uploaded_file(f):
     with open(f.name, 'wb+') as destination:
-        for chunk in f.chunks():
-            destination.write(chunk)
+        source_stream = StringIO(f.read())
+        document = Document(source_stream)
+        source_stream.close()
+        # for chunk in f.chunks():
+        #     destination.write(chunk)
+        # handle_word_file(destination, f.name)
 
+def handle_word_file(f, fileName):
+    # Convert Docx file to Markdown for storage
+    docName = 'clone'+fileName
+    document = Document(f)
+    document.save(docName)
+    output_filename = 'TEST.md'
+    md_source = pypandoc.convert(docName, 'md', outputfile= output_filename) # Return this string for now
 @csrf_protect
 def success(request):
     return render(request, 'projects/success.html')
@@ -46,6 +61,7 @@ def submit(request):
     now=datetime.datetime.now()
     if request.method == 'POST':
         if 'narfile' in request.FILES:
+            print(request.FILES['narfile'])
             handle_uploaded_file(request.FILES['narfile'])
         data = request.POST
         new_title = data.get('title')
