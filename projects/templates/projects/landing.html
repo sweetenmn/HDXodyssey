@@ -1,13 +1,30 @@
 {% extends "projects/base.html" %}
 {% block header %} Your Hendrix Odyssey {% endblock %}
 {% block content %}
-<h3>Proposals</h3>
-<div class="row">
-<table id="proposalsTable" class="col-md-6">
-
+<h3>Saved Forms</h3>
+<table id="saved_forms_table" class="display">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Form Type</th>
+            <th>Updated Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for proposal in projects %}
+        <tr id="{{proposal.id}}">
+            <td>{{proposal.title}}</td>
+            <td>form type</td>
+            <td>proposal.update</td>
+            <td>
+                <a href=#>Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 
 </table>
-</div>
 <h3>In Progress</h3>
 <table id="progress_table" class="display">
     
@@ -15,6 +32,7 @@
         <tr>
         <th>Project</th>
         <th>Status</th>
+        <th>Update</th>
         <th>Action</th>
         </tr>
     </thead>
@@ -23,6 +41,7 @@
         <tr id="{{proposal.id}}">
           <td>{{proposal.title}}</td>
           <td>{{proposal.status}}</td>
+          <td>proposal.update</td>
           <td>
             <a href=#>Delete</a>
           </td>
@@ -30,5 +49,28 @@
     {% endfor %}
     </tbody>
 
+</table>
+<h3>Completed Projects</h3>
+<table id="completion_table" class="display">
+    
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Category</th>
+            <th>Completed</th>
+            <th>Supervisor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for proposal in projects %}
+        <tr id="{{proposal.id}}">
+            <td>{{proposal.title}}</td>
+            <td>{{proposal.category}}</td>
+            <td>proposal.update</td>
+            <td>proposal.supervisor</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
 </table>
 {% endblock %}
