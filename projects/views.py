@@ -60,14 +60,16 @@ def success(request):
 def submit(request):
     now=datetime.datetime.now()
     if request.method == 'POST':
-        if 'narfile' in request.FILES:
-            print(request.FILES['narfile'])
-            handle_uploaded_file(request.FILES['narfile'])
+
         data = request.POST
         new_title = data.get('title')
         adv = data.get('super')
         new_adv = User.objects.get(pk=adv)
         new_category = data.get('cat')
+        uploaded_file = None
+        if 'narfile' in request.FILES:
+            uploaded_file = request.FILES['narfile']
+            print( type(uploaded_file))
         new_project=Project(
                         title=new_title,
                         category=new_category,
@@ -83,6 +85,7 @@ def submit(request):
                         narrative=data.get('narrative'),
                         created_date=now,
                         status="Submitted to super",
+                        narrative_as_file=uploaded_file,
                         updated_date=now
                         )
         new_prop.save()
