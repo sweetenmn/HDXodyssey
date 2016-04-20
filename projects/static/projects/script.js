@@ -1,6 +1,10 @@
 var clicked = '';
 
 $(document).ready(function(){
+
+	$( "#startdate" ).datepicker();
+	$( "#enddate" ).datepicker();
+	
 	$("#progress_table tr").dblclick(function(){
 		location.href = "project-status/" + $(this).attr("id");
 	});
