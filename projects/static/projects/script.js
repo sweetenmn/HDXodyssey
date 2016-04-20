@@ -53,8 +53,6 @@ $(document).ready(function(){
         
     });
     
-    $( "#startdate" ).DatePicker();
-	$( "#enddate" ).DatePicker();
 
 
 	// $('#post-project').on('submit', function(event){
