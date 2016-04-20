@@ -93,10 +93,16 @@ def submit(request):
         return HttpResponseRedirect('success')
     return render(request, 'projects/success.html')
 
+def edit_proposal(request, project_id):
+    supervisors = User.objects.filter(groups__name='Supervisors')
+    project = get_object_or_404(Project, pk=project_id)
+    return render(request, 'projects/proposalEdit.html', {'project':project, 'supervisors':supervisors})
+    
 
 def landing(request):
     projects = Project.objects.all()
-    return render(request, 'projects/landing.html', {'projects':projects})
+    proposals = Proposal.objects.all()
+    return render(request, 'projects/landing.html', {'projects':projects, 'proposals':proposals})
 
 def completion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
