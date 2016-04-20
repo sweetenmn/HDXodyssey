@@ -72,7 +72,7 @@ def submit(request):
                         title=new_title,
                         category=new_category,
                         advisor=new_adv,
-                        status="Proposed",
+                        status="Submitted to Supervisor",
                         start_date="4/16/2016",
                         end_date="4/16/2016",
                         update_date="4/16/2016"
