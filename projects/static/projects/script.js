@@ -1,9 +1,6 @@
 var clicked = '';
 
 $(document).ready(function(){
-
-	$( "#startdate" ).datepicker();
-	$( "#enddate" ).datepicker();
 	
 	$("#progress_table tr").dblclick(function(){
 		location.href = "project-status/" + $(this).attr("id");
@@ -55,6 +52,9 @@ $(document).ready(function(){
 		
         
     });
+    
+    $( "#startdate" ).datepicker();
+	$( "#enddate" ).datepicker();
 
 
 	// $('#post-project').on('submit', function(event){
