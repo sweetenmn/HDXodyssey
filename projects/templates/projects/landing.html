@@ -9,6 +9,7 @@
 </table>
 </div>
 <h3>In Progress</h3>
+<form id="prog_tbl" method = "GET" action="">
 <table id="progress_table" class="display">
     
     <thead>
@@ -19,6 +20,7 @@
         </tr>
     </thead>
     <tbody>
+    {% csrf_token %}
     {% for proposal in projects %}
         <tr id="{{proposal.id}}">
           <td>{{proposal.title}}</td>
@@ -31,4 +33,5 @@
     </tbody>
 
 </table>
+</form>
 {% endblock %}

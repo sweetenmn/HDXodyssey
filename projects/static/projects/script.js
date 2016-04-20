@@ -2,7 +2,8 @@ var clicked = '';
 
 $(document).ready(function(){
 	$("tr").dblclick(function(){
-		location.href = "project-status/" + $(this).attr("id");
+        $("#prog_tbl").attr("action", "project-status/" + $(this).attr("id"));
+		$("#prog_tbl").submit();
 	});
 
 	$("#require").click(function(){
@@ -15,8 +16,15 @@ $(document).ready(function(){
 
     $('#progress_table').DataTable( {
     	select: 'single'
-
     } );
+
+    $('#proposal-form').on('submit', function(event){
+        if ($('#title').val() ==''){
+            event.preventDefault();
+            alert("You must provide a title for your project");
+        }
+
+});
 
 	$(":submit").click(function() { 
 		clicked = this.value 
@@ -34,46 +42,6 @@ $(document).ready(function(){
 		
         
     });
-
-
-	// $('#post-project').on('submit', function(event){
-	// 	event.preventDefault();
-	// 	switch(clicked){
-	// 		case "ss":
-	// 			console.log("save and submit");
-	// 			console.log($('#title').val());
-	// 			console.log($('#party :selected').attr('id'));
-	// 			console.log($('#super :selected').attr('id'));
-	// 			submit_proposal();
-	// 			break;
-	// 		case "save":
-	// 			console.log("save");
-	// 			save_proposal();
-	// 			break;
-	// 		case "del":
-	// 			console.log("delete");
-	// 			delete_proposal();
-	// 			break;
-	// 		default:
-	// 			break;
-	// 	}
-	// });
-
-                  
-	// function submit_proposal(){
-	// 	$.ajax({
-	// 		url : "submit_proposal/",
-	// 		type : "POST",
-	// 		datatype: 'json',
-	// 		data : { title : $("#title").val(), super : $('#super :selected').attr('id').substring(3), category : $("#cat :selected").attr('id')},success : function(json) {
-	// 			console.log(json);
-	// 			console.log("success");
-	// 		},error : function(jqXHR, textStatus, errorThrown){
-	// 			console.log(textStatus, errorThrown);
-	// 		}
-
-	// 	});
-	// };
 
     // This function gets cookie with a given name
     function getCookie(name) {

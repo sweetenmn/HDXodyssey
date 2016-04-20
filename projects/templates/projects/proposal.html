@@ -4,7 +4,7 @@
 {% block content %} 
 
 <div>
-    <form action='submit/' method="POST" id="proposal-form" enctype="multipart/form-data">
+    <form method="POST" id="proposal-form" enctype="multipart/form-data">
         {% csrf_token %}
         Project Title:
         <input type="text" id="title" name="title">
@@ -14,7 +14,7 @@
             <option id="ind">Individual</option>
             <option id="grp">Group</option>
         </select>
-        <button class="btn btn-default btn-sm">Add Group Members</button>
+        <a href="" class="btn btn-default btn-sm">Add Group Members</a>
         <br><br>
         Supervisor:
         <select id="super" name="super">
@@ -45,9 +45,9 @@
         <br>
         <textarea rows="20" cols="50" id="narrative" name='narrative' placeholder="Type your narrative here, or attach a file above."></textarea>
         <br>
-        <input type="submit" name="propose" class="btn btn-default btn-sm" value="Save &amp; Submit to Supervisor">
-        <!-- <button type="submit" name="propose" class="btn btn-default btn-sm" value="save">Save Form</button>
-        <button type="submit" name="propose" class="btn btn-default btn-sm" value="del">Delete Form</button> -->
+        <input type="submit" name="propose" formaction='submit/' class="btn btn-default btn-sm" value="Save &amp; Submit to Supervisor">
+        <input type="submit" name="save" formaction='save/' class="btn btn-default btn-sm" value="Save Form">
+        <!--<button type="submit" name="propose" class="btn btn-default btn-sm" value="del">Delete Form</button> -->
         <div id="dialog-overlay"></div>
     
     
