@@ -118,6 +118,9 @@ table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.h
     background-color: #f8ad73;
     color: white;
 } 
+table.dataTable.display tbody tr:hover>.sorting_1 a{
+    color:white;
+}
 
 .inputnar, .inputhr, .inputdesc {
     width: 0.1px;

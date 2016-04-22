@@ -15,7 +15,7 @@
         {% for p in projects %}
         {% if p.status == "Unsubmitted" %}
         <tr id="{{p.id}}">
-            <td>{{p.title}}</td>
+            <td><a href="{% url 'projects:edit' p.id %}">{{p.title}}</a></td>
             <td>form type</td>
             <td>{{p.updated_date}}</td>
             <td>
@@ -42,7 +42,7 @@
     {% for p in projects %}
     {% if p.status != "Complete" and p.status != "Unsubmitted" %}
         <tr id="{{p.id}}">
-          <td>{{p.title}}</td>
+          <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
           <td>{{p.status}}</td>
           <td>{{p.updated_date}}</td>
           <td>
@@ -69,7 +69,7 @@
         {% for p in projects %}
         {% if p.status == "Complete" %}
         <tr id="{{p.id}}">
-            <td>{{p.title}}</td>
+            <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
             <td>{{p.category}}</td>
             <td>{{p.updated_date}}</td>
             <td>{{p.advisor.last_name}}</td>
