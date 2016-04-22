@@ -7,7 +7,7 @@
     <form action='submit/' method="POST" id="proposal-form" enctype="multipart/form-data">
         {% csrf_token %}
         Project Title:
-        <input type="text" id="title" name="title">
+        <input type="text" id="title" name="title" value="{{project.title}}">
         <br><br>
         Participants:
         <select id="party">

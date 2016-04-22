@@ -1,41 +1,82 @@
 {% extends "projects/base.html" %}
+{% block header %} Your Hendrix Odyssey {% endblock %}
 {% block content %}
-<div class="container">
-<h1>Your Hendrix Odyssey</h1>
-
-<h3>Proposals</h3>
-<div class="row">
-<table id="proposalsTable" class="col-md-6">
-
+<h3>Saved Forms</h3>
+<table id="saved_forms_table" class="display">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Form Type</th>
+            <th>Updated Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in projects %}
+        {% if p.status == "Unsubmitted" %}
+        <tr id="{{p.id}}">
+            <td>{{p.title}}</td>
+            <td>form type</td>
+            <td>{{p.updated_date}}</td>
+            <td>
+                <a href=#>Delete</a>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
 
 </table>
-</div>
 <h3>In Progress</h3>
-<div class="row">
 <table id="progress_table" class="display">
     
     <thead>
         <tr>
         <th>Project</th>
         <th>Status</th>
+        <th>Update</th>
         <th>Action</th>
         </tr>
     </thead>
     <tbody>
-    {% for proposal in projects %}
-        <tr>
-          <td>
-            <a href="{% url 'projects:status' proposal.id %}">{{proposal.title}}</a>
-          </td>
-          <td>{{proposal.status}}</td>
+    {% for p in projects %}
+    {% if p.status != "Complete" and p.status != "Unsubmitted" %}
+        <tr id="{{p.id}}">
+          <td>{{p.title}}</td>
+          <td>{{p.status}}</td>
+          <td>{{p.updated_date}}</td>
           <td>
             <a href=#>Delete</a>
           </td>
         </tr>
+    {% endif %}
     {% endfor %}
     </tbody>
 
 </table>
-</div>
-</div>
+<h3>Completed Projects</h3>
+<table id="completion_table" class="display">
+    
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Category</th>
+            <th>Completed</th>
+            <th>Supervisor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in projects %}
+        {% if p.status == "Complete" %}
+        <tr id="{{p.id}}">
+            <td>{{p.title}}</td>
+            <td>{{p.category}}</td>
+            <td>{{p.updated_date}}</td>
+            <td>{{p.advisor.last_name}}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+    
+</table>
 {% endblock %}
