@@ -28,6 +28,9 @@ h5 {
     color: #f5822a;
 }
 
+#name {
+	text-align: right;
+}
 
 td {
 
