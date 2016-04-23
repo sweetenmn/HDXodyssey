@@ -2,11 +2,15 @@ var clicked = '';
 
 $(document).ready(function(){
 	
-	$("#progress_table tr").dblclick(function(){
+	$("#progress_table .clickable").dblclick(function(){
 		location.href = "project-status/" + $(this).attr("id");
 	});
 
-    $("#saved_forms_table tr").dblclick(function(){
+    $("#completion_table .clickable").dblclick(function(){
+        location.href = "project-status/" + $(this).attr("id");
+    });
+
+    $("#saved_forms_table .clickable").dblclick(function(){
         location.href = "edit-form/" + $(this).attr("id");
     })
 

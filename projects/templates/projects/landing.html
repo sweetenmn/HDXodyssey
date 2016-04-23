@@ -8,18 +8,19 @@
             <th>Project</th>
             <th>Form Type</th>
             <th>Updated Date</th>
-            <th>Action</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {% for p in projects %}
         {% if p.status == "Unsubmitted" %}
-        <tr id="{{p.id}}">
+        <tr class="clickable" id="{{p.id}}">
             <td><a href="{% url 'projects:edit' p.id %}">{{p.title}}</a></td>
             <td>form type</td>
             <td>{{p.updated_date}}</td>
             <td>
-                <a href=#>Delete</a>
+              <a id="icons" href="{% url 'projects:edit' p.id %}" class="glyphicon glyphicon-edit">
+              <a id="icons" href=# class="glyphicon glyphicon-trash">
             </td>
         </tr>
         {% endif %}
@@ -41,12 +42,13 @@
     <tbody>
     {% for p in projects %}
     {% if p.status != "Complete" and p.status != "Unsubmitted" %}
-        <tr id="{{p.id}}">
+        <tr class="clickable" id="{{p.id}}">
           <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
           <td>{{p.status}}</td>
           <td>{{p.updated_date}}</td>
           <td>
-            <a href=#>Delete</a>
+            <a href="{% url 'projects:status' p.id %}">View</a>
+            <a href=#>Hide</a>
           </td>
         </tr>
     {% endif %}
@@ -68,7 +70,7 @@
     <tbody>
         {% for p in projects %}
         {% if p.status == "Complete" %}
-        <tr id="{{p.id}}">
+        <tr class="clickable" id="{{p.id}}">
             <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
             <td>{{p.category}}</td>
             <td>{{p.updated_date}}</td>
