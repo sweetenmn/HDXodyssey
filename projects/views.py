@@ -8,6 +8,8 @@ from django.template import loader
 from .models import *
 from django.contrib.auth.models import User, Group
 from .forms import *
+from django.core.mail import send_mail
+
 
 def proposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
@@ -50,3 +52,10 @@ def landing(request):
 def completion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/completion.html', {'project':project})
+
+def send_email(request):
+    subject = request.POST.get('subject', '')
+    message = request.Post.get('message', '')
+
+
+    
