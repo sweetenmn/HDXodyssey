@@ -56,9 +56,7 @@ $(document).ready(function(){
     });
 
     // Initializing the text editor
-    tinymce.init({
-        selector: '#narrative'
-    });
+    CKEDITOR.replace('narrative')
     
 
     function getCookie(name) {

@@ -16,8 +16,9 @@
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/dt/jq-2.2.0,dt-1.10.11,b-1.1.2,r-2.0.2,se-1.1.2/datatables.min.css"/>
 	<script type="text/javascript" src="https://cdn.datatables.net/t/dt/jq-2.2.0,dt-1.10.11,b-1.1.2,r-2.0.2,se-1.1.2/datatables.min.js"></script>
 
-	{# TINYMCE - Rich text editor #}
-	<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+	{# CKEditor for text area #}
+	{% load static from staticfiles %}
+	<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
 
 	{# PROJECT STATIC FILES #}
 	<link rel="stylesheet" type="text/css" href= {% static "projects/style.css" %} />
