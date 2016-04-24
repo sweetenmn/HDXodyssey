@@ -58,45 +58,54 @@ def success(request):
 
 @csrf_protect
 def submit(request):
-    now=datetime.datetime.now()
+    substatus="Sumbitted to Supervisor"
+    savestatus="Unsubmitted"
+    now=datetime.datetime.now().strftime('%Y-%m-%d')
     if request.method == 'POST':
         if 'narfile' in request.FILES:
-            print(request.FILES['narfile'])
             handle_uploaded_file(request.FILES['narfile'])
         data = request.POST
         new_title = data.get('title')
         adv = data.get('super')
         new_adv = User.objects.get(pk=adv)
         new_category = data.get('cat')
-        new_project=Project(
-                        title=new_title,
-                        category=new_category,
-                        advisor=new_adv,
-                        status="Submitted to Supervisor",
-                        start_date="4/16/2016",
-                        end_date="4/16/2016",
-                        update_date="4/16/2016"
-                    )
-        new_project.save()
-        new_prop=Proposal(
-                        project_id=new_project,
-                        narrative=data.get('narrative'),
-                        created_date=now,
-                        status="Submitted to super",
-                        updated_date=now
-                        )
-        new_prop.save()
-        new_grp = ProjectGroup(student=User.objects.get(username='jepsencr'),
-                               project=new_project)
-        new_grp.save()
-
-        return HttpResponseRedirect('success')
-    return render(request, 'projects/success.html')
+        
+        new_project=Project(title=new_title,
+                            category=new_category,
+                            advisor=new_adv,
+                            status="",
+                            start_date=data.get('startdate'),
+                            end_date=data.get('enddate'),
+                            update_date=now
+                            ) 
+        new_prop=Proposal(project_id=new_project,
+                          narrative=data.get('narrative'),
+                          created_date=now,
+                          status="",
+                          updated_date=now
+                          )
+        if data.get('propose')=="Save & Submit to Supervisor":
+            new_project.status=substatus
+            new_prop.status=substatus
+            new_project.save()
+            new_prop.save()
+            
+            render(request, 'projects/success.html')
+        else:
+            new_project.status=savestatus
+            new_prop.status=savestatus
+            new_project.save()
+            new_prop.save()
+            return render(request,'projects/proposalSave.html', {'project':new_project})
+            
+    
+    
 
 def edit_proposal(request, project_id):
     supervisors = User.objects.filter(groups__name='Supervisors')
     project = get_object_or_404(Project, pk=project_id)
-    return render(request, 'projects/proposalEdit.html', {'project':project, 'supervisors':supervisors})
+    return render(request, 'projects/proposalEdit.html',
+                  {'project':project, 'supervisors':supervisors})
     
 
 def landing(request):
