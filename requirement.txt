@@ -1,3 +1,0 @@
-pypandoc
-python-docx
-django-markdown

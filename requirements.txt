@@ -1,3 +1,4 @@
 pypandoc
 python-docx
 django-markdown
+django-extensions
