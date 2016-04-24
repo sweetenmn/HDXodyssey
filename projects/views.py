@@ -8,17 +8,10 @@ from django.template import loader
 from .models import *
 from django.contrib.auth.models import User, Group
 from .forms import *
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from os.path import basename
-import datetime
-import pypandoc
-from io import *
-from docx import Document
+from django.core.mail import send_mail
+from django.core import mail
 
-import logging
-logger = logging.getLogger(__name__)
 
-WORD_EXTENSION = '.docx'
 def proposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
     return render(request, 'projects/proposal.html', {'supervisors':supervisors})
@@ -26,84 +19,53 @@ def proposal(request):
 def status(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/status.html', {'project':project})
-
-@csrf_protect
-def upload(request):
-    if request.method == 'POST':
-        logger.debug(request.POST['text'])
-        handle_uploaded_file(request.FILES['descfile'])
-        return HttpResponseRedirect('success')
-    return render(request, 'completion')
-
-def handle_uploaded_file(f):
-    with open(f.name, 'wb+') as destination:
-        source_stream = StringIO(f.read())
-        document = Document(source_stream)
-        source_stream.close()
-        # for chunk in f.chunks():
-        #     destination.write(chunk)
-        # handle_word_file(destination, f.name)
-
-def handle_word_file(f, fileName):
-    # Convert Docx file to Markdown for storage
-    docName = 'clone'+fileName
-    document = Document(f)
-    document.save(docName)
-    output_filename = 'TEST.md'
-    md_source = pypandoc.convert(docName, 'md', outputfile= output_filename) # Return this string for now
-@csrf_protect
-def success(request):
-    return render(request, 'projects/success.html')
-
-
-@csrf_protect
-def submit(request):
-    now=datetime.datetime.now()
-    if request.method == 'POST':
-        if 'narfile' in request.FILES:
-            print(request.FILES['narfile'])
-            handle_uploaded_file(request.FILES['narfile'])
-        data = request.POST
-        new_title = data.get('title')
-        adv = data.get('super')
-        new_adv = User.objects.get(pk=adv)
-        new_category = data.get('cat')
-        new_project=Project(
-                        title=new_title,
-                        category=new_category,
-                        advisor=new_adv,
-                        status="Submitted to Supervisor",
-                        start_date="4/16/2016",
-                        end_date="4/16/2016",
-                        update_date="4/16/2016"
-                    )
-        new_project.save()
-        new_prop=Proposal(
-                        project_id=new_project,
-                        narrative=data.get('narrative'),
-                        created_date=now,
-                        status="Submitted to super",
-                        updated_date=now
-                        )
-        new_prop.save()
-        new_grp = ProjectGroup(student=User.objects.get(username='jepsencr'),
-                               project=new_project)
-        new_grp.save()
-
-        return HttpResponseRedirect('success')
-    return render(request, 'projects/success.html')
-
-def edit_proposal(request, project_id):
-    supervisors = User.objects.filter(groups__name='Supervisors')
-    project = get_object_or_404(Project, pk=project_id)
-    return render(request, 'projects/proposalEdit.html', {'project':project, 'supervisors':supervisors})
     
+    
+def submit_proposal(request):
+    if request.method == 'POST':
+        new_title = request.POST.get('title')
+        adv = request.POST.get('super')
+        new_advisor = User.objects.get(pk=adv[3:])
+        new_category = request.POST.get('category')
+        response_data = {}
+        project = Project(title=new_title, category=new_category,
+                          advisor=new_advisor, status="Incomplete")
+        project.save()
+        response_data['result'] = 'Create project successful'
+        response_data['projectpk'] = project.pk
+        response_data['title']=project.title
+        response_data['advisor']=project.advisor
+        response_data['category']=project.category
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+            )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 def landing(request):
     projects = Project.objects.all()
-    proposals = Proposal.objects.all()
-    return render(request, 'projects/landing.html', {'projects':projects, 'proposals':proposals})
+    return render(request, 'projects/landing.html', {'projects':projects})
 
 def completion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/completion.html', {'project':project})
+
+def send_email(request):
+    subject = request.POST.get('subject', '')
+    message = request.Post.get('message', '')
+
+
+
+with mail.get_connection() as connection:
+    mail.EmailMessage(subject1, body1, from1, [to1],
+                      connection=connection).send()
+    mail.EmailMessage(subject2, body2, from2, [to2],
+                      connection=connection).send()
+    EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+
+
+    
