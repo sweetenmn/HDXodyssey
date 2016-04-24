@@ -12,6 +12,7 @@ class Project(models.Model):
     update_date = models.CharField(max_length=50)
     def __str__(self):
         return self.title
+
     
 class ProjectGroup(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -42,20 +43,20 @@ class Completion(models.Model):
 
 
 class Student(models.Model):
-    user = models.OneToOnefield(User, on_delete=models.CASCADE, primary_key = True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
     stu_ID = models.CharField(max_length=100)
     def __str__(self):
         return self.user.first_name+" "+self.user.last_name
 
 class Supervisor(models.Model):
-    user = models.OneToOnefield(User, on_delete=models.CASCADE, primary_key = True)
-    sup_ID = models.Charfield(max_length=100)
-    department = models.Charfield(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
+    sup_ID = models.CharField(max_length=100)
+    department = models.CharField(max_length=100)
     def __str__(self):
         return self.user.first_name+" "+self.user.last_name
 
-class Odyssey(models.Model)
-    user = models.OneToOnefield(User, on_delete=models.CASCADE, primary_key = True)
-    ody_ID = models.Charfield(max_length=100)
+class Odyssey(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
+    ody_ID = models.CharField(max_length=100)
     def __str__(self):
         return self.user.first_name+" "+self.user.last_name
