@@ -1,9 +1,13 @@
 var clicked = '';
 
 $(document).ready(function(){
-	$("tr").dblclick(function(){
+	$("#progress_table tr").dblclick(function(){
 		location.href = "project-status/" + $(this).attr("id");
 	});
+
+    $("#saved_forms_table tr").dblclick(function(){
+        location.href = "edit-form/" + $(this).attr("id");
+    })
 
 	$("#require").click(function(){
 		alert("These are the requirements...");

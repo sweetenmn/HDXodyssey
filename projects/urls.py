@@ -11,4 +11,5 @@ urlpatterns = [url(r'^$', views.landing, name = 'landing'),
                url(r'^upload/success', views.success, name='success'),
                url(r'^success', views.success, name='success'),
                url('^markdown/', include( 'django_markdown.urls'))
+               url(r'^edit-form/(?P<project_id>[0-9]+)', views.edit_proposal, name='edit')
                ]
