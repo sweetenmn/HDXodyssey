@@ -19,8 +19,14 @@
             <td>form type</td>
             <td>{{p.updated_date}}</td>
             <td>
-              <a id="icons" href="{% url 'projects:edit' p.id %}" class="glyphicon glyphicon-edit">
-              <a id="icons" href=# class="glyphicon glyphicon-trash">
+            <div id="icons">
+                <a href="{% url 'projects:edit' p.id %}" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+                </a>
+                <a href="#" class="btn btn-link" aria-label="Delete">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                </a>
+                </div>
             </td>
         </tr>
         {% endif %}

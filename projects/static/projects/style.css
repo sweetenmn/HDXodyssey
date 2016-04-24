@@ -28,10 +28,6 @@ h5 {
     color: #f5822a;
 }
 
-#name {
-	text-align: right;
-}
-
 td {
 
 	border-bottom: 1px solid #f5822a;
@@ -65,7 +61,6 @@ li a {
     text-decoration: none;
 }
 
-/* Change the link color to #111 (black) on hover */
 li a:hover {
     background-color: #f5822a;
     text-decoration: none;
@@ -112,16 +107,6 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover a:h
     color: white;
 }
 
-.btn {
-	color: #f5822a;
-}
-
-#icons {
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-
 table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.hover tbody tr:hover>.sorting_1{
     background-color: #f8ad73;
     color: white;
@@ -130,8 +115,19 @@ table.dataTable.display tbody tr:hover>.sorting_1 a{
     color:white;
 }
 
+#name {
+    text-align: right;
+    float: right;
+}
+
 .glyphicon hover{
     text-decoration: none;
+}
+#icons {
+    float: right;
+}
+#delicon, #editicon {
+    margin: -8px;
 }
 
 .inputnar, .inputhr, .inputdesc {
@@ -156,4 +152,8 @@ table.dataTable.display tbody tr:hover>.sorting_1 a{
 .inputnar:focus + label, .inputhr:focus + label, .inputdesc:focus + label {
     outline: 1px dotted #000;
     outline: -webkit-focus-ring-color auto 5px;
+}
+
+.btn {
+    color: #f5822a;
 }
