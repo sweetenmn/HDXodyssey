@@ -54,18 +54,7 @@ def completion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/completion.html', {'project':project})
 
-def send_email(request):
-    subject = request.POST.get('subject', '')
-    message = request.Post.get('message', '')
 
-
-
-with mail.get_connection() as connection:
-    mail.EmailMessage(subject1, body1, from1, [to1],
-                      connection=connection).send()
-    mail.EmailMessage(subject2, body2, from2, [to2],
-                      connection=connection).send()
-    EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
 
     
