@@ -90,7 +90,7 @@ def submit(request):
             new_project.save()
             new_prop.save()
             
-            render(request, 'projects/success.html')
+            return render(request, 'projects/success.html')
         else:
             new_project.status=savestatus
             new_prop.status=savestatus
@@ -98,7 +98,48 @@ def submit(request):
             new_prop.save()
             return render(request,'projects/proposalSave.html', {'project':new_project})
             
-    
+@csrf_protect
+def submit_saved(request, project_id):
+    substatus="Sumbitted to Supervisor"
+    savestatus="Unsubmitted"
+    now=datetime.datetime.now().strftime('%Y-%m-%d')
+    if request.method == 'POST':
+        if 'narfile' in request.FILES:
+            handle_uploaded_file(request.FILES['narfile'])
+        data = request.POST
+        new_title = data.get('tatle')
+        adv = data.get('super')
+        new_adv = User.objects.get(pk=adv)
+        new_category = data.get('cat')
+        
+        new_project=Project(title=new_title,
+                            category=new_category,
+                            advisor=new_adv,
+                            status="",
+                            start_date=data.get('startdate'),
+                            end_date=data.get('enddate'),
+                            update_date=now
+                            ) 
+        new_prop=Proposal(project_id=new_project,
+                          narrative=data.get('narrative'),
+                          created_date=now,
+                          status="",
+                          updated_date=now
+                          )
+        if data.get('propose')=="Save & Submit to Supervisor":
+            new_project.status=substatus
+            new_prop.status=substatus
+            new_project.save()
+            new_prop.save()
+            
+            render(request, 'projects/success.html')
+        else:
+            new_project.status=savestatus
+            new_prop.status=savestatus
+            new_project.save()
+            new_prop.save()
+            return render(request,'projects/proposalSave.html', {'project':new_project})
+                
     
 
 def edit_proposal(request, project_id):
