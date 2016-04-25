@@ -46,7 +46,13 @@
           <td>{{p.status}}</td>
           <td>{{p.updated_date}}</td>
           <td>
+<<<<<<< HEAD
             <a href=#>Delete</a>
+=======
+            <a href="{% url 'projects:status' p.id %}">View</a>
+            	<span class="glyphicon glphicon-eye-open" aria-hidden="true" id="viewicon"></span>
+            <a href=#>Hide</a>
+>>>>>>> refs/remotes/origin/master
           </td>
         </tr>
     {% endif %}
