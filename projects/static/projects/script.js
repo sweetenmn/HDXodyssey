@@ -1,4 +1,6 @@
 var clicked = '';
+var groupNo = 0;
+var added = false;
 
 $(document).ready(function(){
 	
@@ -54,6 +56,53 @@ $(document).ready(function(){
             }
         }                                                   
     } );
+
+    $("#party").change(function() {
+        if ($(this).val() == "Group" && groupNo==0){
+            var label = "group-" + groupNo;
+            $('#groupdiv').append("<br><div id="+
+                label+"><input type='text' size=35 name='"+label+
+                "'' placeholder='Email for additional member #"+(groupNo+1)+"'></div> ");
+            $('#addmember').addClass('btn btn-default btn-sm');
+            $('#addmember').text("+");
+            $('#remmember').addClass('btn btn-default btn-sm');
+            $('#remmember').text("-");
+            groupNo++;
+        } else if ($(this).val() == "Individual"){
+            removeGroup();
+        }
+    });
+
+    $("#addmember").click(function() {
+        var label = "group-" + groupNo;
+        $('#groupdiv').append("<div id="+
+            label+"><input type='text' size=35 name='"+label+
+            "'' placeholder='Email for additional member #"+(groupNo+1)+"'></div> ");
+        groupNo++;
+    });
+    $("#remmember").click(function() {
+        if (groupNo > 1){
+            $('#group-'+(groupNo-1)).remove();
+            groupNo--;
+        } else {
+            removeGroup();
+
+        }
+    });
+
+    function removeGroup(){
+        $('#groupdiv').empty()
+        $("#party").val("Individual");
+        $('#addmember').removeClass('btn btn-default btn-sm');
+        $('#addmember').text("");
+        $('#remmember').removeClass('btn btn-default btn-sm');
+        $('#remmember').text("");
+        groupNo=0;
+    }
+
+
+
+
 
 
 	$(":submit").click(function() { 

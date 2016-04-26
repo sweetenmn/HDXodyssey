@@ -14,8 +14,19 @@
             <option id="ind">Individual</option>
             <option id="grp">Group</option>
         </select>
-        <button class="btn btn-default btn-sm">Add Group Members</button>
-        <br><br>
+        <div class="container">
+        <div id="groupdiv">
+        </div>
+        <div class="container">
+        <div class="row">
+        <div id="addmember"></div>
+        <div id="remmember"></div>
+        </div>
+        </div>
+        </div>
+        
+        </div>
+        <br>
         Supervisor:
         <select id="super" name="super">
         {% for user in supervisors %}
