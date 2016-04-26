@@ -10,6 +10,6 @@ urlpatterns = [url(r'^$', views.landing, name = 'landing'),
                url(r'^upload/$', views.upload, name='upload'),
                url(r'^upload/success', views.success, name='success'),
                url(r'^success', views.success, name='success'),
-               url(r'^edit-form/(?P<project_id>[0-9]+)', views.edit_proposal, name='edit'),
-               url(r'^edit-form/(?P<project_id>[0-9]+)/submit/', views.submit_saved, name='submitedit'),
+               url(r'^edit-form/(?P<project_id>[0-9]+)/$', views.edit_proposal, name='edit'),
+               url(r'^edit-form/(?P<project_id>[0-9]+)/submit', views.submitsaved, name='submitedit'),
                ]

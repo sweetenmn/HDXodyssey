@@ -25,12 +25,9 @@
         <br><br>
         Category:
         <select id="cat" name="cat">
-            <option id="ac">Artistic Creativity</option>
-            <option id="ga">Global Awareness</option>
-            <option id="pl">Professional and Leadership Development</option>
-            <option id="sp">Special Projects</option>
-            <option id="sw">Service to the World</option>
-            <option id="ur">Undergraduate Research</option>
+            {% for c in categories %}
+            <option>{{ c }}</option>
+            {% endfor %}
         </select>
         <br><br>
         Start Date:

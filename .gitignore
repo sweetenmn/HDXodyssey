@@ -99,3 +99,4 @@ hendrixodyssey/__pycache__/wsgi.cpython-34.pyc
 *.pyc
 
 *.docx
+*.sqlite3
