@@ -29,7 +29,7 @@ class Proposal(models.Model):
     status = models.CharField(max_length=60)
     updated_date = models.DateTimeField('updated on')
     def __str__(self):
-        return "Proposal: " + self.project_id.title
+        return self.project_id.title
 
 class Completion(models.Model):
     project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)

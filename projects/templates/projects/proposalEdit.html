@@ -4,7 +4,7 @@
 {% block content %} 
 
 <div>
-    <form action='submit/' method="POST" id="proposal-form" enctype="multipart/form-data">
+    <form action='{% url 'projects:submitedit' project.id %}' method="POST" id="proposal-form" enctype="multipart/form-data">
         {% csrf_token %}
         Project Title:
         <input type="text" id="title" name="title" value="{{project.title}}">
@@ -19,24 +19,29 @@
         Supervisor:
         <select id="super" name="super">
         {% for user in supervisors %}
-           <option id="sv{{ user.id }}" name="sv{{ user.id }}" value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }}</option>
+        {% if user.id == project.advisor.id %}
+            <option selected="selected" id="sv{{ user.id }}" name="sv{{ user.id }}" value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }}</option>
+        {% else %}
+            <option id="sv{{ user.id }}" name="sv{{ user.id }}" value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }}</option>
+        {% endif %}
         {% endfor %}
         </select>
         <br><br>
         Category:
-        <select id="cat" name="cat">
-            <option id="ac">Artistic Creativity</option>
-            <option id="ga">Global Awareness</option>
-            <option id="pl">Professional and Leadership Development</option>
-            <option id="sp">Special Projects</option>
-            <option id="sw">Service to the World</option>
-            <option id="ur">Undergraduate Research</option>
+        <select id="cat" name="editcat">
+            {% for c in categories %}
+            {% if c == project.category %}
+            <option selected="selected">{{ c }}</option>
+            {% else %}
+            <option>{{ c }}</option>
+            {% endif %}
+            {% endfor %}
         </select>
         <br><br>
         Start Date:
-        <input type="date" id="startdate">
+        <input type="date" name="startdate" value={{ project.start_date }}>
         End Date:
-        <input type="date" id="enddate">
+        <input type="date" name="enddate" value={{ project.end_date }}>
         <br><br>Please attach a copy of your narrative:<br><br>
         <input type="file" name="narfile" id="narfile" class="inputnar"/>
         <label for="narfile">Choose a file</label><p id="narlabel"> No file selected</p>
@@ -46,8 +51,8 @@
         <textarea rows="20" cols="50" id="narrative" name='narrative' placeholder="Type your narrative here, or attach a file above."></textarea>
         <br>
         <input type="submit" name="propose" class="btn btn-default btn-sm" value="Save &amp; Submit to Supervisor">
-        <!-- <button type="submit" name="propose" class="btn btn-default btn-sm" value="save">Save Form</button>
-        <button type="submit" name="propose" class="btn btn-default btn-sm" value="del">Delete Form</button> -->
+        <input type="submit" name="propose" class="btn btn-default btn-sm" value="Save Form">
+        <!--<button type="submit" name="propose" class="btn btn-default btn-sm" value="del">Delete Form</button> -->
         <div id="dialog-overlay"></div>
     
     
