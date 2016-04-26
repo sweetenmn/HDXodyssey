@@ -1,5 +1,4 @@
 var clicked = '';
-
 $(document).ready(function(){
 	
 	$("#progress_table .clickable").dblclick(function(){
@@ -57,7 +56,36 @@ $(document).ready(function(){
 
     // Initializing the text editor
     CKEDITOR.replace('narrative')
-    
+
+    //Fire when a new file is uploaded
+    $("#narfile").change(function(event) {
+        //Convert to HTML
+        handleFileSelect(event)
+    });
+
+    function handleFileSelect(event){
+        readFileInputAsArrBuffer(event, function(arrayBuffer){
+            mammoth.convertToHtml({arrayBuffer: arrayBuffer})
+                .then(setTextEditor)
+                .done();
+        });
+    }
+
+    function setTextEditor(result) {
+        console.log(result);
+
+        CKEDITOR.instances['narrative'].setData(result.value);
+    }
+
+    function readFileInputAsArrBuffer(event, callback) {
+        var file = document.getElementById('narfile').files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var arrayBuffer = e.target.result;
+            callback(arrayBuffer);
+        }
+        reader.readAsArrayBuffer(file);
+    }
 
     function getCookie(name) {
         var cookieValue = null;

@@ -2,11 +2,8 @@
 
 clear
 echo "Installing the dependencies on OS-side"
-<<<<<<< HEAD
 sudo apt-get install g++ -y 
-=======
 sudo apt-get install g++ -y
->>>>>>> refs/remotes/origin/master
 sudo apt-get install pandoc -y
 sudo apt-get install libxml2-dev libxslt-dev python-dev python3-lxml -y
 
