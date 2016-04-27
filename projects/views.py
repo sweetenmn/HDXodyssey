@@ -67,13 +67,18 @@ def success(request):
 def submit(request):
     now=datetime.datetime.now().strftime('%Y-%m-%d')
     if request.method == 'POST':
+<<<<<<< HEAD
         if 'narfile' in request.FILES:
             handle_uploaded_file(request.FILES['narfile'])
+=======
+
+>>>>>>> my-2nd-branch
         data = request.POST
         new_title = data.get('title')
         adv = data.get('super')
         new_adv = User.objects.get(pk=adv)
         new_category = data.get('cat')
+<<<<<<< HEAD
         
         new_project=Project(title=new_title,
                             category=new_category,
@@ -113,6 +118,37 @@ def submitsaved(request, project_id):
         project = get_object_or_404(Project, pk=project_id)
         proposal = get_object_or_404(Proposal, pk=project)
         data = request.POST
+=======
+        uploaded_file = None
+        if 'narfile' in request.FILES:
+            uploaded_file = request.FILES['narfile']
+            print( type(uploaded_file))
+        new_project=Project(
+                        title=new_title,
+                        category=new_category,
+                        advisor=new_adv,
+                        status="Submitted to Supervisor",
+                        start_date="4/16/2016",
+                        end_date="4/16/2016",
+                        update_date="4/16/2016"
+                    )
+        new_project.save()
+        new_prop=Proposal(
+                        project_id=new_project,
+                        narrative=data.get('narrative'),
+                        created_date=now,
+                        status="Submitted to super",
+                        narrative_as_file=uploaded_file,
+                        updated_date=now
+                        )
+        new_prop.save()
+        new_grp = ProjectGroup(student=User.objects.get(username='jepsencr'),
+                               project=new_project)
+        new_grp.save()
+
+        return HttpResponseRedirect('success')
+    return render(request, 'projects/success.html')
+>>>>>>> my-2nd-branch
 
         project.title = data.get('title')
         project.advisor = User.objects.get(pk=data.get('super'))
