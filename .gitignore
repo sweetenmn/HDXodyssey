@@ -95,3 +95,4 @@ projects/migrations/__pycache__/0003_auto_20160329_0234.cpython-34.pyc
 hendrixodyssey/__pycache__/wsgi.cpython-34.pyc
 *.docx
 db.sqlite3
+db.sqlite3
