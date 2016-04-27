@@ -26,23 +26,20 @@
 </head>
 <body>
 <div class="container">
-	<div id="header">
-	<ul>
-		<li><a href="/odyssey">Odyssey Home</a></li>
-		<li><a href="{% url 'projects:proposal' %}">Proposal Form</a></li>
-		<div id="name">
-		<li><a>Name    <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a>
-		</div>
-	</ul>
+	<div class="container-fluid">
+		<ul class="navbar">
+			<li><a href="/odyssey">Odyssey Home</a></li>
+			<li><a href="{% url 'projects:proposal' %}">Proposal Form</a></li>
+			<div id="name">
+			<li><a>Name<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span></a></li>
+			</div>
+		</ul>
 	</div>
-	</div>
-	<div id="content">
-	<div class="container">
+
 	<h1>{% block header %}{% endblock %}</h1>
 	<hr>
 	{% block content %}{% endblock %}
-	</div>
-	</div>
+	
 
 </body>
 
