@@ -1,4 +1,6 @@
 var clicked = '';
+var groupNo = 0;
+var added = false;
 
 $(document).ready(function(){
 	$("#progress_table tr").dblclick(function(){
@@ -10,7 +12,7 @@ $(document).ready(function(){
     })
 
 	$("#require").click(function(){
-		alert("These are the requirements...");
+		alert("GGGGGGGGGGGGGGGJALDAFL:KDS:LKGDSGKLJKLGSKJLKLGSJKL:G:GS:L:KLGJKL:GLFJG:FLKLKF: These are the requirements...");
 	});
 
 	$(".inputnar + label").addClass('btn btn-default btn-sm');
@@ -18,22 +20,85 @@ $(document).ready(function(){
 	$(".inputdesc + label").addClass('btn btn-default btn-sm');
 
     $('#progress_table').DataTable( {
-    	select: 'single'
-
+    	select: 'single',
+        language: {
+            select: {
+                rows: {
+                    _: ''
+                }
+            }
+        }
     } );
                   
     $('#completion_table').DataTable( {
-        select: 'single'
+        select: 'single',
+        language: {
+            select: {
+                rows: {
+                    _: ''
+                }
+            }
+        }        
                                    
     } );
     $('#saved_forms_table').DataTable( {
-        select: 'single'
-                                                   
+        select: 'single',
+        language: {
+            select: {
+                rows: {
+                    _: ''
+                }
+            }
+        }                                                   
     } );
-                  
-    $('#waiting_table').DataTable( {
-        select:'single'
+
+    $("#party").change(function() {
+        if ($(this).val() == "Group" && groupNo==0){
+            var label = "group-" + groupNo;
+            $('#groupdiv').append("<br><div id="+
+                label+"><input type='text' size=35 name='"+label+
+                "'' placeholder='Email for additional member #"+(groupNo+1)+"'></div> ");
+            $('#addmember').addClass('btn btn-default btn-sm');
+            $('#addmember').text("+");
+            $('#remmember').addClass('btn btn-default btn-sm');
+            $('#remmember').text("-");
+            groupNo++;
+        } else if ($(this).val() == "Individual"){
+            removeGroup();
+        }
     });
+
+    $("#addmember").click(function() {
+        var label = "group-" + groupNo;
+        $('#groupdiv').append("<div id="+
+            label+"><input type='text' size=35 name='"+label+
+            "'' placeholder='Email for additional member #"+(groupNo+1)+"'></div> ");
+        groupNo++;
+    });
+    $("#remmember").click(function() {
+        if (groupNo > 1){
+            $('#group-'+(groupNo-1)).remove();
+            groupNo--;
+        } else {
+            removeGroup();
+
+        }
+    });
+
+    function removeGroup(){
+        $('#groupdiv').empty()
+        $("#party").val("Individual");
+        $('#addmember').removeClass('btn btn-default btn-sm');
+        $('#addmember').text("");
+        $('#remmember').removeClass('btn btn-default btn-sm');
+        $('#remmember').text("");
+        groupNo=0;
+    }
+
+
+
+
+
 
 	$(":submit").click(function() { 
 		clicked = this.value 
@@ -51,48 +116,7 @@ $(document).ready(function(){
 		
         
     });
-
-
-	// $('#post-project').on('submit', function(event){
-	// 	event.preventDefault();
-	// 	switch(clicked){
-	// 		case "ss":
-	// 			console.log("save and submit");
-	// 			console.log($('#title').val());
-	// 			console.log($('#party :selected').attr('id'));
-	// 			console.log($('#super :selected').attr('id'));
-	// 			submit_proposal();
-	// 			break;
-	// 		case "save":
-	// 			console.log("save");
-	// 			save_proposal();
-	// 			break;
-	// 		case "del":
-	// 			console.log("delete");
-	// 			delete_proposal();
-	// 			break;
-	// 		default:
-	// 			break;
-	// 	}
-	// });
-
-                  
-	// function submit_proposal(){
-	// 	$.ajax({
-	// 		url : "submit_proposal/",
-	// 		type : "POST",
-	// 		datatype: 'json',
-	// 		data : { title : $("#title").val(), super : $('#super :selected').attr('id').substring(3), category : $("#cat :selected").attr('id')},success : function(json) {
-	// 			console.log(json);
-	// 			console.log("success");
-	// 		},error : function(jqXHR, textStatus, errorThrown){
-	// 			console.log(textStatus, errorThrown);
-	// 		}
-
-	// 	});
-	// };
-
-    // This function gets cookie with a given name
+    
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {

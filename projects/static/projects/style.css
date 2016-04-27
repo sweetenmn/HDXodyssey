@@ -142,3 +142,7 @@ table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.h
     outline: 1px dotted #000;
     outline: -webkit-focus-ring-color auto 5px;
 }
+
+.btn {
+    color: #f5822a;
+}

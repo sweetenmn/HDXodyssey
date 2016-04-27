@@ -13,11 +13,16 @@
     </thead>
     <tbody>
         {% for p in projects %}
-        {% if p.status == "Unsubmitted" %}
-        <tr id="{{p.id}}">
-            <td>{{p.title}}</td>
-            <td>form type</td>
-            <td>{{p.updated_date}}</td>
+        {% if 'Unsubmitted' in p.status %}
+        <tr class="clickable" id="{{p.id}}">
+            <td><a href="{% url 'projects:edit' p.id %}">{{p.title}}</a></td>
+            <td>
+            {% if 'Comp' in p.status %}
+                Project Completion
+            {% else %}
+                Project Proposal
+            {% endif %}</td>
+            <td></td>
             <td>
                 <a href=#>Delete</a>
             </td>
@@ -44,15 +49,12 @@
         <tr id="{{p.id}}">
           <td>{{p.title}}</td>
           <td>{{p.status}}</td>
-          <td>{{p.updated_date}}</td>
+          <td>{{ p.update_date }}</td>
           <td>
-<<<<<<< HEAD
-            <a href=#>Delete</a>
-=======
             <a href="{% url 'projects:status' p.id %}">View</a>
             	<span class="glyphicon glphicon-eye-open" aria-hidden="true" id="viewicon"></span>
-            <a href=#>Hide</a>
->>>>>>> refs/remotes/origin/master
+            <a href="{% url 'projects:status' p.id %}" class="btn btn-link" aria-label="View">
+            	<span class="glyphicon glyphicon-eye-open" aria-hidden="true" id="viewicon"></span></a>
           </td>
         </tr>
     {% endif %}
