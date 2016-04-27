@@ -32,10 +32,7 @@ class Proposal(models.Model):
     updated_date = models.DateTimeField('updated on')
     def __str__(self):
         return self.project_id.title
-<<<<<<< HEAD
-=======
 
->>>>>>> my-2nd-branch
 
 class Completion(models.Model):
     project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
