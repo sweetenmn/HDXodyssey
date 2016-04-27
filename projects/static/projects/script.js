@@ -17,7 +17,7 @@ $(document).ready(function(){
     })
 
 	$("#require").click(function(){
-		alert("These are the requirements...");
+		alert("GGGGGGGGGGGGGGGJALDAFL:KDS:LKGDSGKLJKLGSKJLKLGSJKL:G:GS:L:KLGJKL:GLFJG:FLKLKF: These are the requirements...");
 	});
 
 	$(".inputnar + label").addClass('btn btn-default btn-sm');
