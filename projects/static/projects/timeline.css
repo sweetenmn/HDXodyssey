@@ -1,89 +1,91 @@
 .timeline {
-  list-style-type: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #FFFFFF !important
+  list-style-type: none !important;
+  display: block !important ;
+  align-items: center !important ;
+  justify-content: center !important ;
+  background-color: #FFFFFF !important ;
 }
 
 .li {
-  transition: all 200ms ease-in;
+  transition: all 200ms ease-in !important ;
 }
 
 .timestamp {
-  margin-bottom: 20px;
-  padding: 0px 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-weight: 100;
+  margin-bottom: 20px !important ;
+  padding: 0px 40px !important ;
+  display: table-row-group; 
+  /*flex-direction: column !important ;*/
+  align-items: center !important ;
+  font-weight: 100 !important ;
 }
 
 .status {
-  padding: 0px 40px;
-  display: flex;
-  justify-content: center;
-  border-top: 2px solid #D6DCE0;
-  position: relative;
-  transition: all 200ms ease-in;
+  padding: 0px 40px !important ;
+  display: block !important ;
+  justify-content: center !important ;
+  border-top: 2px solid #D6DCE0 !important ;
+  position: relative !important ;
+  transition: all 200ms ease-in !important ;
 }
 .status h4 {
-  font-weight: 600;
+  font-weight: 600 !important ;
+  padding-bottom: 0px !important;
+  padding-top: 0px !important ;
 }
 .status:before {
-  content: "";
-  width: 25px;
-  height: 25px;
-  background-color: white;
-  border-radius: 25px;
-  border: 1px solid #ddd;
-  position: absolute;
-  top: -15px;
-  left: 42%;
-  transition: all 200ms ease-in;
+  content: "" !important ;
+  width: 25px !important ;
+  height: 25px !important ;
+  background-color: white !important ;
+  border-radius: 25px !important ;
+  border: 1px solid #ddd !important ;
+  position: absolute !important ;
+  top: -15px !important ;
+  left: 42% !important ;
+  transition: all 200ms ease-in !important ;
 }
 
 .li.complete .status {
-  border-top: 2px solid #66DC71;
+  border-top: 2px solid #66DC71 !important ;
 }
 .li.complete .status:before {
-  background-color: #66DC71;
-  border: none;
-  transition: all 200ms ease-in;
+  background-color: #66DC71 !important ;
+  border: none !important ;
+  transition: all 200ms ease-in !important ;
 }
 .li.complete .status h4 {
-  color: #66DC71;
+  color: #66DC71 !important ;
 }
 
 @media (min-device-width: 320px) and (max-device-width: 700px) {
   .timeline {
-    list-style-type: none;
-    display: block;
+    list-style-type: none !important ;
+    display: block !important ;
   }
 
   .li {
-    transition: all 200ms ease-in;
-    display: flex;
-    width: inherit;
+    transition: all 200ms ease-in !important ;
+    display: block !important ;
+    width: inherit !important ;
   }
 
   .timestamp {
-    width: 100px;
+    width: 100px !important ;
   }
 
   .status:before {
-    left: -8%;
-    top: 30%;
-    transition: all 200ms ease-in;
+    left: -8% !important ;
+    top: 30% !important ;
+    transition: all 200ms ease-in !important ;
   }
 }
 html, body {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
+  width: 100% !important ;
+  height: 100% !important ;
+  display: block !important ;
+  justify-content: center !important ;
   font-family: "Titillium Web", sans serif;
-  color: #758D96;
+  color: #758D96 !important ;
 }
 
 serif {
