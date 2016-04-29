@@ -1,4 +1,5 @@
-﻿#!/bin/bash
+﻿
+#!/bin/bash
 
 sudo apt-get install libxml2-dev libxslt-dev python-dev python3-lxml -y
 clear
