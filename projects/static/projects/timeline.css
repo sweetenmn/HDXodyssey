@@ -57,7 +57,41 @@
   color: #66DC71 !important ;
 }
 
-@media (min-device-width: 320px) and (max-device-width: 700px) {
+@media (min-device-width: 0px) and (max-device-width: 320px) {
+  .timeline{
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg); 
+    -moz-transform: rotate(-90deg);
+    list-style-type: none;
+    display: block; 
+  }
+
+  .li {
+    transition: all 200ms ease-in;
+    display: flex;
+    width: inherit;
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg); 
+    -moz-transform: rotate(-90deg); 
+  }
+
+  .timestamp{
+    transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg); 
+    -moz-transform: rotate(-90deg); 
+    width: 100px;
+  }
+  .status:before {
+    left: -8%;
+    top: 30%;
+    transition: all 200ms ease-in;
+  }
+}
+
+@media (min-device-width: 320px) and (max-device-width: 700px){
   .timeline {
     list-style-type: none !important ;
     display: block !important ;
@@ -79,6 +113,7 @@
     transition: all 200ms ease-in !important ;
   }
 }
+
 html, body {
   width: 100% !important ;
   height: 100% !important ;
