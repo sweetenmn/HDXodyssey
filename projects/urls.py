@@ -16,9 +16,9 @@ urlpatterns = [url(r'^$', views.landing, name = 'landing'),
                url(r'^edit-form/(?P<project_id>[0-9]+)/submit', views.submitsaved, name='submitedit'),
                url(r'^Login/$', views.login, name = 'Login'),
  			   url(r'^Supervisor-page/$', views.superLanding, name = 'superLanding'),
- 			   url(r'^superProposal/$', views.superProposal, name = 'superProposal'),
-			   url(r'^odysseylanding/$', views.odysseylanding, name = 'odysseylanding'),
-			   url(r'^odysseyproposal/$', views.odysseyproposal, name = 'odysseyproposal'),
+ 			   url(r'^Supervisor-proposal/$', views.superProposal, name = 'superProposal'),
+			   url(r'^Odyssey-page/$', views.odysseylanding, name = 'odysseylanding'),
+			   url(r'^Odyssey-proposal/$', views.odysseyproposal, name = 'odysseyproposal'),
 			   ]
                
 			   
