@@ -4,9 +4,6 @@ var added = false;
 
 $(document).ready(function(){
     
-<<<<<<< HEAD
-   
-=======
     $("#progress_table .clickable").dblclick(function(){
         location.href = "project-status/" + $(this).attr("id");
     });
@@ -215,7 +212,6 @@ $(document).ready(function(){
             }
         }
     });
->>>>>>> master
 
 });
 
