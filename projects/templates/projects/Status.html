@@ -2,6 +2,8 @@
 {% block title %}Odyssey Project Status{% endblock %}
 {% block header %}{{project.title}}{% endblock %}
 {% block content %}
+
+
 <div class="container-fluid">
 	<ul class="timeline" id="timeline">
 		<li class="li complete">
@@ -77,5 +79,8 @@
 			<p>Status: {{project.status}}</p>
 		</div>
 	</div>
+{% load static from staticfiles %}
+
+<script src="{% static "projects/timeline.js" %}"></script>
 
 {% endblock %}

@@ -23,6 +23,7 @@ class ProjectGroup(models.Model):
 
 def user_dir_path(instance, filename):
     return 'proposals/project_{0}/{1}'.format(instance.project_id, (filename+'%Y-%m-%d'))
+    
 class Proposal(models.Model):
     project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
     narrative = models.CharField(max_length=500)
