@@ -145,14 +145,37 @@ def edit_proposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/proposalEdit.html',
                   {'project':project, 'supervisors':supervisors, 'categories':categories})
-    
+@login_required
 def landing(request):
     projects = Project.objects.all()
     proposals = Proposal.objects.all()
-        if not request.User.is_authenticated():
-            return redirect('%ssuperLanding%s' % settings.Login_URL, request.path)
+    if not request.User.is_authenticated():
+        return redirect('%ssuperLanding%s' % settings.Login_URL, request.path)
     return render(request, 'projects/landing.html', {'projects':projects, 'proposals':proposals})
 
 def completion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/completion.html', {'project':project})
+
+@login_required
+def superLanding(request,project_id):
+    projects = Project.objects.all()
+    proposals = Proposal.objects.all()
+    return render(request, 'projects/superLanding.html', {'projects':projects, 'proposals':proposals})
+
+def superProposal(request):
+    supervisors = User.objects.filter(groups__name='Supervisors')
+    return render(request, 'projects/superProposal.html', {'supervisors':supervisors, 'categories':categories})
+
+@login_required
+def odysseylanding(request,project_id):
+    projects = Project.objects.all()
+    proposals = Proposal.objects.all()
+    return render(request, 'projects/odysseylanding.html', {'projects':projects, 'proposals':proposals})
+
+def odysseyproposal(request):
+    Odyssey = User.objects.filter(groups__name='Odyssey')
+    return render(request, 'projects/odysseyproposal.html', {'supervisors':supervisors, 'categories':categories})
+
+
+
