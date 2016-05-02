@@ -146,3 +146,48 @@ table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.h
 .btn {
     color: #f5822a;
 }
+.img{
+  width: 250px;
+  height: 50px;
+  margin-bottom: 60px;
+  transform: translatex(5%);
+}
+.login-form {
+  width: 350px;
+  padding: 40px 30px;
+  border: 1px solid;
+  border-radius: 4px;
+  margin: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.user{
+  position: relative;
+}
+
+.pass{
+  position: relative;
+  margin-top: 35px;
+}
+.boxcontrol {
+  width: 100%;
+  height: 50px;
+  padding: 5px 7px 5px 15px;
+  background: #fff;
+  color: #666;
+  border: 1px solid;
+  border-radius: 4px;
+}
+.logb{
+  background: #eeeeee;
+  width: 30%;
+  font-size: 16px;
+  border: 1px solid;
+  border-radius: 4px;
+  margin-top: 45px;
+  margin-left: 100px;
+}
