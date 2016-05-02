@@ -8,7 +8,7 @@
             <th>Project</th>
             <th>Form Type</th>
             <th>Updated Date</th>
-            <th>Action</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +24,14 @@
             {% endif %}</td>
             <td></td>
             <td>
-                <a href=#>Delete</a>
+            <div id="icons">
+                <a href="{% url 'projects:edit' p.id %}" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+                </a>
+                <a href="#" class="btn btn-link" aria-label="Delete">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                </a>
+                </div>
             </td>
         </tr>
         {% endif %}
@@ -46,15 +53,14 @@
     <tbody>
     {% for p in projects %}
     {% if p.status != "Complete" and p.status != "Unsubmitted" %}
-        <tr id="{{p.id}}">
-          <td>{{p.title}}</td>
+        <tr class="clickable" id="{{p.id}}">
+          <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
           <td>{{p.status}}</td>
           <td>{{ p.update_date }}</td>
           <td>
-            <a href="{% url 'projects:status' p.id %}">View</a>
-            	<span class="glyphicon glphicon-eye-open" aria-hidden="true" id="viewicon"></span>
             <a href="{% url 'projects:status' p.id %}" class="btn btn-link" aria-label="View">
             	<span class="glyphicon glyphicon-eye-open" aria-hidden="true" id="viewicon"></span></a>
+            <a href=#>Hide</a>
           </td>
         </tr>
     {% endif %}
@@ -76,8 +82,8 @@
     <tbody>
         {% for p in projects %}
         {% if p.status == "Complete" %}
-        <tr id="{{p.id}}">
-            <td>{{p.title}}</td>
+        <tr class="clickable" id="{{p.id}}">
+            <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
             <td>{{p.category}}</td>
             <td>{{p.updated_date}}</td>
             <td>{{p.advisor.last_name}}</td>
