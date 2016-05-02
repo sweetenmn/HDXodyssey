@@ -1,14 +1,16 @@
+var groupNo = 0;
+
 $(document).ready(function(){
-     $("#require").click(function(){
-        alert("GGGGGGGGGGGGGGGJALDAFL:KDS:LKGDSGKLJKLGSKJLKLGSJKL:G:GS:L:KLGJKL:GLFJG:FLKLKF: These are the requirements...");
-    });
-    $(".inputnar + label").addClass('btn btn-default btn-sm');
-    $(".inputhr + label").addClass('btn btn-default btn-sm');
-    $(".inputdesc + label").addClass('btn btn-default btn-sm');
-    CKEDITOR.replace('description')
-    $('description').change(function(event) {
-        handleFileSelect(event, 'description')
-    });
+    // $("#require").click(function(){
+    //     alert("GGGGGGGGGGGGGGGJALDAFL:KDS:LKGDSGKLJKLGSKJLKLGSJKL:G:GS:L:KLGJKL:GLFJG:FLKLKF: These are the requirements...");
+    // });
+    // $(".inputnar + label").addClass('btn btn-default btn-sm');
+    // $(".inputhr + label").addClass('btn btn-default btn-sm');
+    // $(".inputdesc + label").addClass('btn btn-default btn-sm');
+    // CKEDITOR.replace('description')
+    // $('description').change(function(event) {
+    //     handleFileSelect(event, 'description')
+    // });
     // Initializing the text editor
     CKEDITOR.replace('narrative')
     //Fire when a new file is uploaded
@@ -97,6 +99,24 @@ $(document).ready(function(){
         }
     });
 
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    function sameOrigin(url) {
+        // test that a given url is a same-origin URL
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
@@ -107,4 +127,5 @@ $(document).ready(function(){
             }
         }
     });
+});
     
