@@ -1,10 +1,7 @@
 var clicked = '';
-<<<<<<< HEAD
 var groupNo = 0;
 var added = false;
 
-=======
->>>>>>> my-2nd-branch
 $(document).ready(function(){
     
     $("#progress_table .clickable").dblclick(function(){
@@ -19,22 +16,19 @@ $(document).ready(function(){
         location.href = "edit-form/" + $(this).attr("id");
     })
 
-<<<<<<< HEAD
 	$("#require").click(function(){
 		alert("GGGGGGGGGGGGGGGJALDAFL:KDS:LKGDSGKLJKLGSKJLKLGSJKL:G:GS:L:KLGJKL:GLFJG:FLKLKF: These are the requirements...");
 	});
-=======
+
     $("#require").click(function(){
         alert("These are the requirements...");
     });
->>>>>>> my-2nd-branch
 
     $(".inputnar + label").addClass('btn btn-default btn-sm');
     $(".inputhr + label").addClass('btn btn-default btn-sm');
     $(".inputdesc + label").addClass('btn btn-default btn-sm');
 
     $('#progress_table').DataTable( {
-<<<<<<< HEAD
     	select: 'single',
         language: {
             select: {
@@ -43,10 +37,7 @@ $(document).ready(function(){
                 }
             }
         }
-=======
-        select: 'single'
 
->>>>>>> my-2nd-branch
     } );
                   
     $('#completion_table').DataTable( {
@@ -87,7 +78,6 @@ $(document).ready(function(){
         }
     });
 
-<<<<<<< HEAD
     $("#addmember").click(function() {
         var label = "group-" + groupNo;
         $('#groupdiv').append("<div id="+
@@ -123,11 +113,9 @@ $(document).ready(function(){
 	$(":submit").click(function() { 
 		clicked = this.value 
 	});
-=======
     $(":submit").click(function() { 
         clicked = this.value 
     });
->>>>>>> my-2nd-branch
 
     $('input[type="file"]').change(function(e){
         var fileName = e.target.files[0].name;
@@ -140,12 +128,11 @@ $(document).ready(function(){
         }
     });
     
-<<<<<<< HEAD
-=======
-    CKEDITOR.replace('description')
-    $('description').change(function(event) {
-        handleFileSelect(event, 'description')
-    });
+
+    // CKEDITOR.replace('description')
+    // $('description').change(function(event) {
+    //     handleFileSelect(event, 'description')
+    // });
 
     // Initializing the text editor
     CKEDITOR.replace('narrative')
@@ -176,7 +163,6 @@ $(document).ready(function(){
         reader.readAsArrayBuffer(file);
     }
 
->>>>>>> my-2nd-branch
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {
