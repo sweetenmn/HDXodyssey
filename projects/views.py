@@ -114,10 +114,13 @@ def submitsaved(request, project_id):
         project = get_object_or_404(Project, pk=project_id)
         proposal = get_object_or_404(Proposal, pk=project)
         data = request.POST
+<<<<<<< HEAD
         uploaded_file = None
         if 'narfile' in request.FILES:
             uploaded_file = request.FILES['narfile']
             print( type(uploaded_file))
+=======
+>>>>>>> master
         project.title = data.get('title')
         project.advisor = User.objects.get(pk=data.get('super'))
         project.category = data.get('editcat')
