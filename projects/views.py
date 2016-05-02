@@ -13,6 +13,7 @@ import datetime
 import pypandoc
 from io import *
 from docx import Document
+from django.contrib.auth.decorators import login_required
 
 import logging
 logger = logging.getLogger(__name__)
@@ -148,6 +149,8 @@ def edit_proposal(request, project_id):
 def landing(request):
     projects = Project.objects.all()
     proposals = Proposal.objects.all()
+        if not request.User.is_authenticated():
+            return redirect('%ssuperLanding%s' % settings.Login_URL, request.path)
     return render(request, 'projects/landing.html', {'projects':projects, 'proposals':proposals})
 
 def completion(request, project_id):
