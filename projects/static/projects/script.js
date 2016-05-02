@@ -3,16 +3,11 @@ var groupNo = 0;
 var added = false;
 
 $(document).ready(function(){
-    
-    $("#progress_table .clickable").dblclick(function(){
-        location.href = "project-status/" + $(this).attr("id");
-    });
+	$("#progress_table tr").dblclick(function(){
+		location.href = "project-status/" + $(this).attr("id");
+	});
 
-    $("#completion_table .clickable").dblclick(function(){
-        location.href = "project-status/" + $(this).attr("id");
-    });
-
-    $("#saved_forms_table .clickable").dblclick(function(){
+    $("#saved_forms_table tr").dblclick(function(){
         location.href = "edit-form/" + $(this).attr("id");
     })
 
@@ -20,13 +15,9 @@ $(document).ready(function(){
 		alert("GGGGGGGGGGGGGGGJALDAFL:KDS:LKGDSGKLJKLGSKJLKLGSJKL:G:GS:L:KLGJKL:GLFJG:FLKLKF: These are the requirements...");
 	});
 
-    $("#require").click(function(){
-        alert("These are the requirements...");
-    });
-
-    $(".inputnar + label").addClass('btn btn-default btn-sm');
-    $(".inputhr + label").addClass('btn btn-default btn-sm');
-    $(".inputdesc + label").addClass('btn btn-default btn-sm');
+	$(".inputnar + label").addClass('btn btn-default btn-sm');
+	$(".inputhr + label").addClass('btn btn-default btn-sm');
+	$(".inputdesc + label").addClass('btn btn-default btn-sm');
 
     $('#progress_table').DataTable( {
     	select: 'single',
@@ -37,7 +28,6 @@ $(document).ready(function(){
                 }
             }
         }
-
     } );
                   
     $('#completion_table').DataTable( {
@@ -113,56 +103,20 @@ $(document).ready(function(){
 	$(":submit").click(function() { 
 		clicked = this.value 
 	});
-    $(":submit").click(function() { 
-        clicked = this.value 
-    });
 
-    $('input[type="file"]').change(function(e){
+	$('input[type="file"]').change(function(e){
         var fileName = e.target.files[0].name;
         if ($(this).attr('id') == 'narfile'){
-            $("#narlabel").text(" " + fileName);
+        	$("#narlabel").text(" " + fileName);
         } else if ($(this).attr('id') == 'hrfile'){
-            $("#hrlabel").text(" " + fileName);
+        	$("#hrlabel").text(" " + fileName);
         } else if ($(this).attr('id') == 'descfile'){
-            $("#desclabel").text(" " + fileName);
+        	$("#desclabel").text(" " + fileName);
         }
+		
+        
     });
     
-
-    // CKEDITOR.replace('description')
-    // $('description').change(function(event) {
-    //     handleFileSelect(event, 'description')
-    // });
-
-    // Initializing the text editor
-    CKEDITOR.replace('narrative')
-    //Fire when a new file is uploaded
-    $("#narfile").change(function(event) {
-        //Convert to HTML
-        handleFileSelect(event, 'narrative')
-    });
-    function handleFileSelect(event, editorName){
-        readFileInputAsArrBuffer(event, function(arrayBuffer){
-            mammoth.convertToHtml({arrayBuffer: arrayBuffer})
-                .then(function(result) {
-                    setTextEditor(result, editorName)
-                })
-                .done();
-        });
-    }
-    function setTextEditor(result, editorName) {
-        CKEDITOR.instances[editorName].setData(result.value);
-    }
-    function readFileInputAsArrBuffer(event, callback) {
-        var file = document.getElementById('narfile').files[0];
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var arrayBuffer = e.target.result;
-            callback(arrayBuffer);
-        }
-        reader.readAsArrayBuffer(file);
-    }
-
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {
