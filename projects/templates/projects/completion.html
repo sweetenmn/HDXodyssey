@@ -14,7 +14,7 @@
             <p id="group">
             Group Member(s):
             </p>
-            <form action="">
+            <form action="{% url 'projects:submitcompletion' project.id %}" method="POST" id='completion-form' enctype="multipart/form-data">
             Start Date: <input type="text", id="startdate"/>
             <br><br>
             End Date: <input type="date", id="enddate"/>
@@ -34,30 +34,14 @@
             <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>
             <p>or</p>
             <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
-            <a href="" id="require">Description Requirements</a>
-            </form>
-            <form action="/odyssey/upload/" method="post" enctype="multipart/form-data">
+            <a href="" id="require">Description Requirements</a><br>
+            
             {% csrf_token %}
+
+            <input type="submit" name="complete" class="btn btn-default btn-sm" value="Save &amp; Submit to Supervisor">
+            <input type="submit" name="complete" class="btn btn-default btn-sm" value="Save Form">
+            <input type="submit" name="complete" class="btn btn-default btn-sm" value="Delete">
     
             </form>
 
-
-<button id="ss" class="btn btn-default btn-sm">Save &amp; Submit to Supervisor</button>
-<button id="save" class="btn btn-default btn-sm">Save Form</button>
-<button id="delete" class="btn btn-default btn-sm">Delete Form</button>
-<!--<div class="bot">-->
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-2">-->
-<!--                <button id="ss">Save</button>-->
-<!--            </div>-->
-<!--            <div class="col-md-3">-->
-<!--                <button id="save">Submit for Supervisior Approval</button>-->
-<!--            </div>-->
-<!--            <div class="col-md-4">-->
-<!--                <button id="delete">Delete Form</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 {% endblock %}

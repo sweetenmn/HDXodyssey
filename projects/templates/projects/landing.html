@@ -12,20 +12,14 @@
         </tr>
     </thead>
     <tbody>
-        {% for p in projects %}
-        {% if 'Unsubmitted' in p.status %}
+        {% for p in proposals %}
         <tr class="clickable" id="{{p.id}}">
-            <td><a href="{% url 'projects:edit' p.id %}">{{p.title}}</a></td>
-            <td>
-            {% if 'Comp' in p.status %}
-                Project Completion
-            {% else %}
-                Project Proposal
-            {% endif %}</td>
-            <td></td>
+            <td><a href="{% url 'projects:edit' p.project_id.id %}">{{p.project_id.title}}</a></td>
+            <td>Project Proposal</td>
+            <td>{{p.updated_date}}</td>
             <td>
             <div id="icons">
-                <a href="{% url 'projects:edit' p.id %}" class="btn btn-link" aria-label="Edit">
+                <a href="{% url 'projects:edit' p.project_id.id %}" class="btn btn-link" aria-label="Edit">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
                 </a>
                 <a href="#" class="btn btn-link" aria-label="Delete">
@@ -34,7 +28,23 @@
                 </div>
             </td>
         </tr>
-        {% endif %}
+        {% endfor %}
+        {% for c in completions %}
+        <tr class="clickable" id="{{c.project_id.id}}">
+            <td><a href="#">{{c.project_id.title}}</a></td>
+            <td>Project Completion</td>
+            <td></td>
+            <td>
+            <div id="icons">
+                <a href="#" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+                </a>
+                <a href="#" class="btn btn-link" aria-label="Delete">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                </a>
+                </div>
+            </td>
+        </tr>
         {% endfor %}
     </tbody>
 

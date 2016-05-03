@@ -71,5 +71,6 @@
 			<p>Status: {{project.status}}</p>
 		</div>
 	</div>
+    <a href="{% url 'projects:completion' project.id %}" class="btn btn-default btn-sm">Completion Form</a>
 
 {% endblock %}
