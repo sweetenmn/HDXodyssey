@@ -51,7 +51,6 @@
 </table>
 <h3>In Progress</h3>
 <table id="progress_table" class="display">
-    
     <thead>
         <tr>
         <th>Project</th>
@@ -80,7 +79,6 @@
 </table>
 <h3>Completed Projects</h3>
 <table id="completion_table" class="display">
-    
     <thead>
         <tr>
             <th>Project</th>
@@ -101,6 +99,12 @@
         {% endif %}
         {% endfor %}
     </tbody>
-    
 </table>
+
+{% load static from staticfiles %}
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/t/dt/jq-2.2.0,dt-1.10.11,b-1.1.2,r-2.0.2,se-1.1.2/datatables.min.js"></script>
+<script src="{% static "projects/landing.js" %}"></script>
 {% endblock %}

@@ -1,5 +1,6 @@
 var clicked = '';
 var groupNo = 0;
+var added = false;
 
 $(document).ready(function(){
     
@@ -14,8 +15,13 @@ $(document).ready(function(){
     $("#saved_forms_table .clickable").dblclick(function(){
         location.href = "edit-form/" + $(this).attr("id");
     })
-    $("#require").click(function(){
+
+	$("#require").click(function(){
 		alert("GGGGGGGGGGGGGGGJALDAFL:KDS:LKGDSGKLJKLGSKJLKLGSJKL:G:GS:L:KLGJKL:GLFJG:FLKLKF: These are the requirements...");
+	});
+
+    $("#require").click(function(){
+        alert("These are the requirements...");
     });
 
     $(".inputnar + label").addClass('btn btn-default btn-sm');
@@ -31,6 +37,7 @@ $(document).ready(function(){
                 }
             }
         }
+
     } );
                   
     $('#completion_table').DataTable( {
@@ -96,8 +103,16 @@ $(document).ready(function(){
         $('#remmember').removeClass('btn btn-default btn-sm');
         $('#remmember').text("");
         groupNo=0;
-    };
+    }
 
+
+
+
+
+
+	$(":submit").click(function() { 
+		clicked = this.value 
+	});
     $(":submit").click(function() { 
         clicked = this.value 
     });
@@ -113,10 +128,11 @@ $(document).ready(function(){
         }
     });
     
-    CKEDITOR.replace('description')
-    $('description').change(function(event) {
-        handleFileSelect(event, 'description')
-    });
+
+    // CKEDITOR.replace('description')
+    // $('description').change(function(event) {
+    //     handleFileSelect(event, 'description')
+    // });
 
     // Initializing the text editor
     CKEDITOR.replace('narrative')
