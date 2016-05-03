@@ -20,8 +20,10 @@ categories = ['Artistic Creativity', 'Global Awareness',
               'Professional and Leadership Development',
               'Special Projects', 'Service to the World',
               'Undergraduate Research']
-substatus="Submitted to Supervisor"
+subpropstatus="Proposal Submitted to Supervisor"
 savestatus="Unsubmitted"
+subcompstatus="Completion Form Submitted to Supervisor"
+
               
 
 WORD_EXTENSION = '.docx'
@@ -91,9 +93,10 @@ def submit(request):
                           status="",
                           updated_date=now
                           )
+        new_prop.save()
         if data.get('propose')=="Save & Submit to Supervisor":
-            new_project.status=substatus
-            new_prop.status=substatus
+            new_project.status=subpropstatus
+            new_prop.status=subpropstatus
             new_project.save()
             new_prop.save()
             
@@ -112,7 +115,7 @@ def submitsaved(request, project_id):
         if 'narfile' in request.FILES:
             handle_uploaded_file(request.FILES['narfile'])
         project = get_object_or_404(Project, pk=project_id)
-        proposal = get_object_or_404(Proposal, pk=project)
+        proposal = get_object_or_404(Proposal, pk=project_id)
         data = request.POST
         project.title = data.get('title')
         project.advisor = User.objects.get(pk=data.get('super'))
@@ -124,11 +127,9 @@ def submitsaved(request, project_id):
         proposal.narrative=data.get('narrative')
         proposal.updated_date=now
         proposal.status=""
-        logger.debug('made it here')
         if data.get('propose')=="Save & Submit to Supervisor":
-            logger.debug('made it now here!')
-            project.status=substatus
-            proposal.status=substatus
+            project.status=subpropstatus
+            proposal.status=subpropstatus
             project.save()
             proposal.save()
             return render(request, 'projects/success.html')
@@ -147,9 +148,35 @@ def edit_proposal(request, project_id):
     
 def landing(request):
     projects = Project.objects.all()
-    proposals = Proposal.objects.all()
-    return render(request, 'projects/landing.html', {'projects':projects, 'proposals':proposals})
+    proposals = Proposal.objects.filter(status__startswith='Unsubmitted')
+    completions = Completion.objects.filter(status__startswith='Unsubmitted')
+    return render(request, 'projects/landing.html', {'projects':projects,
+                                                     'proposals':proposals,
+                                                     'completions':completions})
 
 def completion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/completion.html', {'project':project})
+
+@csrf_protect
+def submitcompletion(request, project_id):
+    now=datetime.datetime.now().strftime('%Y-%m-%d')
+    project = get_object_or_404(Project, pk=project_id)
+    data = request.POST
+    new_comp=Completion(project_id=project, status="", notation="",
+                        created_date=now,
+                        updated_date=now)
+    if data.get('complete') == "Save & Submit to Supervisor":
+        project.status=subcompstatus
+        project.update_date=now
+        new_comp.status=subcompstatus
+        project.save()
+        new_comp.save()
+        return render(request,'projects/success.html')
+    else:
+        project.status=savestatus
+        new_comp.status=savestatus
+        project.save()
+        new_comp.save()
+        return render(request,'projects/proposalSave.html', {'project':project, 'categories':categories})
+    

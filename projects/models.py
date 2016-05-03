@@ -26,8 +26,7 @@ def user_dir_path(instance, filename):
     
 class Proposal(models.Model):
     project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
-    narrative = models.CharField(max_length=500)
-    narrative_as_file = models.FileField(upload_to=user_dir_path, blank=True)
+    narrative = models.CharField(max_length=2000)
     created_date = models.DateTimeField('created on')
     status = models.CharField(max_length=60)
     updated_date = models.DateTimeField('updated on')
@@ -37,7 +36,7 @@ class Proposal(models.Model):
 
 class Completion(models.Model):
     project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
-    status = models.CharField(max_length=20)
+    status = models.CharField(max_length=60)
     created_date = models.DateTimeField('created on')
     updated_date = models.DateTimeField('updated on')
     notation = models.CharField(max_length=500)
