@@ -2,64 +2,72 @@
 {% block title %}Odyssey Project Status{% endblock %}
 {% block header %}{{project.title}}{% endblock %}
 {% block content %}
-<!-- 	<div class="row"> -->
+
+
+<div class="container-fluid">
 	<ul class="timeline" id="timeline">
 		<li class="li complete">
-			<div class="timestamp">
+			<!-- <div class="timestamp">
 				<span class="youComp">You</span>
-				<span class="propDate">date<span>
-			</div>
+				<span class="propDate">date</span>
+			</div> -->
 			<div class="status">
-				<h4>Submitted Proposal</h4>
+				<h4>Submitted</h4>
+				<h4>Proposal</h4>
 			</div>
 		</li>
 		<li class="li complete">
-			<div class="timestamp">
+			<!-- <div class="timestamp">
 				<span class="supervisor">Supervisor</span>
-				<span class="supDate">date<span>
-			</div>
+				<span class="supDate">date</span>
+			</div> -->
 			<div class="status">
-				<h4>Approved</h4>
+				<h4>Approved by:</h4>
+				<h4>Supervisor</h4>
 			</div>
 		</li>
 		<li class="li complete">
-			<div class="timestamp">
+			<!-- <div class="timestamp">
 				<span class="odyssey">Odyssey Office</span>
-				<span class="odyDate">date<span>
-			</div>
+				<span class="odyDate">date</span>
+			</div> -->
 			<div class="status">
-				<h4>Approved</h4>
+				<h4>Approved by:</h4>
+				<h4>Odyssey</h4>
 			</div>
 		</li>
 		<li class="li complete">
-			<div class="timestamp">
+			<!-- <div class="timestamp">
 				<span class="youComp">You</span>
-				<span class="compDate">date<span>
-			</div>
+				<span class="compDate">date</span>
+			</div> -->
 			<div class="status">
-				<h4>Submitted Completion</h4>
+				<h4>Submitted</h4>
+				<h4>Completion</h4>
 			</div>
 		</li>
 		<li class="li complete">
-			<div class="timestamp">
+			<!-- <div class="timestamp">
 				<span class="supervisor">Supervisor</span>
-				<span class="compSupDate">date<span>
-			</div>
+				<span class="compSupDate">date</span>
+			</div> -->
 			<div class="status">
-				<h4>Approved</h4>
+				<h4>Approved by:</h4>
+				<h4>Supervisor</h4>
 			</div>
 		</li>
 		<li class="li complete">
-			<div class="timestamp">
+			<!-- <div class="timestamp">
 				<span class="odysseyOffice">Odyssey Office</span>
-				<span class="compOdyDate">date<span>
-			</div>
+				<span class="compOdyDate">date</span>
+			</div> -->
 			<div class="status">
-				<h4>Approved</h4>
+				<h4>Approved by:</h4>
+				<h4>Odyssey</h4>
 			</div>
 		</li>
 	</ul>
-<!-- 	</div> -->
+</div>
 	<div class="body">
 		<h4 id="projectCategory">{{project.category}}</h4>
 		<div>
@@ -71,5 +79,8 @@
 			<p>Status: {{project.status}}</p>
 		</div>
 	</div>
+{% load static from staticfiles %}
+
+<script src="{% static "projects/timeline.js" %}"></script>
 
 {% endblock %}
