@@ -149,6 +149,9 @@ def edit_proposal(request, project_id):
 def login(request):
     return render( request, 'projects/login.html')
 
+def handle_login(request):
+
+
 @login_required(login_url='/odyssey/accounts/login/')
 def landing(request):
     projects = Project.objects.all()
