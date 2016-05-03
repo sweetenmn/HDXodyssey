@@ -14,6 +14,8 @@ import pypandoc
 from io import *
 from docx import Document
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+
 
 import logging
 logger = logging.getLogger(__name__)
@@ -181,5 +183,20 @@ def odysseyproposal(request):
     Odyssey = User.objects.filter(groups__name='Odyssey')
     return render(request, 'projects/odysseyproposal.html', {'supervisors':supervisors, 'categories':categories})
 
-
-
+def my_view(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return render(request, 'projects/landing.html', {
+                'username': username,
+            })
+            
+        else:
+            error = u'account disabled'
+            return errorHandle(error)
+    else:
+        error = u'invalid login'
+        return errorHandle(error)
