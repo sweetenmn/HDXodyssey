@@ -3,7 +3,6 @@ var groupNo = 0;
 var added = false;
 
 $(document).ready(function(){
-    
     $("#progress_table .clickable").dblclick(function(){
         location.href = "project-status/" + $(this).attr("id");
     });
