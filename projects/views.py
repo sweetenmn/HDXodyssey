@@ -145,12 +145,16 @@ def edit_proposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/proposalEdit.html',
                   {'project':project, 'supervisors':supervisors, 'categories':categories})
-@login_required
+
+def login(request):
+    return render( request, 'projects/login.html')
+
+@login_required(login_url='/odyssey/accounts/login/')
 def landing(request):
     projects = Project.objects.all()
     proposals = Proposal.objects.all()
-    if not request.User.is_authenticated():
-        return redirect('%ssuperLanding%s' % settings.Login_URL, request.path)
+    # if not request.User.is_authenticated():
+    #     return redirect('%ssuperLanding%s' % (settings.Login_URL, request.path) )
     return render(request, 'projects/landing.html', {'projects':projects, 'proposals':proposals})
 
 def completion(request, project_id):

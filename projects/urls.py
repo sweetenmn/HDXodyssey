@@ -3,7 +3,8 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 app_name = 'projects'
-urlpatterns = [url(r'^$', views.landing, name = 'landing'),
+urlpatterns = [
+               url(r'^$', views.landing, name = 'landing'),
                url(r'^proposal/$', views.proposal, name = 'proposal'),
                url(r'^complete-project/(?P<project_id>[0-9]+)', views.completion, name = 'completion'),
                url(r'^project-status/(?P<project_id>[0-9]+)',views.status, name='status'),
@@ -13,9 +14,9 @@ urlpatterns = [url(r'^$', views.landing, name = 'landing'),
                url(r'^success', views.success, name='success'),
                url(r'^edit-form/(?P<project_id>[0-9]+)/$', views.edit_proposal, name='edit'),
                url(r'^edit-form/(?P<project_id>[0-9]+)/submit', views.submitsaved, name='submitedit'),
-               url(r'^accounts/login/$', auth_views.login),
- 			   url(r'^Supervisor-page/$', views.superLanding, name = 'superLanding'),
- 			   url(r'^Supervisor-proposal/$', views.superProposal, name = 'superProposal'),
-			   url(r'^Odyssey-page/$', views.odysseylanding, name = 'odysseylanding'),
-			   url(r'^Odyssey-proposal/$', views.odysseyproposal, name = 'odysseyproposal'),
+               url(r'^accounts/login/$', views.login),
+               url(r'^Supervisor-page/$', views.superLanding, name = 'superLanding'),
+               url(r'^Supervisor-proposal/$', views.superProposal, name = 'superProposal'),
+               url(r'^Odyssey-page/$', views.odysseylanding, name = 'odysseylanding'),
+               url(r'^Odyssey-proposal/$', views.odysseyproposal, name = 'odysseyproposal'),
                ]
