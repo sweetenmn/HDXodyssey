@@ -20,11 +20,17 @@ categories = ['Artistic Creativity', 'Global Awareness',
               'Professional and Leadership Development',
               'Special Projects', 'Service to the World',
               'Undergraduate Research']
-subpropstatus="Proposal Submitted to Supervisor"
-savestatus="Unsubmitted"
-subcompstatus="Completion Form Submitted to Supervisor"
 
-              
+savestatus="Unsubmitted"
+sup_propsub="Proposal Submitted to Supervisor"
+sup_propapp="Proposal Approved by Supervisor"
+ody_propapp="Proposal Approved by Odyssey Office"
+sup_compsub="Completion Form Submitted to Supervisor"
+sup_compapp="Completion Form Approved by Supervisor"
+ody_compapp="Completion Form Approved by Odyssey Office"
+
+status_dict = {savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
+          sup_compsub:4, sup_compapp:5, ody_compapp:6}
 
 WORD_EXTENSION = '.docx'
 def proposal(request):
@@ -34,7 +40,8 @@ def proposal(request):
 
 def status(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    return render(request, 'projects/status.html', {'project':project})
+    return render(request, 'projects/status.html', {'project':project,
+                                                    'statusNum':status_dict.get(project.status)})
 
 @csrf_protect
 def upload(request):
@@ -95,8 +102,8 @@ def submit(request):
                           )
         new_prop.save()
         if data.get('propose')=="Save & Submit to Supervisor":
-            new_project.status=subpropstatus
-            new_prop.status=subpropstatus
+            new_project.status=sup_propsub
+            new_prop.status=sup_propsub
             new_project.save()
             new_prop.save()
             
@@ -117,6 +124,11 @@ def submitsaved(request, project_id):
         project = get_object_or_404(Project, pk=project_id)
         proposal = get_object_or_404(Proposal, pk=project_id)
         data = request.POST
+        uploaded_file = None
+        if 'narfile' in request.FILES:
+            uploaded_file = request.FILES['narfile']
+            print( type(uploaded_file))
+
         project.title = data.get('title')
         project.advisor = User.objects.get(pk=data.get('super'))
         project.category = data.get('editcat')
@@ -128,8 +140,8 @@ def submitsaved(request, project_id):
         proposal.updated_date=now
         proposal.status=""
         if data.get('propose')=="Save & Submit to Supervisor":
-            project.status=subpropstatus
-            proposal.status=subpropstatus
+            project.status=sup_propsub
+            proposal.status=sup_propsub
             project.save()
             proposal.save()
             return render(request, 'projects/success.html')
@@ -167,14 +179,13 @@ def submitcompletion(request, project_id):
                         created_date=now,
                         updated_date=now)
     if data.get('complete') == "Save & Submit to Supervisor":
-        project.status=subcompstatus
+        project.status=sup_compsub
         project.update_date=now
-        new_comp.status=subcompstatus
+        new_comp.status=sup_compsub
         project.save()
         new_comp.save()
         return render(request,'projects/success.html')
     else:
-        project.status=savestatus
         new_comp.status=savestatus
         project.save()
         new_comp.save()
