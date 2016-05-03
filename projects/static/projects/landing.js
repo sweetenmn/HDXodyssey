@@ -41,4 +41,7 @@ $(document).ready(function(){
             }
         }                                                   
     } );
+    $('#hideicon').click(function(){
+    	$("{{c.project_id.id}}").hide();
+    })
 });
