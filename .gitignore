@@ -101,3 +101,4 @@ hendrixodyssey/__pycache__/wsgi.cpython-34.pyc
 *.sqlite3
 *.sqlite3
 db.sqlite3
+*.sqlite3

@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         {% for p in proposals %}
-        <tr class="clickable" id="{{p.id}}">
+        <tr class="clickableP" id="{{p.project_id.id}}">
             <td><a href="{% url 'projects:edit' p.project_id.id %}">{{p.project_id.title}}</a></td>
             <td>Project Proposal</td>
             <td>{{p.updated_date}}</td>
@@ -30,17 +30,17 @@
         </tr>
         {% endfor %}
         {% for c in completions %}
-        <tr class="clickable" id="{{c.project_id.id}}">
-            <td><a href="#">{{c.project_id.title}}</a></td>
+        <tr class="clickableC" id="{{c.project_id.id}}">
+            <td><a href="{% url 'projects:editcomp' c.project_id.id %}">{{c.project_id.title}}</a></td>
             <td>Project Completion</td>
-            <td></td>
+            <td>{{c.updated_date}}</td>
             <td>
-            <div id="icons2">
-                <a href="#" class="btn btn-link" aria-label="View">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="viewicon"></span>
+            <div id="icons">
+                <a href="{% url 'projects:editcomp' c.project_id.id %}" class="btn btn-link" aria-label="View">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
                 </a>
                 <a href="#" class="btn btn-link" aria-label="Hide">
-                	<span class="glyphicon glyphicon-trash" aria-hidden="true" id="hidelicon"></span>
+                	<span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
                 </a>
                 </div>
             </td>
@@ -56,7 +56,7 @@
         <th>Project</th>
         <th>Status</th>
         <th>Update</th>
-        <th>Action</th>
+        <th></th>
         </tr>
     </thead>
     <tbody>

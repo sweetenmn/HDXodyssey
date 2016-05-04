@@ -33,7 +33,7 @@ status_dict = {savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
           sup_compsub:4, sup_compapp:5, ody_compapp:6}
 
 WORD_EXTENSION = '.docx'
-def proposal(request):
+def viewProposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
     return render(request, 'projects/proposal.html', {'supervisors':supervisors,
                                                       'categories':categories})
@@ -73,8 +73,8 @@ def success(request):
 
 
 @csrf_protect
-def submit(request):
-    now=datetime.datetime.now().strftime('%Y-%m-%d')
+def submitProposal(request):
+    now=datetime.date.today()
     if request.method == 'POST':
         if 'narfile' in request.FILES:
             handle_uploaded_file(request.FILES['narfile'])
@@ -84,13 +84,19 @@ def submit(request):
         adv = data.get('super')
         new_adv = User.objects.get(pk=adv)
         new_category = data.get('cat')
-        
+        # handle empty date for S&S in jquery
+        start = data.get('startdate')
+        end = data.get('enddate')
+        if start == '':
+            start = now
+        if end == '':
+            end = now
         new_project=Project(title=new_title,
                             category=new_category,
                             advisor=new_adv,
                             status="",
-                            start_date=data.get('startdate'),
-                            end_date=data.get('enddate'),
+                            start_date=start,
+                            end_date=end,
                             update_date=now
                             )
         new_project.save()
@@ -116,8 +122,8 @@ def submit(request):
             return render(request,'projects/proposalSave.html', {'project':new_project, 'categories':categories})
             
 @csrf_protect
-def submitsaved(request, project_id):
-    now=datetime.datetime.now().strftime('%Y-%m-%d')
+def submitSavedProposal(request, project_id):
+    now=datetime.date.today()
     if request.method == 'POST':
         if 'narfile' in request.FILES:
             handle_uploaded_file(request.FILES['narfile'])
@@ -150,13 +156,15 @@ def submitsaved(request, project_id):
             proposal.status=savestatus
             project.save()
             proposal.save()
-            return render(request,'projects/proposalSave.html', {'project':project, 'categories':categories})
+            return render(request,'projects/proposalSave.html', {'project':project})
                 
-def edit_proposal(request, project_id):
+def editProposal(request, project_id):
     supervisors = User.objects.filter(groups__name='Supervisors')
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/proposalEdit.html',
-                  {'project':project, 'supervisors':supervisors, 'categories':categories})
+                  {'project':project, 'supervisors':supervisors,
+                   'categories':categories, 'startdate':project.start_date.isoformat(),
+                   'enddate':project.end_date.isoformat()})
     
 def landing(request):
     projects = Project.objects.all()
@@ -166,18 +174,43 @@ def landing(request):
                                                      'proposals':proposals,
                                                      'completions':completions})
 
-def completion(request, project_id):
+def viewCompletion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     return render(request, 'projects/completion.html', {'project':project})
 
 @csrf_protect
-def submitcompletion(request, project_id):
-    now=datetime.datetime.now().strftime('%Y-%m-%d')
+def submitSavedCompletion(request, project_id):
+    now=datetime.date.today()
+    if request.method=='POST':
+        comp = get_object_or_404(Completion, pk=project_id)
+        project = get_object_or_404(Project, pk=project_id)
+        data=request.POST
+        comp.notation=""
+        comp.updated_date=now
+        if data.get('complete') == "Save & Submit to Supervisor":
+            project.status=sup_compsub
+            project.update_date=now
+            comp.status=sup_compsub
+            project.save()
+            comp.save()
+            return render(request,'projects/success.html')
+        else:
+            comp.status=savestatus
+            comp.save()
+            return render(request,'projects/completionSave.html', {'project':project, 'categories':categories})
+            
+
+        
+
+@csrf_protect
+def submitCompletion(request, project_id):
+    now=datetime.date.today()
     project = get_object_or_404(Project, pk=project_id)
     data = request.POST
     new_comp=Completion(project_id=project, status="", notation="",
                         created_date=now,
                         updated_date=now)
+    
     if data.get('complete') == "Save & Submit to Supervisor":
         project.status=sup_compsub
         project.update_date=now
@@ -189,5 +222,14 @@ def submitcompletion(request, project_id):
         new_comp.status=savestatus
         project.save()
         new_comp.save()
-        return render(request,'projects/proposalSave.html', {'project':project, 'categories':categories})
+        return render(request,'projects/completionSave.html', {'project':project})
+
+@csrf_protect    
+def editCompletion(request, project_id):
+    supervisors = User.objects.filter(groups__name='Supervisors')
+    project = get_object_or_404(Project, pk=project_id)
+    return render(request, 'projects/completionEdit.html',
+                  {'project':project, 'supervisors':supervisors,
+                   'startdate':project.start_date.isoformat(),
+                   'enddate':project.end_date.isoformat()})
     

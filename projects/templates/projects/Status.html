@@ -111,6 +111,9 @@
 			<p>Status: {{project.status}}</p>
 		</div>
 	</div>
+    <div class="body">
+    <a href="{% url 'projects:completion' project.id %}" class="btn btn-default">Completion Form</a>
+    </div>
 {% load static from staticfiles %}
 
 <script src="{% static "projects/timeline.js" %}"></script>
