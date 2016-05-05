@@ -1,4 +1,4 @@
- {% extends "projects/base.html" %}
+{% extends "projects/base.html" %}
 {% block header %} Your Hendrix Odyssey {% endblock %}
 {% block content %}
 <h3>Awaiting Approval</h3>
@@ -54,7 +54,7 @@
         <tr>
             <th>Project</th>
             <th>Status</th>
-            <th>Update</th>
+            <th>Updated</th>
             <th></th>
         </tr>
     </thead>
@@ -86,14 +86,25 @@
             <th>Project</th>
             <th>Category</th>
             <th>Completed</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        {% for proposal in inprogress %}
-        <tr id="{{proposal.id}}">
-            <td>{{proposal.title}}</td>
-            <td>{{proposal.category}}</td>
-            <td>proposal.update</td>
+        {% for p in completed %}
+        <tr id="{{p.id}}">
+            <td>{{p.title}}</td>
+            <td>{{p.category}}</td>
+            <td>{{p.update_date}}</td>
+            <td>
+            <div id="icons">
+            <a href="#" class="btn btn-link" aria-label="Edit">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+            </a>
+            <a href="#" class="btn btn-link" aria-label="Delete">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+            </a>
+            </div>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

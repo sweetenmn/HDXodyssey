@@ -52,19 +52,13 @@ def superLanding(request):
     projects = Project.objects.filter(advisor__username="goadrich")
     proposals = projects.filter(status=sup_propsub)
     completions = projects.filter(status=sup_compsub)
-    inprogress = projects.exclude(status=sup_propsub).exclude(status=sup_compsub)
-    appprops = projects.filter(status=sup_propapp)
-    appcomps = projects.filter(status=sup_compapp)
-    odyprops = projects.filter(status=ody_propapp)
+    inprogress = projects.exclude(status=sup_propsub).exclude(status=sup_compsub).exclude(status=ody_compapp)
     odycomps = projects.filter(status=ody_compapp)
     groups = ProjectGroup.objects.filter(project__advisor__username="goadrich")
     return render(request, 'projects/superLanding.html', {'projects':projects,
                                                           'props':proposals,
                                                           'comps':completions,
-                                                          'appprops':appprops,
-                                                          'appcomps':appcomps,
-                                                          'odyprops':odyprops,
-                                                          'odycomps':odycomps,
+                                                          'completed':odycomps,
                                                           'inprogress':inprogress})
 
 @csrf_protect
@@ -279,12 +273,15 @@ def reviewProposal(request, project_id):
                   {'project':project, 'group':grp})
 def superAppProposal(request, project_id):
     now=datetime.date.today()
+    data = request.POST
     project = get_object_or_404(Project, pk=project_id)
     proposal = get_object_or_404(Proposal, pk=project_id)
-    project.status=sup_propapp
-    project.update_date=now
-    proposal.status=sup_propapp
-    proposal.updated_date=now
+    result = data.get("approve")
+    if result == "Approve Proposal":
+        project.status=sup_propapp
+        project.update_date=now
+        proposal.status=sup_propapp
+        proposal.updated_date=now
     project.save()
     proposal.save()
     return render(request,'projects/superSuccess.html')
