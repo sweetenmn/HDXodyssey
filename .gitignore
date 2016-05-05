@@ -21,4 +21,4 @@ ENV/
 *.docx
 *.ipynb
 *.docxY-m-d
-*.sqlite3
+db.sqlite3
