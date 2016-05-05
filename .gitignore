@@ -86,19 +86,13 @@ ENV/
 
 # Rope project settings
 .ropeproject
-Status API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Contact Help
-*.pyc
-hendrixodyssey/__pycache__/settings.cpython-34.pyc
-hendrixodyssey/__pycache__/__init__.cpython-34.pyc
-projects/migrations/__pycache__/0003_auto_20160329_0234.cpython-34.pyc
-hendrixodyssey/__pycache__/wsgi.cpython-34.pyc
+
 *.docx
 
 *.ipynb
 
 *.docxY-m-d
 *.sqlite3
-*.sqlite3
-db.sqlite3
-*.sqlite3
+
+
+*.md
