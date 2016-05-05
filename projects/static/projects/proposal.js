@@ -1,9 +1,6 @@
 var groupNo = 0;
 
 $(document).ready(function(){
-    // $("#require").click(function(){
-    //     alert("GGGGGGGGGGGGGGGJALDAFL:KDS:LKGDSGKLJKLGSKJLKLGSJKL:G:GS:L:KLGJKL:GLFJG:FLKLKF: These are the requirements...");
-    // });
     // $(".inputnar + label").addClass('btn btn-default btn-sm');
     // $(".inputhr + label").addClass('btn btn-default btn-sm');
     // $(".inputdesc + label").addClass('btn btn-default btn-sm');
