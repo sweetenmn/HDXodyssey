@@ -148,7 +148,7 @@ def edit_proposal(request, project_id):
     return render(request, 'projects/proposalEdit.html',
                   {'project':project, 'supervisors':supervisors, 'categories':categories})
 
-def loginView(request):
+def login(request):
     return render( request, 'projects/login.html')
 
 @login_required(login_url='/odyssey/accounts/login/')
@@ -185,9 +185,6 @@ def odysseyproposal(request):
 
 @csrf_protect
 def my_view(request):
-    def errorHandle(error):
-        return render( request, 'projects/login.html',{'error':error})
-
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)

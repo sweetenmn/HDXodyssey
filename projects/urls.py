@@ -14,7 +14,7 @@ urlpatterns = [
                url(r'^success', views.success, name='success'),
                url(r'^edit-form/(?P<project_id>[0-9]+)/$', views.edit_proposal, name='edit'),
                url(r'^edit-form/(?P<project_id>[0-9]+)/submit', views.submitsaved, name='submitedit'),
-               url(r'^accounts/login/$', views.loginView),
+               url(r'^accounts/login/$', views.login),
                url(r'^accounts/login/submit/', views.my_view),
                url(r'^Supervisor-page/$', views.superLanding, name = 'superLanding'),
                url(r'^Supervisor-proposal/$', views.superProposal, name = 'superProposal'),
