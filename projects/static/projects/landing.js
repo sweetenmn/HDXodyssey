@@ -44,4 +44,9 @@ $(document).ready(function(){
             }
         }                                                   
     } );
+    $('#hideicon').Click(function(){
+    	$('.clickable').hide('slow', function(){
+    		alert("The row has been hidden!");
+    	});
+    });
 });
