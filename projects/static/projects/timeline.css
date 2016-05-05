@@ -10,11 +10,14 @@
   color: #66DC71 !important;
 }
 
+#Completed .status {
+  color: #66DC71 !important;
+}
 #Completed .status:before {
   background-color: #66DC71 !important;
 }
 #Uncompleted .h4 {
-  color: #000000 !important;
+  color: #758D96 !important;
 }
 
 .li {
@@ -47,7 +50,7 @@
   content: "" !important ;
   width: 25px !important ;
   height: 25px !important ;
-  background-color: white !important ;
+  background-color: #758D96 !important ;
   border-radius: 25px !important ;
   border: 1px solid #ddd !important ;
   position: absolute !important ;
@@ -65,7 +68,7 @@
 }
 
 #Uncompleted .status {
-  border-top: 2px solid #000000 !important ;
+  border-top: 2px solid #758D96 !important ;
 }
 
 /*.li.complete .status:before {
