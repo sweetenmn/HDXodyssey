@@ -16,7 +16,7 @@
         <tr class="clickableP" id="{{p.project_id.id}}">
             <td><a href="{% url 'projects:edit' p.project_id.id %}">{{p.project_id.title}}</a></td>
             <td>Project Proposal</td>
-            <td>{{p.updated_date}}</td>
+            <td>{{p.update_date}}</td>
             <td>
             <div id="icons">
                 <a href="{% url 'projects:edit' p.project_id.id %}" class="btn btn-link" aria-label="Edit">
@@ -93,7 +93,7 @@
         <tr class="clickable" id="{{p.id}}">
             <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
             <td>{{p.category}}</td>
-            <td>{{p.updated_date}}</td>
+            <td>{{p.update_date}}</td>
             <td>{{p.advisor.last_name}}</td>
         </tr>
         {% endif %}
