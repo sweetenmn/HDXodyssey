@@ -1,23 +1,22 @@
 {% extends "projects/base.html" %}
 {% block title %}Log-In{% endblock %}
 {% block content %}
-<body>
-  <div class="login-form">
-    <div class="img">
-      <img src="http://www.hendrix.edu/staticresources/images/hendrixLogo_bob.svg">
-    </div>
-    <div class="user">
-      <input id="username" type="text" class="boxcontrol" placeholder="Username">
-    </div>
-    <div class="pass">
-      <input id="password" type="password" class="boxcontrol" placeholder="Password">
-    </div>
-    <button class="logb" type="button">Log In</button>
+
+<div class="login-form">
+  <div class="img">
+    <img src="http://www.hendrix.edu/staticresources/images/hendrixLogo_bob.svg">
   </div>
+  <div class="user">
+    <input id="username" type="text" class="boxcontrol" placeholder="Username">
+  </div>
+  <div class="pass">
+    <input id="password" type="password" class="boxcontrol" placeholder="Password">
+  </div>
+  <button class="logb" type="button">Log In</button>
+</div>
+  
 
+{% load static from staticfiles %}
+<script src="{% static "projects/login.js" %}"></script>
 
-  {% load static from staticfiles %}
-  <script src="{% static "projects/login.js" %}"></script>
-
-</body>
 {% endblock %}

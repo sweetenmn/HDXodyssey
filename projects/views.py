@@ -183,6 +183,7 @@ def odysseyproposal(request):
     Odyssey = User.objects.filter(groups__name='Odyssey')
     return render(request, 'projects/odysseyproposal.html', {'supervisors':supervisors, 'categories':categories})
 
+@csrf_protect
 def my_view(request):
     username = request.POST['username']
     password = request.POST['password']
