@@ -6,18 +6,42 @@
         <thead>
             <tr>
                 <th>Project</th>
-                <th>Student</th>
                 <th>Form Type</th>
-                <th>Update</th>
+                <th>Updated</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for proposal in projects %}
-            <tr id="{{proposal.id}}">
-                <td>{{proposal.title}}</td>
-                <td>{{proposal.student}}</td>
-                <td>form type</td>
-                <td>proposal.update</td>
+            {% for p in props %}
+            <tr id="{{p.id}}">
+                <td><a href="{% url 'projects:superprop' p.id %}"> {{p.title}}</a></td>
+                <td>Project Proposal</td>
+                <td>{{p.update_date}}</td>
+                <td><div id="icons">
+                <a href="{% url 'projects:superprop' p.id %}" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+                </a>
+                <a href="#" class="btn btn-link" aria-label="Delete">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                </a>
+                </div>
+            </td>
+            </tr>
+            {% endfor %}
+            {% for p in comps %}
+            <tr id="{{p.id}}">
+                <td>{{p.title}}</td>
+                <td>Project Completion</td>
+                <td>{{p.update_date}}</td>
+                <td><div id="icons">
+                <a href="#" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+                </a>
+                <a href="#" class="btn btn-link" aria-label="Delete">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                </a>
+                </div>
+            </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -29,20 +53,28 @@
     <thead>
         <tr>
             <th>Project</th>
-            <th>Student</th>
             <th>Status</th>
             <th>Update</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        {% for proposal in projects %}
-        <tr id="{{proposal.id}}">
-            <td>{{proposal.title}}</td>
-            <td>{{proposal.student}}</td>
-            <td>{{proposal.status}}</td>
-            <td>proposal.update</td>
+    {% for p in inprogress %}
+        <tr id="{{p.id}}">
+            <td>{{p.title}}</td>
+            <td>{{p.status}}</td>
+            <td>{{p.update_date}}</td>
+            <td><div id="icons">
+            <a href="#" class="btn btn-link" aria-label="Edit">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+            </a>
+            <a href="#" class="btn btn-link" aria-label="Delete">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+            </a>
+            </div>
+            </td>
         </tr>
-        {% endfor %}
+    {% endfor %}
     </tbody>
     
 </table>
@@ -53,16 +85,14 @@
         <tr>
             <th>Project</th>
             <th>Category</th>
-            <th>Student</th>
             <th>Completed</th>
         </tr>
     </thead>
     <tbody>
-        {% for proposal in projects %}
+        {% for proposal in inprogress %}
         <tr id="{{proposal.id}}">
             <td>{{proposal.title}}</td>
             <td>{{proposal.category}}</td>
-            <td>{{proposal.student}}</td>
             <td>proposal.update</td>
         </tr>
         {% endfor %}

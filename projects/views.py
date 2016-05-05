@@ -13,6 +13,8 @@ import datetime
 import pypandoc
 from io import *
 from docx import Document
+from django.core.mail import send_mail
+
 
 import logging
 logger = logging.getLogger(__name__)
@@ -47,8 +49,23 @@ def viewAs(request):
     return render(request, 'projects/viewas.html')
 
 def superLanding(request):
-    projects = Project.objects.all()
-    return render(request, 'projects/superLanding.html', {'projects':projects})
+    projects = Project.objects.filter(advisor__username="goadrich")
+    proposals = projects.filter(status=sup_propsub)
+    completions = projects.filter(status=sup_compsub)
+    inprogress = projects.exclude(status=sup_propsub).exclude(status=sup_compsub)
+    appprops = projects.filter(status=sup_propapp)
+    appcomps = projects.filter(status=sup_compapp)
+    odyprops = projects.filter(status=ody_propapp)
+    odycomps = projects.filter(status=ody_compapp)
+    groups = ProjectGroup.objects.filter(project__advisor__username="goadrich")
+    return render(request, 'projects/superLanding.html', {'projects':projects,
+                                                          'props':proposals,
+                                                          'comps':completions,
+                                                          'appprops':appprops,
+                                                          'appcomps':appcomps,
+                                                          'odyprops':odyprops,
+                                                          'odycomps':odycomps,
+                                                          'inprogress':inprogress})
 
 @csrf_protect
 def upload(request):
@@ -106,20 +123,22 @@ def submitProposal(request):
                             end_date=end,
                             update_date=now
                             )
+        
         new_project.save()
+        createGroup(data, new_project)
         new_prop=Proposal(project_id=new_project,
                           narrative=data.get('narrative'),
                           created_date=now,
                           status="",
                           updated_date=now
                           )
+        
         new_prop.save()
         if data.get('propose')=="Save & Submit to Supervisor":
             new_project.status=sup_propsub
             new_prop.status=sup_propsub
             new_project.save()
-            new_prop.save()
-            
+            new_prop.save()            
             return render(request, 'projects/success.html')
         else:
             new_project.status=savestatus
@@ -127,6 +146,20 @@ def submitProposal(request):
             new_project.save()
             new_prop.save()
             return render(request,'projects/proposalSave.html', {'project':new_project, 'categories':categories})
+
+def createGroup(data, project):
+    num = data.get('groupsize')
+    size= int(num)
+    ind = ProjectGroup(student=User.objects.get(username="jepsencr"),
+                       project=project)
+    ind.save()
+    if size > 0:
+        for i in range(size):
+            mail = data.get('group-'+str(i+1))
+            grp = ProjectGroup(student=User.objects.get(email=mail),
+                               project=project)
+            grp.save()
+        
             
 @csrf_protect
 def submitSavedProposal(request, project_id):
@@ -239,3 +272,19 @@ def editCompletion(request, project_id):
                    'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
     
+def reviewProposal(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/superProposal.html',
+                  {'project':project, 'group':grp})
+def superAppProposal(request, project_id):
+    now=datetime.date.today()
+    project = get_object_or_404(Project, pk=project_id)
+    proposal = get_object_or_404(Proposal, pk=project_id)
+    project.status=sup_propapp
+    project.update_date=now
+    proposal.status=sup_propapp
+    proposal.updated_date=now
+    project.save()
+    proposal.save()
+    return render(request,'projects/superSuccess.html')
