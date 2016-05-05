@@ -24,17 +24,13 @@
             Hours Log:
             <input type="file" name="hrfile" id="hrfile" class="inputhr"/>
             <label for="hrfile">Choose a file</label><p id="hrlabel"> No file selected</p>
-            <br><br>
-            Project Desciption/Transcript Notation:
-            <br>
-            <!--<input type="file" name="descfile" id="descfile" class="inputdesc"/>
-            <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>-->
-            <br>
+            <br><br>Project Desciption/Transcript Notation:
+            <a href="" id="CompRequire">Description Requirements</a><br>
             <input type="file" name="descfile" id="descfile" class="inputdesc"/>
             <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>
             <p>or</p>
             <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
-            <a href="" id="require">Description Requirements</a><br>
+            
             
             {% csrf_token %}
 

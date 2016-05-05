@@ -57,6 +57,11 @@ $(document).ready(function(){
         }
     });
 
+
+    $("#NarrRequire").click(function(){
+        alert("Your narrative must describe your project in detail. Submit 1-2 pages for a credit request. For a project needing funding, 2-4 pages should be sufficient for this purpose. Address all the relevant criteria for your category, such as learning goals, reflection component, hours log or public presentation. Include any relevant contact information for agencies or persons with whom you plan to work on this project.");
+    });
+
     $("#addmember").click(function() {
         var label = "group-" + groupNo;
         $('#groupdiv').append("<div id="+
