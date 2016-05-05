@@ -2,23 +2,17 @@
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-
-
 # Django stuff:
 *.log
 local_settings.py
-
-
 # virtualenv
 venv/
 ENV/
-
-
-
 *.pyc
-
-
 *.docx
 *.ipynb
 *.docxY-m-d
 db.sqlite3
+
+
+projects/static/projects/ckeditor/.DS_Store
