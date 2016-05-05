@@ -30,8 +30,10 @@ ody_propapp="Proposal Approved by Odyssey Office"
 sup_compsub="Completion Form Submitted to Supervisor"
 sup_compapp="Completion Form Approved by Supervisor"
 ody_compapp="Completion Form Approved by Odyssey Office"
+revise="Revision Requested"
+rejected="Rejected"
 
-status_dict = {savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
+status_dict = {revise:-1, rejected:-2, savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
           sup_compsub:4, sup_compapp:5, ody_compapp:6}
 
 WORD_EXTENSION = '.docx'
@@ -201,12 +203,18 @@ def editProposal(request, project_id):
                    'enddate':project.end_date.isoformat()})
     
 def landing(request):
-    projects = Project.objects.all()
-    proposals = Proposal.objects.filter(status__startswith='Unsubmitted')
-    completions = Completion.objects.filter(status__startswith='Unsubmitted')
+    projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=ody_compapp)
+
+    proposals = Proposal.objects.filter(status=savestatus)
+    completions = Completion.objects.filter(status=savestatus)
+    revprops = Proposal.objects.filter(status=revise)
+    revcomps = Completion.objects.filter(status=revise)
+    complete = Project.objects.filter(status=ody_compapp)
     return render(request, 'projects/landing.html', {'projects':projects,
                                                      'proposals':proposals,
-                                                     'completions':completions})
+                                                     'completions':completions,
+                                                     'revprops':revprops,
+                                                     'revcomps':revcomps})
 
 def viewCompletion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
@@ -279,9 +287,15 @@ def superAppProposal(request, project_id):
     result = data.get("approve")
     if result == "Approve Proposal":
         project.status=sup_propapp
-        project.update_date=now
         proposal.status=sup_propapp
-        proposal.updated_date=now
+    elif result == "Request Revision":
+        project.status=revise
+        proposal.status=revise
+    else:
+        project.status=rejected
+        proposal.status=rejected
+    project.update_date=now
+    proposal.updated_date=now
     project.save()
     proposal.save()
     return render(request,'projects/superSuccess.html')
