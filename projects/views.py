@@ -205,7 +205,8 @@ def editProposal(request, project_id):
                   {'project':project, 'supervisors':supervisors,
                    'categories':categories, 'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
-    
+
+@login_required(login_url='/odyssey/accounts/login/')
 def landing(request):
     projects = Project.objects.all()
     proposals = Proposal.objects.filter(status__startswith='Unsubmitted')
@@ -288,3 +289,30 @@ def superAppProposal(request, project_id):
     project.save()
     proposal.save()
     return render(request,'projects/superSuccess.html')
+
+
+# USER AUTHENTICATION 
+def loginView(request):
+    return render( request, 'projects/login.html')
+
+@csrf_protect
+def my_view(request):
+    def errorHandle(error):
+        return render( request, 'projects/login.html',{'error':error})
+
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return render(request, 'projects/landing.html', {
+                'username': username,
+            })
+            
+        else:
+            error = u'account disabled'
+            return errorHandle(error)
+    else:
+        error = u'invalid login'
+        return errorHandle(error)    
