@@ -88,5 +88,13 @@ urlpatterns =
                r'^supervisor/review-proposal/(?P<project_id>[0-9]+)/submit',
                views.superAppProposal, 
                name='superapp'
+          ),
+          url(
+               r'^accounts/login/$', 
+               views.loginView
+          ),
+          url(
+               r'^accounts/login/submit/', 
+               views.my_view
           )
      ]
