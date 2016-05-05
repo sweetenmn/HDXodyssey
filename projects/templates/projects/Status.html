@@ -6,7 +6,11 @@
 
 <div class="container-fluid">
 	<ul class="timeline" id="timeline">
-		<div id="t1">
+		{% if statusNum >= 1 %}
+		<div id="Completed">
+		{% else %}
+		<div id="Uncompleted">
+		{% endif %}
 		<li class="li complete">
 			<div class="status">
 				<h4>Submitted</h4>
@@ -14,7 +18,11 @@
 			</div>
 		</li>
 		</div>
-		<div id="t2">
+		{% if statusNum >= 2 %}
+		<div id="Completed">
+		{% else %}
+		<div id="Uncompleted">
+		{% endif %}
 		<li class="li complete">
 			<!-- <div class="timestamp">
 				<span class="supervisor">Supervisor</span>
@@ -26,7 +34,11 @@
 			</div>
 		</li>
 		</div>
-		<div id="t3">
+		{% if statusNum >= 3 %}
+		<div id="Completed">
+		{% else %}
+		<div id="Uncompleted">
+		{% endif %}
 		<li class="li complete">
 			<!-- <div class="timestamp">
 				<span class="odyssey">Odyssey Office</span>
@@ -38,7 +50,11 @@
 			</div>
 		</li>
 		</div>
-		<div id="t4">
+		{% if statusNum >= 4 %}
+		<div id="Completed">
+		{% else %}
+		<div id="Uncompleted">
+		{% endif %}
 		<li class="li complete">
 			<!-- <div class="timestamp">
 				<span class="youComp">You</span>
@@ -50,7 +66,11 @@
 			</div>
 		</li>
 		</div>
-		<div id="t5">
+		{% if statusNum >= 5 %}
+		<div id="Completed">
+		{% else %}
+		<div id="Uncompleted">
+		{% endif %}
 		<li class="li complete">
 			<!-- <div class="timestamp">
 				<span class="supervisor">Supervisor</span>
@@ -62,7 +82,11 @@
 			</div>
 		</li>
 		</div>
-		<div id="t6">
+		{% if statusNum >= 6 %}
+		<div id="Completed">
+		{% else %}
+		<div id="Uncompleted">
+		{% endif %}
 		<li class="li complete">
 			<!-- <div class="timestamp">
 				<span class="odysseyOffice">Odyssey Office</span>
