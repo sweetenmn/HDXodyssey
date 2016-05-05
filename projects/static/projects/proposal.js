@@ -1,10 +1,7 @@
 var groupNo = 0;
 
 $(document).ready(function(){
-
     $(".inputnar + label").addClass('btn btn-default btn-sm');
-    // $(".inputhr + label").addClass('btn btn-default btn-sm');
-    // $(".inputdesc + label").addClass('btn btn-default btn-sm');
     // CKEDITOR.replace('description')
     // $('description').change(function(event) {
     //     handleFileSelect(event, 'description')
