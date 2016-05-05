@@ -13,6 +13,4 @@ ENV/
 *.ipynb
 *.docxY-m-d
 db.sqlite3
-
-
 projects/static/projects/ckeditor/.DS_Store
