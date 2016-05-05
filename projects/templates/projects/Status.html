@@ -111,6 +111,11 @@
 			<p>Status: {{project.status}}</p>
 		</div>
 	</div>
+	<div>
+	{% if statusNum == 3 %}
+	<input type="goto" name="complete" class="btn btn-default btn-sm" value="Completion Form">
+	{% endif %}
+	</div>
 {% load static from staticfiles %}
 
 <script src="{% static "projects/timeline.js" %}"></script>
