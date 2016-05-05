@@ -14,7 +14,7 @@
         <tbody>
             {% for p in props %}
             <tr id="{{p.id}}">
-                <td><a href="{% url 'projects:superprop' p.id %}"> {{p.title}}</a></td>
+                <td><a href="{% url 'projects:superprop' p.id %}">{{p.title}}</a></td>
                 <td>Project Proposal</td>
                 <td>{{p.update_date}}</td>
                 <td><div id="icons">

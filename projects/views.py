@@ -63,6 +63,17 @@ def superLanding(request):
                                                           'completed':odycomps,
                                                           'inprogress':inprogress})
 
+def odyLanding(request):
+    projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=rejected)
+    proposals = projects.filter(status=sup_propapp)
+    completions = projects.filter(status=sup_compapp)
+    inprogress= projects.exclude(status=sup_propapp).exclude(status=sup_compapp).exclude(status=ody_compapp)
+    completed = projects.filter(status=ody_compapp)
+    return render(request, 'projects/odysseylanding.html', {'proposals':proposals,
+                                                            'completions':completions,
+                                                            'inprogress':inprogress,
+                                                            'completed':completed})
+
 @csrf_protect
 def upload(request):
     if request.method == 'POST':
@@ -273,21 +284,35 @@ def editCompletion(request, project_id):
                   {'project':project, 'supervisors':supervisors,
                    'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
-    
+
+
 def reviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
     return render(request, 'projects/superProposal.html',
                   {'project':project, 'group':grp})
+def odyReviewProposal(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/odysseyproposal.html',
+                  {'project':project, 'group':grp})
+    
+
+def odyAppProposal(request, project_id):
+    return approve(request, project_id, ody_propapp)
+    
 def superAppProposal(request, project_id):
+    return approve(request, project_id, sup_propapp)
+
+def approve(request, project_id, success):
     now=datetime.date.today()
     data = request.POST
     project = get_object_or_404(Project, pk=project_id)
     proposal = get_object_or_404(Proposal, pk=project_id)
     result = data.get("approve")
     if result == "Approve Proposal":
-        project.status=sup_propapp
-        proposal.status=sup_propapp
+        project.status=success
+        proposal.status=success
     elif result == "Request Revision":
         project.status=revise
         proposal.status=revise

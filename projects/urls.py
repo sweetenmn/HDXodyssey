@@ -27,7 +27,11 @@ urlpatterns = [url(r'^student/$', views.landing, name = 'landing'),
                url(r'^supervisor/review-proposal/(?P<project_id>[0-9]+)/$', views.reviewProposal,
                    name='superprop'),
                url(r'^supervisor/review-proposal/(?P<project_id>[0-9]+)/submit',
-                   views.superAppProposal, name='superapp')
-                   
+                   views.superAppProposal, name='superapp'),
+               url(r'^office/$', views.odyLanding, name='odyLanding'),
+               url(r'^office/review-proposal/(?P<project_id>[0-9]+)/$', views.odyReviewProposal,
+                   name='odyReviewProp'),
+               url(r'^office/review-proposal/(?P<project_id>[0-9]+)/submit',
+                   views.odyAppProposal, name='odyapp'),
                
                ]
