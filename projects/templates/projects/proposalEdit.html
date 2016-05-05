@@ -17,8 +17,16 @@
         <div class="container">
         <div id="groupdiv">
         </div>
+        <div class="container">
+        <div class="row">
+        <div id="addmember"></div>
+        <div id="remmember"></div>
+        <input type="hidden" name="groupsize" id="groupsize" value=0>
         </div>
-        <br><br>
+        </div>
+        </div>
+        </div>
+        <br>
         Supervisor:
         <select id="super" name="super">
         {% for user in supervisors %}
@@ -42,9 +50,9 @@
         </select>
         <br><br>
         Start Date:
-        <input type="date" name="startdate" value={{ project.start_date }}>
+        <input type="date" name="startdate" value={{ startdate }}>
         End Date:
-        <input type="date" name="enddate" value={{ project.end_date }}>
+        <input type="date" name="enddate" value={{ enddate }}>
         <br><br>Please attach a copy of your narrative:<br><br>
         <input type="file" name="narfile" id="narfile" class="inputnar"/>
         <label for="narfile">Choose a file</label><p id="narlabel"> No file selected</p>
@@ -61,4 +69,8 @@
     
     </form>
 </div>
+{% load static from staticfiles %}
+<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<script src="{% static "projects/proposal.js" %}"></script>
 {% endblock %}
