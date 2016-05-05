@@ -14,7 +14,8 @@ import pypandoc
 from io import *
 from docx import Document
 from django.core.mail import send_mail
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 import logging
 logger = logging.getLogger(__name__)
