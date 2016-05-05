@@ -1,0 +1,10 @@
+{% extends "projects/base.html" %}
+{% block title %}View as {% endblock %}
+{% block header %}View as{% endblock %}
+{% block content %}
+<div class="body">
+<a href="{% url 'projects:landing' %}">Student</a>
+<br><br>
+<a href="{% url 'projects:superLanding' %}">Supervisor</a>
+</div>
+{% endblock %}
