@@ -43,6 +43,13 @@ def status(request, project_id):
     return render(request, 'projects/status.html', {'project':project,
                                                     'statusNum':status_dict.get(project.status)})
 
+def viewAs(request):
+    return render(request, 'projects/viewas.html')
+
+def superLanding(request):
+    projects = Project.objects.all()
+    return render(request, 'projects/superLanding.html', {'projects':projects})
+
 @csrf_protect
 def upload(request):
     if request.method == 'POST':
@@ -210,7 +217,6 @@ def submitCompletion(request, project_id):
     new_comp=Completion(project_id=project, status="", notation="",
                         created_date=now,
                         updated_date=now)
-    
     if data.get('complete') == "Save & Submit to Supervisor":
         project.status=sup_compsub
         project.update_date=now

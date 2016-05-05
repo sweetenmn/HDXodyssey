@@ -1,8 +1,8 @@
-{% extends "projects/base.html" %}
+ {% extends "projects/base.html" %}
 {% block header %} Your Hendrix Odyssey {% endblock %}
 {% block content %}
 <h3>Awaiting Approval</h3>
-    <table id="waiting_table" class="display">
+    <table id="awaiting_table" class="display">
         <thead>
             <tr>
                 <th>Project</th>
@@ -15,7 +15,7 @@
             {% for proposal in projects %}
             <tr id="{{proposal.id}}">
                 <td>{{proposal.title}}</td>
-                <th>{{proposal.student}}</td>
+                <td>{{proposal.student}}</td>
                 <td>form type</td>
                 <td>proposal.update</td>
             </tr>
@@ -38,7 +38,7 @@
         {% for proposal in projects %}
         <tr id="{{proposal.id}}">
             <td>{{proposal.title}}</td>
-            <th>{{proposal.student}}</td>
+            <td>{{proposal.student}}</td>
             <td>{{proposal.status}}</td>
             <td>proposal.update</td>
         </tr>
@@ -47,7 +47,7 @@
     
 </table>
 <h3>Completed Projects</h3>
-<table id="completion_table" class="display">
+<table id="complete_table" class="display">
     
     <thead>
         <tr>
@@ -69,4 +69,11 @@
     </tbody>
     
 </table>
+
+{% load static from staticfiles %}
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/t/dt/jq-2.2.0,dt-1.10.11,b-1.1.2,r-2.0.2,se-1.1.2/datatables.min.js"></script>
+<script src="{% static 'projects/superlanding.js' %}"></script>
 {% endblock %}

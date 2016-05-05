@@ -17,8 +17,16 @@
         <div class="container">
         <div id="groupdiv">
         </div>
+        <div class="container">
+        <div class="row">
+        <div id="addmember"></div>
+        <div id="remmember"></div>
+        <input type="hidden" name="groupsize" id="groupsize" value=0>
         </div>
-        <br><br>
+        </div>
+        </div>
+        </div>
+        <br>
         Supervisor:
         <select id="super" name="super">
         {% for user in supervisors %}
@@ -61,4 +69,8 @@
     
     </form>
 </div>
+{% load static from staticfiles %}
+<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<script src="{% static "projects/proposal.js" %}"></script>
 {% endblock %}

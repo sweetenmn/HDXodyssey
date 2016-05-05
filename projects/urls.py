@@ -2,7 +2,9 @@ from django.conf.urls import url
 from . import views
 
 app_name = 'projects'
-urlpatterns = [url(r'^$', views.landing, name = 'landing'),
+urlpatterns = [url(r'^student/', views.landing, name = 'landing'),
+               url(r'^supervisor/', views.superLanding, name='superLanding'),
+               url(r'^$', views.viewAs, name = 'viewas'),
                url(r'^proposal/$', views.viewProposal, name = 'proposal'),
                url(r'^complete-project/(?P<project_id>[0-9]+)/$', views.
                    viewCompletion, name = 'completion'),
@@ -22,4 +24,5 @@ urlpatterns = [url(r'^$', views.landing, name = 'landing'),
                    views.submitCompletion, name='submitcompletion'),
                url(r'^edit-completion-form/(?P<project_id>[0-9]+)/$',
                    views.editCompletion, name='editcomp'),
+               
                ]
