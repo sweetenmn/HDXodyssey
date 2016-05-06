@@ -44,4 +44,9 @@ $(document).ready(function(){
             }
         }                                                   
     } );
+    $('#hideicon').Click(function(){
+    	$('.clickable').hide(function(){
+    		alert('Have been hidden!');
+    	});
+    });
 });
