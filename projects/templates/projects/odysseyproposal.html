@@ -1,24 +1,26 @@
 {% extends "projects/base.html" %}
-{% block title %}
-Odyssey Project Proposal Form
-{% endblock %}
+{% block title %}Review Odyssey Project Proposal Form{% endblock %}
+{% block header %}Project Proposal{% endblock %}
 {% block content %}
 <div class="container">
-    <h1 id="title">Proposal: {{ project.title }}</h1>
+    <h3>{{project.title}}</h3>
     <div>
-        {% csrf_token %}
-        
-        <br><br>
-        Type: {{ individual/group }}
-        Participants: {{ project.students }}
-        <br><br>
-        Supervisor:  {{ project.supervisor }}
+        <br>
+
+        Participant(s): <br>
+        <div class="container">
+        {% for s in group %}
+        {{s.student.first_name}} {{s.student.last_name}}<br>
+        {% endfor %}
+        </div>
+        <br>
+        Supervisor:  {{ project.advisor.first_name }} {{ project.advisor.last_name }} 
         <br><br>
         Category:   {{ project.category }}
         <br><br>
-        Start Date: {{ project.startdate }}
+        Start Date: {{ project.start_date }}
         <br><br>
-        End Date: {{ project.enddate }}
+        End Date: {{ project.end_date }}
         
         <br><br>
         Narrative:
@@ -26,9 +28,12 @@ Odyssey Project Proposal Form
         <textarea rows="20" cols="50" id="narrative" placeholder="Here is an example narrative." readonly>
         </textarea>
         <br>
-        <button type="submit" formaction="/submit_proposal/" name="propose" class="btn btn-default btn-sm" value="ss">Approve Proposal</button>
-        <button type="revise" name="propose" class="btn btn-default btn-sm" value="del">Submit for Revisal</button>
-        <button type="reject" name="propose" class="btn btn-default btn-sm" value="del">Reject Proposal</button>
+        <form action="{% url 'projects:odyapp' project.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="submit" name="approve" class="btn btn-default btn-sm" value="Approve Proposal">
+        <input type="submit" name="approve" class="btn btn-default btn-sm" value="Request Revision">
+        <input type="submit" name="approve" class="btn btn-default btn-sm" value="Reject Proposal">
+        </form>
         
     </div>
 </div>

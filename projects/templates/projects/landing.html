@@ -12,11 +12,45 @@
         </tr>
     </thead>
     <tbody>
+      {% for p in revprops %}
+        <tr class="clickableP" id="{{p.project_id.id}}">
+            <td><a href="{% url 'projects:edit' p.project_id.id %}">{{p.project_id.title}}</a></td>
+            <td>Revised Project Proposal</td>
+            <td>{{p.updated_date}}</td>
+            <td>
+            <div id="icons">
+                <a href="{% url 'projects:edit' p.project_id.id %}" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+                </a>
+                <a href="#" class="btn btn-link" aria-label="Delete">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                </a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        {% for p in revcomps %}
+        <tr class="clickableP" id="{{p.project_id.id}}">
+            <td><a href="{% url 'projects:editcomp' p.project_id.id %}">{{p.project_id.title}}</a></td>
+            <td>Revised Project Completion</td>
+            <td>{{p.updated_date}}</td>
+            <td>
+            <div id="icons">
+                <a href="{% url 'projects:editcomp' p.project_id.id %}" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+                </a>
+                <a href="#" class="btn btn-link" aria-label="Delete">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                </a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
         {% for p in proposals %}
         <tr class="clickableP" id="{{p.project_id.id}}">
             <td><a href="{% url 'projects:edit' p.project_id.id %}">{{p.project_id.title}}</a></td>
             <td>Project Proposal</td>
-            <td>{{p.update_date}}</td>
+            <td>{{p.updated_date}}</td>
             <td>
             <div id="icons">
                 <a href="{% url 'projects:edit' p.project_id.id %}" class="btn btn-link" aria-label="Edit">
@@ -61,7 +95,6 @@
     </thead>
     <tbody>
     {% for p in projects %}
-    {% if p.status != "Complete" and p.status != "Unsubmitted" %}
         <tr class="clickable" id="{{p.id}}">
           <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
           <td>{{p.status}}</td>
@@ -77,7 +110,6 @@
             </div>
           </td>
         </tr>
-    {% endif %}
     {% endfor %}
     </tbody>
 
@@ -98,7 +130,7 @@
         <tr class="clickable" id="{{p.id}}">
             <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
             <td>{{p.category}}</td>
-            <td>{{p.update_date}}</td>
+            <td>{{p.updated_date}}</td>
             <td>{{p.advisor.last_name}}</td>
         </tr>
         {% endif %}
