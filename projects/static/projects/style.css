@@ -133,16 +133,10 @@ table.dataTable.display tbody tr:hover>.sorting_1 a{
 #icons {
     float: right;
 }
-#delicon, #editicon {
+#delicon, #editicon, #hideicon, #viewicon {
     margin: -8px;
 }
 
-#icons2{
-	float: right;
-}
-#viewicon, #hideicon{
-	margin: -8px;
-}
 .inputnar, .inputhr, .inputdesc {
     width: 0.1px;
     height: 0.1px;
