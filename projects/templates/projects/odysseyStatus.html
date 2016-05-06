@@ -85,7 +85,7 @@
 		<div>
 			<h4>Status: {{project.status}}</h4>
 			<p>Last Updated: {{project.update_date}}</p>
-			<p id="student">Student: <a href="mailto:{{project.student.last_name}}@hendrix.edu?Subject=Odyssey%20Project: {{project.title}}" target="_top" id="SupEmail">{{project.student.last_name}}, {{project.student.first_name}}</a>
+			<p id="student">Student: <a href="mailto:{{project.student.email}}?Subject=Odyssey%20Project: {{project.title}}" target="_top" id="SupEmail">{{project.student.last_name}}, {{project.student.first_name}}</a>
 			</p>
 			<p id="student">Supervisor: <a href="mailto:{{project.supervisor.last_name}}@hendrix.edu?Subject=Odyssey%20Project: {{project.title}}" target="_top" id="SupEmail">{{project.supervisor.last_name}}, {{project.supervisor.first_name}}</a>
 			<p id="group">Group Member(s):</p>
