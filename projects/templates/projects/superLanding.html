@@ -19,29 +19,23 @@
                 <td>{{p.update_date}}</td>
                 <td><div id="icons">
                 <a href="{% url 'projects:superprop' p.id %}" class="btn btn-link" aria-label="Edit">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
-                </a>
-                <a href="#" class="btn btn-link" aria-label="Delete">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                    <span class="glyphicon glyphicon-check" aria-hidden="true" id="editicon"></span>
                 </a>
                 </div>
             </td>
             </tr>
             {% endfor %}
-            {% for p in comps %}
-            <tr id="{{p.id}}">
-                <td><a href="{% url 'projects:supReviewComp' p.id %}">{{p.title}}</a></td>
+            {% for c in completions %}
+            <tr id="{{c.id}}">
+                <td><a href="{% url 'projects:supReviewComp' c.id %}">{{c.title}}</a></td>
                 <td>Project Completion</td>
-                <td>{{p.update_date}}</td>
+                <td>{{c.update_date}}</td>
                 <td><div id="icons">
-                <a href="{% url 'projects:supReviewComp' p.id %}" class="btn btn-link" aria-label="Edit">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
-                </a>
-                <a href="#" class="btn btn-link" aria-label="Delete">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                <a href="{% url 'projects:supReviewComp' c.id %}" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-check" aria-hidden="true" id="editicon"></span>
                 </a>
                 </div>
-            </td>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -65,11 +59,11 @@
             <td>{{p.status}}</td>
             <td>{{p.update_date}}</td>
             <td><div id="icons">
-            <a href="{% url 'projects:superview' p.id %}" class="btn btn-link" aria-label="Edit">
-            <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+            <a href="{% url 'projects:superview' p.id %}" class="btn btn-link" aria-label="View">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true" id="viewicon"></span>
             </a>
-            <a href="#" class="btn btn-link" aria-label="Delete">
-            <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+            <a href="" class="btn btn-link" aria-label="Hide">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" id="hideicon"></span>
             </a>
             </div>
             </td>
@@ -92,16 +86,15 @@
     <tbody>
         {% for p in completed %}
         <tr id="{{p.id}}">
-            <td>{{p.title}}</td>
+            <td><a href="{% url 'projects:superview' p.id %}">{{p.title}}</a></td>
             <td>{{p.category}}</td>
             <td>{{p.update_date}}</td>
-            <td>
-            <div id="icons">
-            <a href="#" class="btn btn-link" aria-label="Edit">
-            <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+            <td><div id="icons">
+            <a href="{% url 'projects:superview' p.id %}" class="btn btn-link" aria-label="View">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true" id="viewicon"></span>
             </a>
-            <a href="#" class="btn btn-link" aria-label="Delete">
-            <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+            <a href="" class="btn btn-link" aria-label="Hide">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" id="hideicon"></span>
             </a>
             </div>
             </td>

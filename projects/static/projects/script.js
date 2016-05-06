@@ -3,31 +3,6 @@ var groupNo = 0;
 var added = false;
 
 $(document).ready(function(){
-    
-    /*$("#progress_table .clickable").dblclick(function(){
-        location.href = "project-status/" + $(this).attr("id");
-    });
-
-    $("#completion_table .clickable").dblclick(function(){
-        location.href = "project-status/" + $(this).attr("id");
-    });
-
-    $("#saved_forms_table .clickable").dblclick(function(){
-        location.href = "edit-form/" + $(this).attr("id");
-    })*/
-
-	$("#require").click(function(){
-		alert("Limit yourself to 150 words and a single paragraph - multiple paragraphs will be combined into one for the transcript. Write in complete sentences, preferably using first person. Briefly describe the basic details of your project: who, what, when, where. The first time you name a company, an organization, a position, or a program, use the full title with the abbreviation in parentheses. After that you can refer to it by the abbreviation. Include one or two sentences about the value of the experience. Try to pinpoint some specific learning outcomes or benefits to your personal growth (e.g. “My communication skills improved.” “I gained insight into the many facets of running a small business.”). Avoid grand generalizations or hyperbolic statements.");
-
-    });
-
-	$("#CompRequire").click(function(){
-		alert("Limit yourself to 150 words and a single paragraph - multiple paragraphs will be combined into one for the transcript. Write in complete sentences, preferably using first person. Briefly describe the basic details of your project: who, what, when, where. The first time you name a company, an organization, a position, or a program, use the full title with the abbreviation in parentheses. After that you can refer to it by the abbreviation. Include one or two sentences about the value of the experience. Try to pinpoint some specific learning outcomes or benefits to your personal growth, such as insights gained or skills improved. Avoid grand generalizations or hyperbolic statements.");
-    });
-
-    // $("#require").click(function(){
-    //     alert("These are the requirements...");
-    // });
 
     $(".inputnar + label").addClass('btn btn-default btn-sm');
     $(".inputhr + label").addClass('btn btn-default btn-sm');

@@ -84,17 +84,16 @@
 		<h3 id="projectCategory">{{project.category}}</h3>
 		<div>
 			<h4>Status: {{project.status}}</h4>
-			<p id="group">Participant(s):</p>
+			Participant(s):
 			<div class="container">
 			{% for s in group %}
-			<a href="mailto:{{s.email}}?Subject=Odyssey%20Project: {{project.title}}" target="_top">{{s.student.first_name}} {{s.student.last_name}}</a><br>
+			<a href="mailto:{{s.student.email}}?Subject=Odyssey%20Project: {{project.title}}" target="_top">{{s.student.first_name}} {{s.student.last_name}}</a><br>
 			{% endfor %}
 			</div>
 			<br>
+			<p>Supervisor: <a href="mailto:{{project.advisor.email}}?Subject=Odyssey%20Project: {{project.title}}" target="_top" id="SupEmail">{{project.advisor.first_name}} {{project.advisor.last_name}}</a></p>
 			<p id="startdate">Start Date: {{project.start_date}}</p>
 			<p id="enddate">End Date: {{project.end_date}}</p>
-			<p><a href="mailto:odyssey@hendrix.edu?Subject=Odyssey%20Project: {{project.title}}" target="_top">Contact the Odyssey Office</a>
-			</p>
 		</div>
 	</div>
 {% load static from staticfiles %}

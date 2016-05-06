@@ -67,7 +67,7 @@ def superLanding(request):
     groups = ProjectGroup.objects.filter(project__advisor__username="goadrich")
     return render(request, 'projects/superLanding.html', {'projects':projects,
                                                           'props':proposals,
-                                                          'comps':completions,
+                                                          'completions':completions,
                                                           'completed':odycomps,
                                                           'inprogress':inprogress})
 
@@ -188,6 +188,7 @@ def submitSavedProposal(request, project_id):
         project.end_date = data.get('enddate')
         project.update_date = now
         proposal.narrative=data.get('narrative')
+        
         proposal.updated_date=now
         proposal.status=""
         if data.get('propose')=="Save & Submit to Supervisor":
@@ -196,25 +197,30 @@ def submitSavedProposal(request, project_id):
             project.save()
             proposal.save()
             return render(request, 'projects/success.html')
-        else:
+        elif data.get('propose')=="Save Form":
             project.status=savestatus
             proposal.status=savestatus
             project.save()
             proposal.save()
             return render(request,'projects/proposalSave.html', {'project':project})
+        else:
+            project.delete()
+            return render(request, 'projects/proposalDelete.html')
                 
 def editProposal(request, project_id):
     supervisors = User.objects.filter(groups__name='Supervisors')
     project = get_object_or_404(Project, pk=project_id)
+    group = ProjectGroup.objects.filter(project=project)
+    narrative = get_object_or_404(Proposal, project_id=project).narrative
     return render(request, 'projects/proposalEdit.html',
                   {'project':project, 'supervisors':supervisors,
                    'categories':categories, 'startdate':project.start_date.isoformat(),
-                   'enddate':project.end_date.isoformat()})
+                   'enddate':project.end_date.isoformat(),
+                   'group':group, 'narrative':narrative})
 
 
 def landing(request):
     projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=ody_compapp)
-
     proposals = Proposal.objects.filter(status=savestatus)
     completions = Completion.objects.filter(status=savestatus)
     revprops = Proposal.objects.filter(status=revise)
@@ -224,11 +230,16 @@ def landing(request):
                                                      'proposals':proposals,
                                                      'completions':completions,
                                                      'revprops':revprops,
-                                                     'revcomps':revcomps})
+                                                     'revcomps':revcomps,
+                                                     'completed':complete})
 
 def viewCompletion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    return render(request, 'projects/completion.html', {'project':project})
+    grp = ProjectGroup.objects.filter(project=project)    
+    return render(request, 'projects/completion.html',
+                  {'project':project,
+                   'enddate':project.end_date.isoformat(),
+                   'group':grp})
 
 @csrf_protect
 def submitSavedCompletion(request, project_id):
@@ -237,19 +248,26 @@ def submitSavedCompletion(request, project_id):
         comp = get_object_or_404(Completion, pk=project_id)
         project = get_object_or_404(Project, pk=project_id)
         data=request.POST
-        comp.notation=""
+        comp.hours=data.get('hours')
         comp.updated_date=now
+        comp.notation = data.get('description')
         if data.get('complete') == "Save & Submit to Supervisor":
+            project.end_date=data.get('enddate')
             project.status=sup_compsub
             project.update_date=now
             comp.status=sup_compsub
             project.save()
             comp.save()
             return render(request,'projects/success.html')
-        else:
+        elif data.get('complete') == "Save Form":
+            project.end_date=data.get('enddate')
             comp.status=savestatus
             comp.save()
-            return render(request,'projects/completionSave.html', {'project':project, 'categories':categories})
+            return render(request,'projects/completionSave.html',
+                          {'project':project, 'categories':categories})
+        else:
+            comp.delete()
+            return render(request, 'projects/proposalDelete.html')
             
 
         
@@ -259,7 +277,10 @@ def submitCompletion(request, project_id):
     now=datetime.date.today()
     project = get_object_or_404(Project, pk=project_id)
     data = request.POST
-    new_comp=Completion(project_id=project, status="", notation="",
+    new_comp=Completion(project_id=project,
+                        status="",
+                        hours=data.get('hours'),
+                        notation=data.get('description'),
                         created_date=now,
                         updated_date=now)
     if data.get('complete') == "Save & Submit to Supervisor":
@@ -279,35 +300,51 @@ def submitCompletion(request, project_id):
 def editCompletion(request, project_id):
     supervisors = User.objects.filter(groups__name='Supervisors')
     project = get_object_or_404(Project, pk=project_id)
+    completion = get_object_or_404(Completion, pk=project_id)
+    hours = completion.hours
+    description = completion.notation
     return render(request, 'projects/completionEdit.html',
                   {'project':project, 'supervisors':supervisors,
                    'startdate':project.start_date.isoformat(),
-                   'enddate':project.end_date.isoformat()})
+                   'enddate':project.end_date.isoformat(),
+                   'hours':hours, 'description':description})
 
 
 def reviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
+    narrative = get_object_or_404(Proposal, project_id=project).narrative
     return render(request, 'projects/superProposal.html',
-                  {'project':project, 'group':grp})
+                  {'project':project, 'group':grp,
+                   'narrative':narrative})
 
 def odyReviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
+    narrative = get_object_or_404(Proposal, project_id=project).narrative
     return render(request, 'projects/odysseyproposal.html',
-                  {'project':project, 'group':grp})
+                  {'project':project, 'group':grp,
+                   'narrative':narrative})
 
 def supReviewComp(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
+    completion = get_object_or_404(Completion, pk=project_id)
+    hours = completion.hours
+    desc = completion.notation
     return render(request, 'projects/superCompletion.html',
-                  {'project':project, 'group':grp})
+                  {'project':project, 'group':grp, 'hours':hours,
+                   'description':desc})
 
 def odyReviewComp(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
+    completion = get_object_or_404(Completion, pk=project_id)
+    hours = completion.hours
+    desc = completion.notation
     return render(request, 'projects/odysseyCompletion.html',
-                  {'project':project, 'group':grp})
+                  {'project':project, 'group':grp, 'hours':hours,
+                   'description':desc})
 
 def supViewStatus(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
@@ -351,6 +388,29 @@ def approve(request, project_id, success):
     proposal.updated_date=now
     project.save()
     proposal.save()
+    return render(request,'projects/superSuccess.html')
+def supAppComp(request, project_id):
+    return complete(request, project_id, sup_compapp)
+
+def odyAppComp(request, project_id):
+    return complete(request, project_id, ody_compapp)
+
+def complete(request, project_id, success):
+    now = datetime.date.today()
+    data = request.POST
+    project = get_object_or_404(Project, pk=project_id)
+    completion = get_object_or_404(Completion, pk=project_id)
+    result = data.get('complete')
+    if result=='Approve Completion':
+        project.status=success
+        completion.status=success
+    else:
+        project.status=rejected
+        completion.status=rejected
+    project.update_date=now
+    completion.updated_date = now
+    project.save()
+    completion.save()
     return render(request,'projects/superSuccess.html')
 
 # USER AUTHENTICATION

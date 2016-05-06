@@ -15,32 +15,31 @@
             Group Member(s):
             </p>
             <form action='{% url 'projects:submitcompleteedit' project.id %}' method="post" enctype="multipart/form-data">
-            Start Date: <input type="text", id="startdate"/>
+            Start Date: {{project.start_date}}
             <br><br>
-            End Date: <input type="date", id="enddate"/>
+            End Date: <input type="date" id="enddate" value={{enddate}}>
             <br><br>
             
-            Total Hours: <input type="text", id="hours"/><br><br>
+            Total Hours: <input type="text" name="hours" value={{hours}}/><br><br>
             Hours Log:
             <input type="file" name="hrfile" id="hrfile" class="inputhr"/>
             <label for="hrfile">Choose a file</label><p id="hrlabel"> No file selected</p>
-            <br><br>
+            <br><br><a href="" id="CompRequire">Description Requirements</a>
+            <br>
             Project Desciption/Transcript Notation:
             <br>
-            <!--<input type="file" name="descfile" id="descfile" class="inputdesc"/>
-            <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>-->
             <br>
             <input type="file" name="descfile" id="descfile" class="inputdesc"/>
             <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>
             <p>or</p>
-            <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
+            <textarea rows="15" name="description" cols="56" id="description">{{description}}</textarea> 
             <a href="" id="require">Description Requirements</a>
             {% csrf_token %}
             <br>
             <input type="submit" name="complete" class="btn btn-default btn-sm" value="Save &amp; Submit to Supervisor">
             <input type="submit" name="complete" class="btn btn-default btn-sm" value="Save Form">
+            <input type="submit" name="complete" class="btn btn-default btn-sm" value="Delete Form">
             </form>
-
 {% load static from staticfiles %}
 <script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
 <script src="{% static "projects/mammoth.browser.min.js" %}"></script>

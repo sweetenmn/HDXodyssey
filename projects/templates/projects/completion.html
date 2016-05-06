@@ -12,26 +12,33 @@
             Supervisor: {{project.advisor.first_name}} {{project.advisor.last_name}}
             </p>
             <p id="group">
-            Group Member(s):
+            Participant(s):
             </p>
+            <div class="container">
+            {% for s in group %}
+            {{s.student.first_name}} {{s.student.last_name}}<br>
+            {% endfor %}
+            </div>
             <form action="{% url 'projects:submitcompletion' project.id %}" method="POST" id='completion-form' enctype="multipart/form-data">
-            Start Date: <input type="text", id="startdate"/>
+            Start Date: {{project.start_date}}
             <br><br>
-            End Date: <input type="date", id="enddate"/>
+            End Date: <input type="date" name="enddate" value={{ enddate }}>
             <br><br>
             
-            Total Hours: <input type="text", id="hours"/><br><br>
-            Hours Log:
+            Total Hours: <input type="text" name="hours"/><br><br>
+            Hours Log:  
             <input type="file" name="hrfile" id="hrfile" class="inputhr"/>
             <label for="hrfile">Choose a file</label><p id="hrlabel"> No file selected</p>
-            <br><br>Project Desciption/Transcript Notation:
-            <a href="" id="CompRequire">Description Requirements</a><br>
+
+            <br><br><a href="" id="CompRequire">Description Requirements</a>
+            <br>Project Desciption/Transcript Notation:
+            <br><br>
             <input type="file" name="descfile" id="descfile" class="inputdesc"/>
             <label for="descfile">Choose a file</label><p id="desclabel"> No file selected</p>
             <p>or</p>
-            <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
+            <textarea rows="15" cols="56" name="description" id="description" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
             
-            
+            <br>
             {% csrf_token %}
 
             <input type="submit" name="complete" class="btn btn-default btn-sm" value="Save &amp; Submit to Supervisor">

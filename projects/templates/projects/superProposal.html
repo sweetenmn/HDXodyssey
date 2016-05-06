@@ -9,9 +9,9 @@
 
         Participant(s): <br>
         <div class="container">
-        {% for s in group %}
-        {{s.student.first_name}} {{s.student.last_name}}<br>
-        {% endfor %}
+            {% for s in group %}
+            <a href="mailto:{{s.student.email}}?Subject=Odyssey%20Project: {{project.title}}" target="_top">{{s.student.first_name}} {{s.student.last_name}}</a><br>
+            {% endfor %}
         </div>
         <br>
         Supervisor:  {{ project.advisor.first_name }} {{ project.advisor.last_name }} 
@@ -28,6 +28,7 @@
         <textarea rows="20" cols="50" id="narrative" placeholder="Here is an example narrative."  readonly>
             {{project.proposal.narrative}}
         </textarea>
+
         <br>
         <form action="{% url 'projects:superapp' project.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -41,5 +42,9 @@
 {% load static from staticfiles %}
 <script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
 <script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<<<<<<< HEAD
 <script src="{% static "projects/odyProposal.js" %}"></script>
+=======
+<script src="{% static "projects/proposal.js" %}"></script>
+>>>>>>> origin/master
 {% endblock %}

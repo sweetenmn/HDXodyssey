@@ -10,6 +10,7 @@
         <input type="text" id="title" name="title" value="{{project.title}}">
         <br><br>
         Participants:
+        {% if group|length == 1 %}
         <select id="party">
             <option id="ind">Individual</option>
             <option id="grp">Group</option>
@@ -26,6 +27,32 @@
         </div>
         </div>
         </div>
+        {% else %}
+        <select id="party">
+            <option id="ind">Individual</option>
+            <option selected="selected" id="grp">Group</option>
+        </select>
+        <div class="container">
+        <div id="groupdiv">
+        <br>
+        {% for g in group %}
+        {% if forloop.counter > 1 %}
+        <div id="group-{{forloop.counter}}">
+        <input type='text' size=35 name='group-{{forloop.counter}}' value={{g.student.email}}>
+        </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+        <div class="container">
+        <div class="row">
+        <div id="addmember" class='btn btn-default btn-sm'>+</div>
+        <div id="remmember" class='btn btn-default btn-sm'>-</div>
+        <input type="hidden" name="groupsize" id="groupsize" value={{group|length}}>
+        </div>
+        </div>
+        </div>
+        </div>
+        {% endif %}
         <br>
         Supervisor:
         <select id="super" name="super">
@@ -53,17 +80,18 @@
         <input type="date" name="startdate" value={{ startdate }}>
         End Date:
         <input type="date" name="enddate" value={{ enddate }}>
-        <br><br>Please attach a copy of your narrative:<br><br>
+        <br><br><a href="" id="NarrRequire class="smalllink"">Narrative Requirements</a><br>
+        Please attach a copy of your narrative:<br><br>
         <input type="file" name="narfile" id="narfile" class="inputnar"/>
         <label for="narfile">Choose a file</label><p id="narlabel"> No file selected</p>
         <br>
         or
         <br>
-        <textarea rows="20" cols="50" id="narrative" name='narrative' placeholder="Type your narrative here, or attach a file above."></textarea>
+        <textarea rows="20" cols="50" id="narrative" name='narrative' placeholder="Type your narrative here, or attach a file above.">{{narrative}}</textarea>
         <br>
         <input type="submit" name="propose" class="btn btn-default btn-sm" value="Save &amp; Submit to Supervisor">
         <input type="submit" name="propose" class="btn btn-default btn-sm" value="Save Form">
-        <!--<button type="submit" name="propose" class="btn btn-default btn-sm" value="del">Delete Form</button> -->
+        <input type="submit" name="propose" class="btn btn-default btn-sm" value="Delete Form">
         <div id="dialog-overlay"></div>
     
     

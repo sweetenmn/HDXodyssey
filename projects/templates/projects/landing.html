@@ -99,11 +99,15 @@
           <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
           <td>{{p.status}}</td>
           <td>{{ p.update_date }}</td>
-          <td>
+          
+          <td><div id="icons">
             <a href="{% url 'projects:status' p.id %}" class="btn btn-link" aria-label="View">
             	<span class="glyphicon glyphicon-eye-open" aria-hidden="true" id="viewicon"></span></a>
-            <a href=#>Hide</a>
+            <a href="" class="btn btn-link" aria-label="Hide">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" id="hideicon"></span>
+            </a></div>
           </td>
+          
         </tr>
     {% endfor %}
     </tbody>
@@ -120,15 +124,13 @@
         </tr>
     </thead>
     <tbody>
-        {% for p in projects %}
-        {% if p.status == "Complete" %}
+        {% for p in completed %}
         <tr class="clickable" id="{{p.id}}">
             <td><a href="{% url 'projects:status' p.id %}">{{p.title}}</a></td>
             <td>{{p.category}}</td>
-            <td>{{p.updated_date}}</td>
+            <td>{{p.update_date}}</td>
             <td>{{p.advisor.last_name}}</td>
         </tr>
-        {% endif %}
         {% endfor %}
     </tbody>
 </table>
