@@ -39,6 +39,7 @@ class Completion(models.Model):
     status = models.CharField(max_length=60)
     created_date = models.DateField('created on')
     updated_date = models.DateField('updated on')
+    hours = models.CharField(max_length=10)
     notation = models.CharField(max_length=500)
     def __str__(self):
         return "Completion: " + self.project_id.title

@@ -9,6 +9,11 @@ urlpatterns = [
                name = 'landing'
           ),
           url(
+              r'^office/$',
+              views.odyLanding,
+              name='odyLanding'
+              ),
+          url(
                r'^supervisor/$', 
                views.superLanding, 
                name='superLanding'
@@ -96,17 +101,44 @@ urlpatterns = [
                r'^accounts/login/submit/', 
                views.my_view
           ),
-          url(r'^office/review-proposal/(?P<project_id>[0-9]+)/$', views.odyReviewProposal,
-                   name='odyReviewProp'),
-          url(r'^office/review-proposal/(?P<project_id>[0-9]+)/submit',
-                   views.odyAppProposal, name='odyapp'),
-               url(r'^supervisor/project-status/(?P<project_id>[0-9]+)/$',
-                   views.supViewStatus, name='superview'),
-               url(r'^odyssey/project-status/(?P<project_id>[0-9]+)/$',
-                   views.odyViewStatus, name='odyview'),
-               url(r'^odyssey/review-completion/(?P<project_id>[0-9]+)/$',
-                   views.odyReviewComp, name='odyReviewComp'),
-               url(r'^supervisor/review-completion/(?P<project_id>[0-9]+)/$',
-                   views.supReviewComp, name='supReviewComp'),
+          url(
+              r'^office/review-proposal/(?P<project_id>[0-9]+)/$',
+              views.odyReviewProposal,
+              name='odyReviewProp'
+              ),
+          url(
+              r'^office/review-proposal/(?P<project_id>[0-9]+)/submit',
+              views.odyAppProposal,
+              name='odyapp'
+              ),
+          url(
+              r'^supervisor/project-status/(?P<project_id>[0-9]+)/$',
+              views.supViewStatus,
+              name='superview'
+              ),
+          url(r'^office/project-status/(?P<project_id>[0-9]+)/$',
+              views.odyViewStatus,
+              name='odyview'
+              ),
+          url(
+              r'^office/review-completion/(?P<project_id>[0-9]+)/$',
+              views.odyReviewComp,
+              name='odyReviewComp'
+              ),
+          url(
+              r'^supervisor/review-completion/(?P<project_id>[0-9]+)/$',
+              views.supReviewComp,
+              name='supReviewComp'
+              ),
+          url(
+              r'^supervisor/review-completion/(?P<project_id>[0-9]+)/submit',
+              views.supAppComp,
+              name='supAppComp'
+              ),
+          url(
+              r'^office/review-completion/(?P<project_id>[0-9]+)/submit',
+              views.odyAppComp,
+              name='odyAppComp'
+              )
                
      ]

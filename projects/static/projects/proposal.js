@@ -1,6 +1,7 @@
-var groupNo = 0;
+
 
 $(document).ready(function(){
+    var groupNo = $("#groupsize").val();
     $(".inputnar + label").addClass('btn btn-default btn-sm');
     // CKEDITOR.replace('description')
     // $('description').change(function(event) {
