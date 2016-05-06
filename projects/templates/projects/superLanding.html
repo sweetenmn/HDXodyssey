@@ -2,22 +2,46 @@
 {% block header %} Your Hendrix Odyssey {% endblock %}
 {% block content %}
 <h3>Awaiting Approval</h3>
-    <table id="waiting_table" class="display">
+    <table id="awaiting_table" class="display">
         <thead>
             <tr>
                 <th>Project</th>
-                <th>Student</th>
                 <th>Form Type</th>
-                <th>Update</th>
+                <th>Updated</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for proposal in projects %}
-            <tr id="{{proposal.id}}">
-                <td>{{proposal.title}}</td>
-                <th>{{proposal.student}}</td>
-                <td>form type</td>
-                <td>proposal.update</td>
+            {% for p in props %}
+            <tr id="{{p.id}}">
+                <td><a href="{% url 'projects:superprop' p.id %}">{{p.title}}</a></td>
+                <td>Project Proposal</td>
+                <td>{{p.update_date}}</td>
+                <td><div id="icons">
+                <a href="{% url 'projects:superprop' p.id %}" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+                </a>
+                <a href="#" class="btn btn-link" aria-label="Delete">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                </a>
+                </div>
+            </td>
+            </tr>
+            {% endfor %}
+            {% for p in comps %}
+            <tr id="{{p.id}}">
+                <td>{{p.title}}</td>
+                <td>Project Completion</td>
+                <td>{{p.update_date}}</td>
+                <td><div id="icons">
+                <a href="#" class="btn btn-link" aria-label="Edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+                </a>
+                <a href="#" class="btn btn-link" aria-label="Delete">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+                </a>
+                </div>
+            </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -29,44 +53,68 @@
     <thead>
         <tr>
             <th>Project</th>
-            <th>Student</th>
             <th>Status</th>
-            <th>Update</th>
+            <th>Updated</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        {% for proposal in projects %}
-        <tr id="{{proposal.id}}">
-            <td>{{proposal.title}}</td>
-            <th>{{proposal.student}}</td>
-            <td>{{proposal.status}}</td>
-            <td>proposal.update</td>
+    {% for p in inprogress %}
+        <tr id="{{p.id}}">
+            <td>{{p.title}}</td>
+            <td>{{p.status}}</td>
+            <td>{{p.update_date}}</td>
+            <td><div id="icons">
+            <a href="#" class="btn btn-link" aria-label="Edit">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+            </a>
+            <a href="#" class="btn btn-link" aria-label="Delete">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+            </a>
+            </div>
+            </td>
         </tr>
-        {% endfor %}
+    {% endfor %}
     </tbody>
     
 </table>
 <h3>Completed Projects</h3>
-<table id="completion_table" class="display">
+<table id="complete_table" class="display">
     
     <thead>
         <tr>
             <th>Project</th>
             <th>Category</th>
-            <th>Student</th>
             <th>Completed</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        {% for proposal in projects %}
-        <tr id="{{proposal.id}}">
-            <td>{{proposal.title}}</td>
-            <td>{{proposal.category}}</td>
-            <td>{{proposal.student}}</td>
-            <td>proposal.update</td>
+        {% for p in completed %}
+        <tr id="{{p.id}}">
+            <td>{{p.title}}</td>
+            <td>{{p.category}}</td>
+            <td>{{p.update_date}}</td>
+            <td>
+            <div id="icons">
+            <a href="#" class="btn btn-link" aria-label="Edit">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
+            </a>
+            <a href="#" class="btn btn-link" aria-label="Delete">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true" id="delicon"></span>
+            </a>
+            </div>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
     
 </table>
+
+{% load static from staticfiles %}
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/buttons/1.1.2/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/t/dt/jq-2.2.0,dt-1.10.11,b-1.1.2,r-2.0.2,se-1.1.2/datatables.min.js"></script>
+<script src="{% static 'projects/superlanding.js' %}"></script>
 {% endblock %}

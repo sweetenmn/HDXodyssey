@@ -7,9 +7,9 @@ class Project(models.Model):
     category = models.CharField(max_length=20)
     advisor = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=60)
-    start_date = models.CharField(max_length=50)
-    end_date = models.CharField(max_length=50)
-    update_date = models.CharField(max_length=50)
+    start_date = models.DateField('start date')
+    end_date = models.DateField('end date')
+    update_date = models.DateField('updated on')
     def __str__(self):
         return self.title
 
@@ -27,9 +27,9 @@ def user_dir_path(instance, filename):
 class Proposal(models.Model):
     project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
     narrative = models.CharField(max_length=2000)
-    created_date = models.DateTimeField('created on')
+    created_date = models.DateField('created on')
     status = models.CharField(max_length=60)
-    updated_date = models.DateTimeField('updated on')
+    updated_date = models.DateField('updated on')
     def __str__(self):
         return self.project_id.title
 
@@ -37,8 +37,8 @@ class Proposal(models.Model):
 class Completion(models.Model):
     project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
     status = models.CharField(max_length=60)
-    created_date = models.DateTimeField('created on')
-    updated_date = models.DateTimeField('updated on')
+    created_date = models.DateField('created on')
+    updated_date = models.DateField('updated on')
     notation = models.CharField(max_length=500)
     def __str__(self):
-        return "Completion: " + self.project.id.title
+        return "Completion: " + self.project_id.title

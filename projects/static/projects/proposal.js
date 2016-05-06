@@ -1,12 +1,7 @@
 var groupNo = 0;
 
 $(document).ready(function(){
-    // $("#require").click(function(){
-    //     alert("GGGGGGGGGGGGGGGJALDAFL:KDS:LKGDSGKLJKLGSKJLKLGSJKL:G:GS:L:KLGJKL:GLFJG:FLKLKF: These are the requirements...");
-    // });
-    // $(".inputnar + label").addClass('btn btn-default btn-sm');
-    // $(".inputhr + label").addClass('btn btn-default btn-sm');
-    // $(".inputdesc + label").addClass('btn btn-default btn-sm');
+    $(".inputnar + label").addClass('btn btn-default btn-sm');
     // CKEDITOR.replace('description')
     // $('description').change(function(event) {
     //     handleFileSelect(event, 'description')
@@ -43,31 +38,40 @@ $(document).ready(function(){
 
     $("#party").change(function() {
         if ($(this).val() == "Group" && groupNo==0){
+            groupNo++;
             var label = "group-" + groupNo;
+            $('#groupsize').val(String(groupNo));
             $('#groupdiv').append("<br><div id="+
                 label+"><input type='text' size=35 name='"+label+
-                "'' placeholder='Email for additional member #"+(groupNo+1)+"'></div> ");
+                "'' placeholder='Email for additional member #"+(groupNo)+"'></div> ");
             $('#addmember').addClass('btn btn-default btn-sm');
             $('#addmember').text("+");
             $('#remmember').addClass('btn btn-default btn-sm');
             $('#remmember').text("-");
-            groupNo++;
+           
         } else if ($(this).val() == "Individual"){
             removeGroup();
         }
     });
 
+
+    $("#NarrRequire").click(function(){
+        alert("Your narrative must describe your project in detail. Submit 1-2 pages for a credit request. For a project needing funding, 2-4 pages should be sufficient for this purpose. Address all the relevant criteria for your category, such as learning goals, reflection component, hours log or public presentation. Include any relevant contact information for agencies or persons with whom you plan to work on this project.");
+    });
+
     $("#addmember").click(function() {
+        groupNo++;
         var label = "group-" + groupNo;
         $('#groupdiv').append("<div id="+
             label+"><input type='text' size=35 name='"+label+
-            "'' placeholder='Email for additional member #"+(groupNo+1)+"'></div> ");
-        groupNo++;
+            "'' placeholder='Email for additional member #"+(groupNo)+"'></div> ");
+        $('#groupsize').val(String(groupNo));
     });
     $("#remmember").click(function() {
         if (groupNo > 1){
-            $('#group-'+(groupNo-1)).remove();
+            $('#group-'+(groupNo)).remove();
             groupNo--;
+            $('#groupsize').val(String(groupNo));
         } else {
             removeGroup();
 
@@ -82,6 +86,7 @@ $(document).ready(function(){
         $('#remmember').removeClass('btn btn-default btn-sm');
         $('#remmember').text("");
         groupNo=0;
+        $('#groupsize').val(String(groupNo));
     };
 
     $(":submit").click(function() { 

@@ -77,8 +77,8 @@ table.dataTable.display tbody tr.odd.selected > .sorting_1,
     table.dataTable.order-column.stripe tbody tr.odd.selected > .sorting_1,
     table.dataTable.display tbody tr.even.selected > .sorting_1,
     table.dataTable.order-column.stripe tbody tr.even.selected > .sorting_1 {
-        background-color: #f5822a; 
-        color: white;
+        background-color: #f5822a; /*Select project title*/
+        color: white; 
 }
 
 
@@ -87,33 +87,40 @@ table.dataTable.hover tbody tr:hover.selected,
     table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected,
     table.dataTable.stripe tbody tr.even.selected, table.dataTable.display tbody tr.even.selected
      {
-      background-color: #bcbcbc;
-
+      background-color: #bcbcbc ; /*Select non-project title*/
+      color: white ;
 }
 table.dataTable.hover tbody tr:hover.selected a,
     table.dataTable.display tbody tr:hover.selected a,
     table.dataTable.stripe tbody tr.odd.selected a, table.dataTable.display tbody tr.odd.selected a,
     table.dataTable.stripe tbody tr.even.selected a, table.dataTable.display tbody tr.even.selected a
      {
-      color: white;
+      color: white; /*Select far right buttons and project title*/
       
 }
 
 
 table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
-    background-color: #d6d6d6;
+    background-color: #d6d6d6; /*hover table non-project title columns*/
 }
+
+table.dataTable.display tbody tr:hover>.sorting_1, table.dataTable.display tbody tr:hover{
+  color: #f5822a; /*hover non-project title columns*/
+}
+
 table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover a:hover {
-    color: white;
+    color: white; /*hover far right buttons*/
 }
 
 table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.hover tbody tr:hover>.sorting_1{
-    background-color: #f8ad73;
+    background-color: #f8ad73 ; /*hover left column*/
     color: white;
 } 
 table.dataTable.display tbody tr:hover>.sorting_1 a{
-    color:white;
+    color: white; /*hover row left column*/
 }
+
+
 
 #name {
     text-align: right;
@@ -126,16 +133,10 @@ table.dataTable.display tbody tr:hover>.sorting_1 a{
 #icons {
     float: right;
 }
-#delicon, #editicon {
+#delicon, #editicon, #hideicon, #viewicon {
     margin: -8px;
 }
 
-#icons2{
-	float: right;
-}
-#viewicon, #hideicon{
-	margin: -8px;
-}
 .inputnar, .inputhr, .inputdesc {
     width: 0.1px;
     height: 0.1px;

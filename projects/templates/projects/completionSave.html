@@ -1,0 +1,11 @@
+{% extends "projects/base.html" %}
+{% block title %}Save Successful{% endblock %}
+{% block header %}Success{% endblock %}
+{% block content %}
+<div class="body">
+<p>Your completion form has been saved. Please contact your project supervisor or the Odyssey office with any questions.</p>
+<a href="{% url 'projects:editcomp' project.id %}">Continue editing</a>
+<br>
+<a href="/odyssey/">Return to Odyssey portal</a>
+</div>
+{% endblock %}
