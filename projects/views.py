@@ -46,10 +46,12 @@ def viewProposal(request):
 
 def status(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    return render(request, 'projects/status.html', {'project':project,
-                                                    'statusNum':status_dict.get(project.status)})
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/status.html',
+                  {'project':project,
+                   'statusNum':status_dict.get(project.status),
+                   'group':grp})
 
-@login_required(login_url='/odyssey/accounts/login/')
 def viewAs(request):
     return render(request, 'projects/viewas.html')
 
@@ -216,7 +218,7 @@ def editProposal(request, project_id):
                    'categories':categories, 'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
 
-@login_required
+
 def landing(request):
     projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=ody_compapp)
 
@@ -295,12 +297,41 @@ def reviewProposal(request, project_id):
     grp = ProjectGroup.objects.filter(project=project)
     return render(request, 'projects/superProposal.html',
                   {'project':project, 'group':grp})
+
 def odyReviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
     return render(request, 'projects/odysseyproposal.html',
                   {'project':project, 'group':grp})
-    
+
+def supReviewComp(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/superCompletion.html',
+                  {'project':project, 'group':grp})
+
+def odyReviewComp(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/odysseyCompletion.html',
+                  {'project':project, 'group':grp})
+
+def supViewStatus(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/superStatus.html',
+                  {'project':project,
+                   'statusNum':status_dict.get(project.status),
+                   'group':grp
+                   })
+
+def odyViewStatus(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/odysseyStatus.html',
+                  {'project':project,
+                   'statusNum':status_dict.get(project.status),
+                   'group':grp})  
 
 def odyAppProposal(request, project_id):
     return approve(request, project_id, ody_propapp)
@@ -328,3 +359,5 @@ def approve(request, project_id, success):
     project.save()
     proposal.save()
     return render(request,'projects/superSuccess.html')
+
+

@@ -7,13 +7,18 @@
         <h3>{{project.title}}</h3>
         <h4 id="projectCategory">Category: {{project.category}}</h4>
         <div>
-            <p id="student">
-            Student: {{project.student.first_name}} {{project.student.last_name}}
+            <p>
+            Student:
+            <div class="container">
+            {% for s in group %}
+            {{s.student.first_name}} {{s.student.last_name}}<br>
+            {% endfor %}
+            </div>
             </p>
             <p id="group">
             Group Member(s):
             </p>
-            <form action="{% url 'projects:submitcompletion' project.id %}" method="POST" id='completion-form' enctype="multipart/form-data">
+            <form action="" method="POST" id='completion-form' enctype="multipart/form-data">
             Start Date: {{project.start_date}}
             <br><br>
             End Date: {{project.end_date}}
@@ -21,17 +26,18 @@
             
             Total Hours: <input type="text", id="hours"/><br><br>
             Hours Log: ~~~Insert Link to Hours Log~~~
+            <a href="">Download Hours Log</a>
             <br><br>Project Desciption/Transcript Notation:
             <a href="" id="CompRequire">Description Requirements</a><br>
-            ~~~Insert Link to Narrative or display below~~~
+            <a href="">Download Description</a>
             <p>or</p>
             <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
             
             
             {% csrf_token %}
 
-            <input type="accept" name="complete" class="btn btn-default btn-sm" value="Accept Completion">
-            <input type="reject" name="complete" class="btn btn-default btn-sm" value="Reject Completion">
+            <input type="submit" name="complete" class="btn btn-default btn-sm" value="Accept Completion">
+            <input type="submit" name="complete" class="btn btn-default btn-sm" value="Reject Completion">
     
             </form>
 

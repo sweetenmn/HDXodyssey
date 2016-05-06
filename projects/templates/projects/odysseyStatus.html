@@ -24,10 +24,6 @@
 		<div id="Uncompleted">
 		{% endif %}
 		<li class="li complete">
-			<!-- <div class="timestamp">
-				<span class="supervisor">Supervisor</span>
-				<span class="supDate">date</span>
-			</div> -->
 			<div class="status">
 				<h4>Approved by:</h4>
 				<h4>Supervisor</h4>
@@ -40,10 +36,6 @@
 		<div id="Uncompleted">
 		{% endif %}
 		<li class="li complete">
-			<!-- <div class="timestamp">
-				<span class="odyssey">Odyssey Office</span>
-				<span class="odyDate">date</span>
-			</div> -->
 			<div class="status">
 				<h4>Approved by:</h4>
 				<h4>Odyssey</h4>
@@ -56,10 +48,6 @@
 		<div id="Uncompleted">
 		{% endif %}
 		<li class="li complete">
-			<!-- <div class="timestamp">
-				<span class="youComp">You</span>
-				<span class="compDate">date</span>
-			</div> -->
 			<div class="status">
 				<h4>Submitted</h4>
 				<h4>Completion</h4>
@@ -72,10 +60,6 @@
 		<div id="Uncompleted">
 		{% endif %}
 		<li class="li complete">
-			<!-- <div class="timestamp">
-				<span class="supervisor">Supervisor</span>
-				<span class="compSupDate">date</span>
-			</div> -->
 			<div class="status">
 				<h4>Approved by:</h4>
 				<h4>Supervisor</h4>
@@ -88,10 +72,6 @@
 		<div id="Uncompleted">
 		{% endif %}
 		<li class="li complete">
-			<!-- <div class="timestamp">
-				<span class="odysseyOffice">Odyssey Office</span>
-				<span class="compOdyDate">date</span>
-			</div> -->
 			<div class="status">
 				<h4>Approved by:</h4>
 				<h4>Odyssey</h4>
@@ -104,21 +84,19 @@
 		<h3 id="projectCategory">{{project.category}}</h3>
 		<div>
 			<h4>Status: {{project.status}}</h4>
-			<p id="student">Student: <a href="mailto:{{project.student.last_name}}@hendrix.edu?Subject=Odyssey%20Project: {{project.title}}" target="_top" id="SupEmail">{{project.student.last_name}}, {{project.student.first_name}}</a>
-			</p>
-			<p id="group">Group Member(s):</p>
+			<p id="group">Participant(s):</p>
+			<div class="container">
+			{% for s in group %}
+			<a href="mailto:{{s.email}}?Subject=Odyssey%20Project: {{project.title}}" target="_top">{{s.student.first_name}} {{s.student.last_name}}</a><br>
+			{% endfor %}
+			</div>
+			<br>
 			<p id="startdate">Start Date: {{project.start_date}}</p>
 			<p id="enddate">End Date: {{project.end_date}}</p>
-			<p><a href="mailto:odyssey@hendrix.edu?Subject=Odyssey%20Project: {{project.title}}" target="_top" id="OdyEmail">Contact the Odyssey Office</a>
+			<p><a href="mailto:odyssey@hendrix.edu?Subject=Odyssey%20Project: {{project.title}}" target="_top">Contact the Odyssey Office</a>
 			</p>
 		</div>
 	</div>
-	{% if statusNum == 3 %}
-	<div class="body">
-    <a href="{% url 'projects:completion' project.id %}" class="btn btn-default">Completion Form</a>
-    </div>
-    
-	{% endif %}
 {% load static from staticfiles %}
 
 <script src="{% static "projects/timeline.js" %}"></script>
