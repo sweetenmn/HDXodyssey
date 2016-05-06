@@ -14,7 +14,8 @@ import pypandoc
 from io import *
 from docx import Document
 from django.core.mail import send_mail
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 import logging
 logger = logging.getLogger(__name__)
@@ -37,8 +38,6 @@ status_dict = {revise:-1, rejected:-2, savestatus:0, sup_propsub:1, sup_propapp:
           sup_compsub:4, sup_compapp:5, ody_compapp:6}
 
 WORD_EXTENSION = '.docx'
-
-
 def viewProposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
     return render(request, 'projects/proposal.html', {'supervisors':supervisors,
@@ -60,6 +59,9 @@ def superLanding(request):
     proposals = projects.filter(status=sup_propsub)
     completions = projects.filter(status=sup_compsub)
     inprogress = projects.exclude(status=sup_propsub).exclude(status=sup_compsub).exclude(status=ody_compapp)
+    appprops = projects.filter(status=sup_propapp)
+    appcomps = projects.filter(status=sup_compapp)
+    odyprops = projects.filter(status=ody_propapp)
     odycomps = projects.filter(status=ody_compapp)
     groups = ProjectGroup.objects.filter(project__advisor__username="goadrich")
     return render(request, 'projects/superLanding.html', {'projects':projects,
@@ -360,4 +362,28 @@ def approve(request, project_id, success):
     proposal.save()
     return render(request,'projects/superSuccess.html')
 
+# USER AUTHENTICATION
+def loginView(request):
+    return render( request, 'projects/login.html')
 
+@csrf_protect
+def my_view(request):
+    def errorHandle(error):
+        return render( request, 'projects/login.html',{'error':error})
+
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return render(request, 'projects/landing.html', {
+                'username': username,
+            })
+
+        else:
+            error = u'account disabled'
+            return errorHandle(error)
+    else:
+        error = u'invalid login'
+        return errorHandle(error)

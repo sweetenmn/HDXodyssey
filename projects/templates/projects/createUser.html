@@ -1,0 +1,42 @@
+
+<form 
+    class='form-horizontal' 
+    action='submit/' 
+    method="POST" 
+    id="create-user-form" 
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <div class="login-form">
+    	<div class="img">
+			<img src="http://www.hendrix.edu/staticresources/images/hendrixLogo_bob.svg">
+		</div>
+		<h1>Create a New Account</h1>
+		<div class="firstname form-group">
+        	<input id="firstname" name='firstname' type="text" class="boxcontrol" placeholder="First Name">
+     	</div>
+     	<div class="lastname form-group">
+        	<input id="lastname" name='lastname' type="text" class="boxcontrol" placeholder="Last Name">
+     	</div>
+        <div class="user form-group">
+        	<input id="username" name='username' type="text" class="boxcontrol" placeholder="Hendrix Email Address">
+     	</div>
+      	<div class="pass form-group">
+        	<input id="password" name='password' type="password" class="boxcontrol" placeholder="Password">
+      	</div>
+      	<div class="pass form-group">
+      		<input id="confirmpassword" name='password' type="password" class="boxcontrol" placeholder="Confirm Password">
+      	</div>
+      	<select id="auth">
+      		<option id="student">Student</option>
+      		<option id="supervisor">Supervisor</option>
+      		<option id="odyssey">Odyssey Staff</option>
+      	</select>
+      	{% if error %}
+      	<span></span>
+      	<span class='alert alert-danger'>{{error}}</span>
+      	{% endif %}
+		<br><br>
+      	<button class="logb btn" type="submit">Create Account</button>
+    </div>
+</form>     
