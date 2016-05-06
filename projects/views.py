@@ -82,30 +82,30 @@ def odyLanding(request):
                                                             'inprogress':inprogress,
                                                             'completed':completed})
 
-@csrf_protect
-def upload(request):
-    if request.method == 'POST':
-        logger.debug(request.POST['text'])
-        handle_uploaded_file(request.FILES['descfile'])
-        return HttpResponseRedirect('success')
-    return render(request, 'completion')
+# @csrf_protect
+# def upload(request):
+#     if request.method == 'POST':
+#         logger.debug(request.POST['text'])
+#         handle_uploaded_file(request.FILES['descfile'])
+#         return HttpResponseRedirect('success')
+#     return render(request, 'completion')
 
-def handle_uploaded_file(f):
-    with open(f.name, 'wb+') as destination:
-        source_stream = StringIO(f.read())
-        document = Document(source_stream)
-        source_stream.close()
-        # for chunk in f.chunks():
-        #     destination.write(chunk)
-        # handle_word_file(destination, f.name)
+# def handle_uploaded_file(f):
+#     with open(f.name, 'wb+') as destination:
+#         source_stream = StringIO(f.read())
+#         document = Document(source_stream)
+#         source_stream.close()
+#         # for chunk in f.chunks():
+#         #     destination.write(chunk)
+#         # handle_word_file(destination, f.name)
 
-def handle_word_file(f, fileName):
-    # Convert Docx file to Markdown for storage
-    docName = 'clone'+fileName
-    document = Document(f)
-    document.save(docName)
-    output_filename = 'TEST.md'
-    md_source = pypandoc.convert(docName, 'md', outputfile= output_filename) # Return this string for now
+# def handle_word_file(f, fileName):
+#     # Convert Docx file to Markdown for storage
+#     docName = 'clone'+fileName
+#     document = Document(f)
+#     document.save(docName)
+#     output_filename = 'TEST.md'
+#     md_source = pypandoc.convert(docName, 'md', outputfile= output_filename) # Return this string for now
 @csrf_protect
 def success(request):
     return render(request, 'projects/success.html')
@@ -115,15 +115,12 @@ def success(request):
 def submitProposal(request):
     now=datetime.date.today()
     if request.method == 'POST':
-        if 'narfile' in request.FILES:
-            handle_uploaded_file(request.FILES['narfile'])
-
         data = request.POST
         new_title = data.get('title')
         adv = data.get('super')
         new_adv = User.objects.get(pk=adv)
         new_category = data.get('cat')
-        # handle empty date for S&S in jquery
+        # od empty date for S&S in jquery
         start = data.get('startdate')
         end = data.get('enddate')
         if start == '':
@@ -180,16 +177,9 @@ def createGroup(data, project):
 def submitSavedProposal(request, project_id):
     now=datetime.date.today()
     if request.method == 'POST':
-        if 'narfile' in request.FILES:
-            handle_uploaded_file(request.FILES['narfile'])
         project = get_object_or_404(Project, pk=project_id)
         proposal = get_object_or_404(Proposal, pk=project_id)
         data = request.POST
-        uploaded_file = None
-        if 'narfile' in request.FILES:
-            uploaded_file = request.FILES['narfile']
-            print( type(uploaded_file))
-
         project.title = data.get('title')
         project.advisor = User.objects.get(pk=data.get('super'))
         project.category = data.get('editcat')

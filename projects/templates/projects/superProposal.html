@@ -23,9 +23,10 @@
         End Date: {{ project.end_date }}
         
         <br><br>
-        Narrative:
+        Narrative: 
         <br>
-        <textarea rows="20" cols="50" id="narrative" placeholder="Here is an example narrative." readonly>
+        <textarea rows="20" cols="50" id="narrative" placeholder="Here is an example narrative."  readonly>
+            {{project.proposal.narrative}}
         </textarea>
         <br>
         <form action="{% url 'projects:superapp' project.id %}" method="POST" enctype="multipart/form-data">
@@ -37,4 +38,8 @@
         
     </div>
 </div>
+{% load static from staticfiles %}
+<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<script src="{% static "projects/odyProposal.js" %}"></script>
 {% endblock %}

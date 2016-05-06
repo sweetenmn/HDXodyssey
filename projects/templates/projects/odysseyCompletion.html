@@ -31,7 +31,7 @@
             <a href="" id="CompRequire">Description Requirements</a><br>
             <a href="">Download Description</a>
             <p>or</p>
-            <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above."></textarea> 
+            <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above." ></textarea> 
             
             
             {% csrf_token %}
@@ -40,5 +40,9 @@
             <input type="submit" name="complete" class="btn btn-default btn-sm" value="Reject Completion">
     
             </form>
+{% load static from staticfiles %}
+<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<script src="{% static "projects/odyCompletion.js" %}"></script>
 
 {% endblock %}

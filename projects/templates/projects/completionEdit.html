@@ -41,19 +41,9 @@
             <input type="submit" name="complete" class="btn btn-default btn-sm" value="Save Form">
             </form>
 
-<!--<div class="bot">-->
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-md-2">-->
-<!--                <button id="ss">Save</button>-->
-<!--            </div>-->
-<!--            <div class="col-md-3">-->
-<!--                <button id="save">Submit for Supervisior Approval</button>-->
-<!--            </div>-->
-<!--            <div class="col-md-4">-->
-<!--                <button id="delete">Delete Form</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+{% load static from staticfiles %}
+<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<script src="{% static "projects/completion.js" %}"></script>
+
 {% endblock %}
