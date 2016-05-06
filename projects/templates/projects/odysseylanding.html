@@ -20,7 +20,7 @@
             {% endfor %}
             {% for c in completions %}
             <tr id="{{c.id}}">
-                <td><a href="{% url 'projects:odyprop' c.id %}">{{c.title}}</a></td>
+                <td><a href="{% url 'projects:odyReviewComp' c.id %}">{{c.title}}</a></td>
                 <td>Project Completionl</td>
                 <td>{{c.update_date}}</td>
             </tr>
@@ -41,7 +41,7 @@
     <tbody>
         {% for p in inprogress %}
         <tr id="{{p.id}}">
-            <td>{{p.title}}</td>
+            <td><a href="{% url 'projects:odyview' p.id %}">{{p.title}}</a></td>
             <td>{{p.status}}</td>
             <td>{{p.update_date}}</td>
         </tr>
@@ -62,7 +62,7 @@
     <tbody>
         {% for p in completed %}
         <tr id="{{p.id}}">
-            <td>{{p.title}}</td>
+            <td><a href="{% url 'projects:odyview' p.id %}">{{p.title}}</a></td>
             <td>{{p.category}}</td>
             <td>{{p.update_date}}</td>
         </tr>

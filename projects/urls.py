@@ -101,6 +101,7 @@ urlpatterns = [
                r'^accounts/login/submit/', 
                views.my_view
           ),
+<<<<<<< HEAD
           url(
                r'^office/review-proposal/(?P<project_id>[0-9]+)/$', 
                views.odyReviewProposal,
@@ -120,5 +121,19 @@ urlpatterns = [
                views.signup
           ),
 
+=======
+          url(r'^office/review-proposal/(?P<project_id>[0-9]+)/$', views.odyReviewProposal,
+                   name='odyReviewProp'),
+          url(r'^office/review-proposal/(?P<project_id>[0-9]+)/submit',
+                   views.odyAppProposal, name='odyapp'),
+               url(r'^supervisor/project-status/(?P<project_id>[0-9]+)/$',
+                   views.supViewStatus, name='superview'),
+               url(r'^odyssey/project-status/(?P<project_id>[0-9]+)/$',
+                   views.odyViewStatus, name='odyview'),
+               url(r'^odyssey/review-completion/(?P<project_id>[0-9]+)/$',
+                   views.odyReviewComp, name='odyReviewComp'),
+               url(r'^supervisor/review-completion/(?P<project_id>[0-9]+)/$',
+                   views.supReviewComp, name='supReviewComp'),
+>>>>>>> origin/master
                
      ]

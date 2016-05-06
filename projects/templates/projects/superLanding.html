@@ -30,11 +30,11 @@
             {% endfor %}
             {% for p in comps %}
             <tr id="{{p.id}}">
-                <td>{{p.title}}</td>
+                <td><a href="{% url 'projects:supReviewComp' p.id %}">{{p.title}}</a></td>
                 <td>Project Completion</td>
                 <td>{{p.update_date}}</td>
                 <td><div id="icons">
-                <a href="#" class="btn btn-link" aria-label="Edit">
+                <a href="{% url 'projects:supReviewComp' p.id %}" class="btn btn-link" aria-label="Edit">
                     <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
                 </a>
                 <a href="#" class="btn btn-link" aria-label="Delete">
@@ -61,11 +61,11 @@
     <tbody>
     {% for p in inprogress %}
         <tr id="{{p.id}}">
-            <td>{{p.title}}</td>
+            <td><a href="{% url 'projects:superview' p.id %}">{{p.title}}</a></td>
             <td>{{p.status}}</td>
             <td>{{p.update_date}}</td>
             <td><div id="icons">
-            <a href="#" class="btn btn-link" aria-label="Edit">
+            <a href="{% url 'projects:superview' p.id %}" class="btn btn-link" aria-label="Edit">
             <span class="glyphicon glyphicon-edit" aria-hidden="true" id="editicon"></span>
             </a>
             <a href="#" class="btn btn-link" aria-label="Delete">
