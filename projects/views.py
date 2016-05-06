@@ -207,12 +207,15 @@ def submitSavedProposal(request, project_id):
             project.save()
             proposal.save()
             return render(request, 'projects/success.html')
-        else:
+        elif data.get('propose')=="Save Form":
             project.status=savestatus
             proposal.status=savestatus
             project.save()
             proposal.save()
             return render(request,'projects/proposalSave.html', {'project':project})
+        else:
+            project.delete()
+            return render(request, 'projects/proposalDelete.html')
                 
 def editProposal(request, project_id):
     supervisors = User.objects.filter(groups__name='Supervisors')
@@ -258,19 +261,23 @@ def submitSavedCompletion(request, project_id):
         comp.hours=data.get('hours')
         comp.updated_date=now
         comp.notation = data.get('description')
-        project.end_date=data.get('enddate')
         if data.get('complete') == "Save & Submit to Supervisor":
+            project.end_date=data.get('enddate')
             project.status=sup_compsub
             project.update_date=now
             comp.status=sup_compsub
             project.save()
             comp.save()
             return render(request,'projects/success.html')
-        else:
+        elif data.get('complete') == "Save Form":
+            project.end_date=data.get('enddate')
             comp.status=savestatus
             comp.save()
             return render(request,'projects/completionSave.html',
                           {'project':project, 'categories':categories})
+        else:
+            comp.delete()
+            return render(request, 'projects/proposalDelete.html')
             
 
         

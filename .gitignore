@@ -95,3 +95,4 @@ ENV/
 *.sqlite3
 *.md
 db.sqlite3
+*.sqlite3
