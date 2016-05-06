@@ -215,13 +215,8 @@ def editProposal(request, project_id):
                   {'project':project, 'supervisors':supervisors,
                    'categories':categories, 'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
-<<<<<<< HEAD
-
 
 @login_required
-=======
-    
->>>>>>> master
 def landing(request):
     projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=ody_compapp)
 
