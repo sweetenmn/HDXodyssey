@@ -31,8 +31,10 @@ ody_propapp="Proposal Approved by Odyssey Office"
 sup_compsub="Completion Form Submitted to Supervisor"
 sup_compapp="Completion Form Approved by Supervisor"
 ody_compapp="Completion Form Approved by Odyssey Office"
+revise="Revision Requested"
+rejected="Rejected"
 
-status_dict = {savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
+status_dict = {revise:-1, rejected:-2, savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
           sup_compsub:4, sup_compapp:5, ody_compapp:6}
 
 WORD_EXTENSION = '.docx'
@@ -46,6 +48,7 @@ def status(request, project_id):
     return render(request, 'projects/status.html', {'project':project,
                                                     'statusNum':status_dict.get(project.status)})
 
+@login_required(login_url='/odyssey/accounts/login/')
 def viewAs(request):
     return render(request, 'projects/viewas.html')
 
@@ -62,10 +65,7 @@ def superLanding(request):
     return render(request, 'projects/superLanding.html', {'projects':projects,
                                                           'props':proposals,
                                                           'comps':completions,
-                                                          'appprops':appprops,
-                                                          'appcomps':appcomps,
-                                                          'odyprops':odyprops,
-                                                          'odycomps':odycomps,
+                                                          'completed':odycomps,
                                                           'inprogress':inprogress})
 
 @csrf_protect
@@ -206,20 +206,20 @@ def editProposal(request, project_id):
                   {'project':project, 'supervisors':supervisors,
                    'categories':categories, 'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
-<<<<<<< HEAD
-    
-=======
 
-
-@login_required
->>>>>>> parent of 15e40eb... Merge branch 'master' into userAuth
 def landing(request):
-    projects = Project.objects.all()
-    proposals = Proposal.objects.filter(status__startswith='Unsubmitted')
-    completions = Completion.objects.filter(status__startswith='Unsubmitted')
+    projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=ody_compapp)
+
+    proposals = Proposal.objects.filter(status=savestatus)
+    completions = Completion.objects.filter(status=savestatus)
+    revprops = Proposal.objects.filter(status=revise)
+    revcomps = Completion.objects.filter(status=revise)
+    complete = Project.objects.filter(status=ody_compapp)
     return render(request, 'projects/landing.html', {'projects':projects,
                                                      'proposals':proposals,
-                                                     'completions':completions})
+                                                     'completions':completions,
+                                                     'revprops':revprops,
+                                                     'revcomps':revcomps})
 
 def viewCompletion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
@@ -278,26 +278,49 @@ def editCompletion(request, project_id):
                   {'project':project, 'supervisors':supervisors,
                    'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
-    
+
+
 def reviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
     return render(request, 'projects/superProposal.html',
                   {'project':project, 'group':grp})
+def odyReviewProposal(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/odysseyproposal.html',
+                  {'project':project, 'group':grp})
+    
+
+def odyAppProposal(request, project_id):
+    return approve(request, project_id, ody_propapp)
+    
 def superAppProposal(request, project_id):
+    return approve(request, project_id, sup_propapp)
+
+def approve(request, project_id, success):
     now=datetime.date.today()
+    data = request.POST
     project = get_object_or_404(Project, pk=project_id)
     proposal = get_object_or_404(Proposal, pk=project_id)
-    project.status=sup_propapp
+    result = data.get("approve")
+    if result == "Approve Proposal":
+        project.status=success
+        proposal.status=success
+    elif result == "Request Revision":
+        project.status=revise
+        proposal.status=revise
+    else:
+        project.status=rejected
+        proposal.status=rejected
     project.update_date=now
-    proposal.status=sup_propapp
     proposal.updated_date=now
     project.save()
     proposal.save()
     return render(request,'projects/superSuccess.html')
 
 
-# USER AUTHENTICATION 
+# USER AUTHENTICATION
 def loginView(request):
     return render( request, 'projects/login.html')
 
@@ -315,10 +338,10 @@ def my_view(request):
             return render(request, 'projects/landing.html', {
                 'username': username,
             })
-            
+
         else:
             error = u'account disabled'
             return errorHandle(error)
     else:
         error = u'invalid login'
-        return errorHandle(error)    
+        return errorHandle(error)
