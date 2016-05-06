@@ -142,8 +142,7 @@ def submitProposal(request):
         new_project.save()
         createGroup(data, new_project)
         new_prop=Proposal(project_id=new_project,
-                          #narrative=data.get('narrative'),
-                          narrative="",
+                          narrative=data.get('narrative'),
                           created_date=now,
                           status="",
                           updated_date=now
@@ -198,7 +197,7 @@ def submitSavedProposal(request, project_id):
         project.start_date = data.get('startdate')
         project.end_date = data.get('enddate')
         project.update_date = now
-        #proposal.narrative=data.get('narrative')
+        proposal.narrative=data.get('narrative')
         
         proposal.updated_date=now
         proposal.status=""
@@ -219,11 +218,12 @@ def editProposal(request, project_id):
     supervisors = User.objects.filter(groups__name='Supervisors')
     project = get_object_or_404(Project, pk=project_id)
     group = ProjectGroup.objects.filter(project=project)
+    narrative = get_object_or_404(Proposal, project_id=project).narrative
     return render(request, 'projects/proposalEdit.html',
                   {'project':project, 'supervisors':supervisors,
                    'categories':categories, 'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat(),
-                   'group':group})
+                   'group':group, 'narrative':narrative})
 
 
 def landing(request):
@@ -316,14 +316,18 @@ def editCompletion(request, project_id):
 def reviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
+    narrative = get_object_or_404(Proposal, project_id=project).narrative
     return render(request, 'projects/superProposal.html',
-                  {'project':project, 'group':grp})
+                  {'project':project, 'group':grp,
+                   'narrative':narrative})
 
 def odyReviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
+    narrative = get_object_or_404(Proposal, project_id=project).narrative
     return render(request, 'projects/odysseyproposal.html',
-                  {'project':project, 'group':grp})
+                  {'project':project, 'group':grp,
+                   'narrative':narrative})
 
 def supReviewComp(request, project_id):
     project = get_object_or_404(Project, pk=project_id)

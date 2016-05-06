@@ -25,8 +25,8 @@
         <br><br>
         Narrative:
         <br>
-        <textarea rows="20" cols="50" id="narrative" placeholder="Here is an example narrative." readonly>
-        </textarea>
+        <textarea rows="20" cols="50" readonly id="narrative" placeholder="Here is an example narrative.">
+        {{narrative}}</textarea>
         <br>
         <form action="{% url 'projects:superapp' project.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -37,4 +37,8 @@
         
     </div>
 </div>
+{% load static from staticfiles %}
+<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<script src="{% static "projects/proposal.js" %}"></script>
 {% endblock %}

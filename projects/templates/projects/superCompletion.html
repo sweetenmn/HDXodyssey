@@ -38,5 +38,9 @@
             <input type="submit" name="complete" class="btn btn-default btn-sm" value="Reject Completion">
     
             </form>
+{% load static from staticfiles %}
+<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<script src="{% static "projects/completion.js" %}"></script>
 
 {% endblock %}

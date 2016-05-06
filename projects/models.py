@@ -26,7 +26,7 @@ def user_dir_path(instance, filename):
     
 class Proposal(models.Model):
     project_id = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
-    narrative = models.CharField(max_length=2000)
+    narrative = models.TextField()
     created_date = models.DateField('created on')
     status = models.CharField(max_length=60)
     updated_date = models.DateField('updated on')
@@ -40,6 +40,6 @@ class Completion(models.Model):
     created_date = models.DateField('created on')
     updated_date = models.DateField('updated on')
     hours = models.CharField(max_length=10)
-    notation = models.CharField(max_length=500)
+    notation = models.TextField()
     def __str__(self):
         return "Completion: " + self.project_id.title
