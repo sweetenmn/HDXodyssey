@@ -51,11 +51,7 @@ def status(request, project_id):
                    'statusNum':status_dict.get(project.status),
                    'group':grp})
 
-<<<<<<< HEAD
-
 @login_required(login_url='/odyssey/accounts/login/')
-=======
->>>>>>> origin/master
 def viewAs(request):
     return render(request, 'projects/viewas.html')
 

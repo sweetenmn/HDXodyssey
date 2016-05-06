@@ -2,11 +2,7 @@ var groupNo = 0;
 
 $(document).ready(function(){
     $(".inputnar + label").addClass('btn btn-default btn-sm');
-    // CKEDITOR.replace('description')
-    // $('description').change(function(event) {
-    //     handleFileSelect(event, 'description')
-    // });
-    // Initializing the text editor
+    
     CKEDITOR.replace('narrative')
     //Fire when a new file is uploaded
     $("#narfile").change(function(event) {
