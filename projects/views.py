@@ -37,8 +37,6 @@ status_dict = {revise:-1, rejected:-2, savestatus:0, sup_propsub:1, sup_propapp:
           sup_compsub:4, sup_compapp:5, ody_compapp:6}
 
 WORD_EXTENSION = '.docx'
-
-
 def viewProposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
     return render(request, 'projects/proposal.html', {'supervisors':supervisors,
@@ -49,7 +47,6 @@ def status(request, project_id):
     return render(request, 'projects/status.html', {'project':project,
                                                     'statusNum':status_dict.get(project.status)})
 
-@login_required(login_url='/odyssey/accounts/login/')
 def viewAs(request):
     return render(request, 'projects/viewas.html')
 
@@ -215,13 +212,7 @@ def editProposal(request, project_id):
                   {'project':project, 'supervisors':supervisors,
                    'categories':categories, 'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
-<<<<<<< HEAD
-
-
-@login_required
-=======
     
->>>>>>> master
 def landing(request):
     projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=ody_compapp)
 
