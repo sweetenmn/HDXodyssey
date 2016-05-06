@@ -48,6 +48,7 @@ def status(request, project_id):
     return render(request, 'projects/status.html', {'project':project,
                                                     'statusNum':status_dict.get(project.status)})
 
+
 @login_required(login_url='/odyssey/accounts/login/')
 def viewAs(request):
     return render(request, 'projects/viewas.html')
@@ -357,3 +358,36 @@ def my_view(request):
     else:
         error = u'invalid login'
         return errorHandle(error)
+
+def pickGroup(g):
+    if g == 'Student':
+        group = 'Students'
+    elif g == 'Supervisor':
+        group = 'Supervisors'
+    elif g == 'Odyssey Staff':
+        group = 'Odyssey'
+    else:
+        group = None
+    return group
+
+@csrf_protect
+def signup(request):
+    if request.method=='POST':
+        data = request.POST
+        username = request.POST['username']
+        password = request.POST['password']
+        user = User.objects.create_user(
+                username,
+                password,
+                username # Username is also email
+            )
+        user.first_name = request.POST['firstname']
+        user.last_name  = request.POST['lastname']
+        g = pickGroup(request.POST['auth'])
+        if g is not None:
+            group = Group.objects.get(name=g)
+            group.user_set.add(user)
+        user.save()
+        return redirect('views.viewAs')    
+    else:
+        return render(request, 'projects/createUser.html')

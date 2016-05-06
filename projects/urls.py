@@ -4,6 +4,11 @@ from . import views
 app_name = 'projects'
 urlpatterns = [
           url(
+               r'^office/$', 
+               views.odyLanding, 
+               name='odyLanding'
+          ),
+          url(
                r'^student/$', 
                views.landing, 
                name = 'landing'
@@ -96,9 +101,24 @@ urlpatterns = [
                r'^accounts/login/submit/', 
                views.my_view
           ),
-          url(r'^office/review-proposal/(?P<project_id>[0-9]+)/$', views.odyReviewProposal,
-                   name='odyReviewProp'),
-          url(r'^office/review-proposal/(?P<project_id>[0-9]+)/submit',
-                   views.odyAppProposal, name='odyapp'),
+          url(
+               r'^office/review-proposal/(?P<project_id>[0-9]+)/$', 
+               views.odyReviewProposal,
+               name='odyReviewProp'
+          ),
+          url(
+               r'^office/review-proposal/(?P<project_id>[0-9]+)/submit',
+               views.odyAppProposal, 
+               name='odyapp' 
+          ),
+          url(
+               r'^accounts/signup/$',
+               views.signup
+          ),
+          url(
+               r'^accounts/signup/submit',
+               views.signup
+          ),
+
                
      ]
