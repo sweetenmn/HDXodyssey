@@ -14,7 +14,8 @@ import pypandoc
 from io import *
 from docx import Document
 from django.core.mail import send_mail
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 import logging
 logger = logging.getLogger(__name__)
@@ -30,10 +31,8 @@ ody_propapp="Proposal Approved by Odyssey Office"
 sup_compsub="Completion Form Submitted to Supervisor"
 sup_compapp="Completion Form Approved by Supervisor"
 ody_compapp="Completion Form Approved by Odyssey Office"
-revise="Revision Requested"
-rejected="Rejected"
 
-status_dict = {revise:-1, rejected:-2, savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
+status_dict = {savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
           sup_compsub:4, sup_compapp:5, ody_compapp:6}
 
 WORD_EXTENSION = '.docx'
@@ -54,25 +53,20 @@ def superLanding(request):
     projects = Project.objects.filter(advisor__username="goadrich")
     proposals = projects.filter(status=sup_propsub)
     completions = projects.filter(status=sup_compsub)
-    inprogress = projects.exclude(status=sup_propsub).exclude(status=sup_compsub).exclude(status=ody_compapp)
+    inprogress = projects.exclude(status=sup_propsub).exclude(status=sup_compsub)
+    appprops = projects.filter(status=sup_propapp)
+    appcomps = projects.filter(status=sup_compapp)
+    odyprops = projects.filter(status=ody_propapp)
     odycomps = projects.filter(status=ody_compapp)
     groups = ProjectGroup.objects.filter(project__advisor__username="goadrich")
     return render(request, 'projects/superLanding.html', {'projects':projects,
                                                           'props':proposals,
                                                           'comps':completions,
-                                                          'completed':odycomps,
+                                                          'appprops':appprops,
+                                                          'appcomps':appcomps,
+                                                          'odyprops':odyprops,
+                                                          'odycomps':odycomps,
                                                           'inprogress':inprogress})
-
-def odyLanding(request):
-    projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=rejected)
-    proposals = projects.filter(status=sup_propapp)
-    completions = projects.filter(status=sup_compapp)
-    inprogress= projects.exclude(status=sup_propapp).exclude(status=sup_compapp).exclude(status=ody_compapp)
-    completed = projects.filter(status=ody_compapp)
-    return render(request, 'projects/odysseylanding.html', {'proposals':proposals,
-                                                            'completions':completions,
-                                                            'inprogress':inprogress,
-                                                            'completed':completed})
 
 @csrf_protect
 def upload(request):
@@ -212,20 +206,20 @@ def editProposal(request, project_id):
                   {'project':project, 'supervisors':supervisors,
                    'categories':categories, 'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
+<<<<<<< HEAD
     
-def landing(request):
-    projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=ody_compapp)
+=======
 
-    proposals = Proposal.objects.filter(status=savestatus)
-    completions = Completion.objects.filter(status=savestatus)
-    revprops = Proposal.objects.filter(status=revise)
-    revcomps = Completion.objects.filter(status=revise)
-    complete = Project.objects.filter(status=ody_compapp)
+
+@login_required
+>>>>>>> parent of 15e40eb... Merge branch 'master' into userAuth
+def landing(request):
+    projects = Project.objects.all()
+    proposals = Proposal.objects.filter(status__startswith='Unsubmitted')
+    completions = Completion.objects.filter(status__startswith='Unsubmitted')
     return render(request, 'projects/landing.html', {'projects':projects,
                                                      'proposals':proposals,
-                                                     'completions':completions,
-                                                     'revprops':revprops,
-                                                     'revcomps':revcomps})
+                                                     'completions':completions})
 
 def viewCompletion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
@@ -284,43 +278,47 @@ def editCompletion(request, project_id):
                   {'project':project, 'supervisors':supervisors,
                    'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
-
-
+    
 def reviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
     return render(request, 'projects/superProposal.html',
                   {'project':project, 'group':grp})
-def odyReviewProposal(request, project_id):
-    project = get_object_or_404(Project, pk=project_id)
-    grp = ProjectGroup.objects.filter(project=project)
-    return render(request, 'projects/odysseyproposal.html',
-                  {'project':project, 'group':grp})
-    
-
-def odyAppProposal(request, project_id):
-    return approve(request, project_id, ody_propapp)
-    
 def superAppProposal(request, project_id):
-    return approve(request, project_id, sup_propapp)
-
-def approve(request, project_id, success):
     now=datetime.date.today()
-    data = request.POST
     project = get_object_or_404(Project, pk=project_id)
     proposal = get_object_or_404(Proposal, pk=project_id)
-    result = data.get("approve")
-    if result == "Approve Proposal":
-        project.status=success
-        proposal.status=success
-    elif result == "Request Revision":
-        project.status=revise
-        proposal.status=revise
-    else:
-        project.status=rejected
-        proposal.status=rejected
+    project.status=sup_propapp
     project.update_date=now
+    proposal.status=sup_propapp
     proposal.updated_date=now
     project.save()
     proposal.save()
     return render(request,'projects/superSuccess.html')
+
+
+# USER AUTHENTICATION 
+def loginView(request):
+    return render( request, 'projects/login.html')
+
+@csrf_protect
+def my_view(request):
+    def errorHandle(error):
+        return render( request, 'projects/login.html',{'error':error})
+
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return render(request, 'projects/landing.html', {
+                'username': username,
+            })
+            
+        else:
+            error = u'account disabled'
+            return errorHandle(error)
+    else:
+        error = u'invalid login'
+        return errorHandle(error)    

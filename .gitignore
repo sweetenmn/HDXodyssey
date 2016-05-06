@@ -99,7 +99,13 @@ hendrixodyssey/__pycache__/wsgi.cpython-34.pyc
 
 *.docxY-m-d
 *.sqlite3
+<<<<<<< HEAD
 *.sqlite3
 db.sqlite3
 *.sqlite3
 db.sqlite3
+=======
+
+
+*.md
+>>>>>>> parent of 15e40eb... Merge branch 'master' into userAuth
