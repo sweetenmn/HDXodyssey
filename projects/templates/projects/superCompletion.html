@@ -1,0 +1,46 @@
+{% extends "projects/base.html" %}
+{% block title %}Odyssey Project Completion Form{% endblock %}
+{% block header %}Project Completion and Transcript Notation Form{% endblock %}
+{% block content %}
+<div class="body">
+</div>
+        <h3>{{project.title}}</h3>
+        <h4 id="projectCategory">Category: {{project.category}}</h4>
+        <div>
+            Participant(s):
+            <div class="container">
+            {% for s in group %}
+            <a href="mailto:{{s.student.email}}?Subject=Odyssey%20Project: {{project.title}}" target="_top">{{s.student.first_name}} {{s.student.last_name}}</a><br>
+            {% endfor %}
+            </div>
+            <br>
+            
+            <form action="{% url 'projects:supAppComp' project.id %}" method="POST" id='completion-form' enctype="multipart/form-data">
+            Start Date: {{project.start_date}}
+            <br><br>
+            End Date: {{project.end_date}}
+            <br><br>
+            
+            Total Hours: {{hours}}<br><br>
+            Hours Log:
+            <a href="">Download Hours Log</a><br><br>
+            <a href="" id="CompRequire">Description Requirements</a>
+            <br>Project Desciption/Transcript Notation:
+            <br><br>
+            <a href="">Download Description</a>
+            <p>or</p>
+            <textarea rows="15" cols="56" id="description" placeholder="Type your project description paragraph here, or attach a file above." readonly>{{description}}</textarea> 
+            <br>
+            
+            {% csrf_token %}
+
+            <input type="submit" name="complete" class="btn btn-default btn-sm" value="Approve Completion">
+            <input type="submit" name="complete" class="btn btn-default btn-sm" value="Reject Completion">
+    
+            </form>
+{% load static from staticfiles %}
+<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<script src="{% static "projects/completion.js" %}"></script>
+
+{% endblock %}

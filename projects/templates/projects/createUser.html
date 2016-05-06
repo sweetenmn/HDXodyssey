@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <title>Sign Up - Your Hendrix Odyssey</title>
+
+  {# BOOTSTRAP #}
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
+  {# DATATABLE #}
+  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/dt/jq-2.2.0,dt-1.10.11,b-1.1.2,r-2.0.2,se-1.1.2/datatables.min.css"/>
+  
+  {# PROJECT STATIC FILES #}
+  <link rel="stylesheet" type="text/css" href= {% static "projects/style.css" %} />
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600,700' rel='stylesheet' type='text/css'>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href= {% static "projects/timeline.css" %} />
+</head>
+<body>
+
+  <form 
+    class='form-horizontal' 
+    action='submit/' 
+    method="POST" 
+    id="create-user-form" 
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+
+    <div class="login-form">
+      <div class="img">
+      <img src="http://www.hendrix.edu/staticresources/images/hendrixLogo_bob.svg">
+    </div>
+    <h1>Create a New Account</h1>
+    <div class="firstname form-group">
+          <input id="firstname" name='firstname' type="text" class="boxcontrol" placeholder="First Name">
+      </div>
+      <div class="lastname form-group">
+          <input id="lastname" name='lastname' type="text" class="boxcontrol" placeholder="Last Name">
+      </div>
+        <div class="user form-group">
+          <input id="username" name='username' type="text" class="boxcontrol" placeholder="Hendrix Email Address">
+      </div>
+        <div class="pass form-group">
+          <input id="password" name='password' type="password" class="boxcontrol" placeholder="Password">
+        </div>
+        <div class="pass form-group">
+          <input id="confirmpassword" name='password' type="password" class="boxcontrol" placeholder="Confirm Password">
+        </div>
+        <select id="auth" name='auth'>
+          <option id="student">Student</option>
+          <option id="supervisor">Supervisor</option>
+          <option id="odyssey">Odyssey Staff</option>
+        </select>
+        {% if error %}
+        <span></span>
+        <span class='alert alert-danger'>{{error}}</span>
+        {% endif %}
+    <br><br>
+        <button class="logb btn" type="submit">Create</button>
+    </div>
+</form>  
+
+</body>
+
+</html>
+

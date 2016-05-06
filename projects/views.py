@@ -14,7 +14,8 @@ import pypandoc
 from io import *
 from docx import Document
 from django.core.mail import send_mail
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 import logging
 logger = logging.getLogger(__name__)
@@ -30,8 +31,10 @@ ody_propapp="Proposal Approved by Odyssey Office"
 sup_compsub="Completion Form Submitted to Supervisor"
 sup_compapp="Completion Form Approved by Supervisor"
 ody_compapp="Completion Form Approved by Odyssey Office"
+revise="Revision Requested"
+rejected="Rejected"
 
-status_dict = {savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
+status_dict = {revise:-1, rejected:-2, savestatus:0, sup_propsub:1, sup_propapp:2, ody_propapp:3,
           sup_compsub:4, sup_compapp:5, ody_compapp:6}
 
 WORD_EXTENSION = '.docx'
@@ -42,9 +45,13 @@ def viewProposal(request):
 
 def status(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    return render(request, 'projects/status.html', {'project':project,
-                                                    'statusNum':status_dict.get(project.status)})
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/status.html',
+                  {'project':project,
+                   'statusNum':status_dict.get(project.status),
+                   'group':grp})
 
+@login_required(login_url='/odyssey/accounts/login/')
 def viewAs(request):
     return render(request, 'projects/viewas.html')
 
@@ -52,7 +59,7 @@ def superLanding(request):
     projects = Project.objects.filter(advisor__username="goadrich")
     proposals = projects.filter(status=sup_propsub)
     completions = projects.filter(status=sup_compsub)
-    inprogress = projects.exclude(status=sup_propsub).exclude(status=sup_compsub)
+    inprogress = projects.exclude(status=sup_propsub).exclude(status=sup_compsub).exclude(status=ody_compapp)
     appprops = projects.filter(status=sup_propapp)
     appcomps = projects.filter(status=sup_compapp)
     odyprops = projects.filter(status=ody_propapp)
@@ -60,12 +67,20 @@ def superLanding(request):
     groups = ProjectGroup.objects.filter(project__advisor__username="goadrich")
     return render(request, 'projects/superLanding.html', {'projects':projects,
                                                           'props':proposals,
-                                                          'comps':completions,
-                                                          'appprops':appprops,
-                                                          'appcomps':appcomps,
-                                                          'odyprops':odyprops,
-                                                          'odycomps':odycomps,
+                                                          'completions':completions,
+                                                          'completed':odycomps,
                                                           'inprogress':inprogress})
+
+def odyLanding(request):
+    projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=rejected)
+    proposals = projects.filter(status=sup_propapp)
+    completions = projects.filter(status=sup_compapp)
+    inprogress= projects.exclude(status=sup_propapp).exclude(status=sup_compapp).exclude(status=ody_compapp)
+    completed = projects.filter(status=ody_compapp)
+    return render(request, 'projects/odysseylanding.html', {'proposals':proposals,
+                                                            'completions':completions,
+                                                            'inprogress':inprogress,
+                                                            'completed':completed})
 
 @csrf_protect
 def upload(request):
@@ -183,6 +198,7 @@ def submitSavedProposal(request, project_id):
         project.end_date = data.get('enddate')
         project.update_date = now
         proposal.narrative=data.get('narrative')
+        
         proposal.updated_date=now
         proposal.status=""
         if data.get('propose')=="Save & Submit to Supervisor":
@@ -201,22 +217,36 @@ def submitSavedProposal(request, project_id):
 def editProposal(request, project_id):
     supervisors = User.objects.filter(groups__name='Supervisors')
     project = get_object_or_404(Project, pk=project_id)
+    group = ProjectGroup.objects.filter(project=project)
+    narrative = get_object_or_404(Proposal, project_id=project).narrative
     return render(request, 'projects/proposalEdit.html',
                   {'project':project, 'supervisors':supervisors,
                    'categories':categories, 'startdate':project.start_date.isoformat(),
-                   'enddate':project.end_date.isoformat()})
-    
+                   'enddate':project.end_date.isoformat(),
+                   'group':group, 'narrative':narrative})
+
+
 def landing(request):
-    projects = Project.objects.all()
-    proposals = Proposal.objects.filter(status__startswith='Unsubmitted')
-    completions = Completion.objects.filter(status__startswith='Unsubmitted')
+    projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=ody_compapp)
+    proposals = Proposal.objects.filter(status=savestatus)
+    completions = Completion.objects.filter(status=savestatus)
+    revprops = Proposal.objects.filter(status=revise)
+    revcomps = Completion.objects.filter(status=revise)
+    complete = Project.objects.filter(status=ody_compapp)
     return render(request, 'projects/landing.html', {'projects':projects,
                                                      'proposals':proposals,
-                                                     'completions':completions})
+                                                     'completions':completions,
+                                                     'revprops':revprops,
+                                                     'revcomps':revcomps,
+                                                     'completed':complete})
 
 def viewCompletion(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    return render(request, 'projects/completion.html', {'project':project})
+    grp = ProjectGroup.objects.filter(project=project)    
+    return render(request, 'projects/completion.html',
+                  {'project':project,
+                   'enddate':project.end_date.isoformat(),
+                   'group':grp})
 
 @csrf_protect
 def submitSavedCompletion(request, project_id):
@@ -225,8 +255,10 @@ def submitSavedCompletion(request, project_id):
         comp = get_object_or_404(Completion, pk=project_id)
         project = get_object_or_404(Project, pk=project_id)
         data=request.POST
-        comp.notation=""
+        comp.hours=data.get('hours')
         comp.updated_date=now
+        comp.notation = data.get('description')
+        project.end_date=data.get('enddate')
         if data.get('complete') == "Save & Submit to Supervisor":
             project.status=sup_compsub
             project.update_date=now
@@ -237,7 +269,8 @@ def submitSavedCompletion(request, project_id):
         else:
             comp.status=savestatus
             comp.save()
-            return render(request,'projects/completionSave.html', {'project':project, 'categories':categories})
+            return render(request,'projects/completionSave.html',
+                          {'project':project, 'categories':categories})
             
 
         
@@ -247,7 +280,10 @@ def submitCompletion(request, project_id):
     now=datetime.date.today()
     project = get_object_or_404(Project, pk=project_id)
     data = request.POST
-    new_comp=Completion(project_id=project, status="", notation="",
+    new_comp=Completion(project_id=project,
+                        status="",
+                        hours=data.get('hours'),
+                        notation=data.get('description'),
                         created_date=now,
                         updated_date=now)
     if data.get('complete') == "Save & Submit to Supervisor":
@@ -267,24 +303,174 @@ def submitCompletion(request, project_id):
 def editCompletion(request, project_id):
     supervisors = User.objects.filter(groups__name='Supervisors')
     project = get_object_or_404(Project, pk=project_id)
+    completion = get_object_or_404(Completion, pk=project_id)
+    hours = completion.hours
+    description = completion.notation
     return render(request, 'projects/completionEdit.html',
                   {'project':project, 'supervisors':supervisors,
                    'startdate':project.start_date.isoformat(),
-                   'enddate':project.end_date.isoformat()})
-    
+                   'enddate':project.end_date.isoformat(),
+                   'hours':hours, 'description':description})
+
+
 def reviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
+    narrative = get_object_or_404(Proposal, project_id=project).narrative
     return render(request, 'projects/superProposal.html',
-                  {'project':project, 'group':grp})
+                  {'project':project, 'group':grp,
+                   'narrative':narrative})
+
+def odyReviewProposal(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    narrative = get_object_or_404(Proposal, project_id=project).narrative
+    return render(request, 'projects/odysseyproposal.html',
+                  {'project':project, 'group':grp,
+                   'narrative':narrative})
+
+def supReviewComp(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    completion = get_object_or_404(Completion, pk=project_id)
+    hours = completion.hours
+    desc = completion.notation
+    return render(request, 'projects/superCompletion.html',
+                  {'project':project, 'group':grp, 'hours':hours,
+                   'description':desc})
+
+def odyReviewComp(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    completion = get_object_or_404(Completion, pk=project_id)
+    hours = completion.hours
+    desc = completion.notation
+    return render(request, 'projects/odysseyCompletion.html',
+                  {'project':project, 'group':grp, 'hours':hours,
+                   'description':desc})
+
+def supViewStatus(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/superStatus.html',
+                  {'project':project,
+                   'statusNum':status_dict.get(project.status),
+                   'group':grp
+                   })
+
+def odyViewStatus(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/odysseyStatus.html',
+                  {'project':project,
+                   'statusNum':status_dict.get(project.status),
+                   'group':grp})  
+
+def odyAppProposal(request, project_id):
+    return approve(request, project_id, ody_propapp)
+    
 def superAppProposal(request, project_id):
+    return approve(request, project_id, sup_propapp)
+
+def approve(request, project_id, success):
     now=datetime.date.today()
+    data = request.POST
     project = get_object_or_404(Project, pk=project_id)
     proposal = get_object_or_404(Proposal, pk=project_id)
-    project.status=sup_propapp
+    result = data.get("approve")
+    if result == "Approve Proposal":
+        project.status=success
+        proposal.status=success
+    elif result == "Request Revision":
+        project.status=revise
+        proposal.status=revise
+    else:
+        project.status=rejected
+        proposal.status=rejected
     project.update_date=now
-    proposal.status=sup_propapp
     proposal.updated_date=now
     project.save()
     proposal.save()
     return render(request,'projects/superSuccess.html')
+def supAppComp(request, project_id):
+    return complete(request, project_id, sup_compapp)
+
+def odyAppComp(request, project_id):
+    return complete(request, project_id, ody_compapp)
+
+def complete(request, project_id, success):
+    now = datetime.date.today()
+    data = request.POST
+    project = get_object_or_404(Project, pk=project_id)
+    completion = get_object_or_404(Completion, pk=project_id)
+    result = data.get('complete')
+    if result=='Approve Completion':
+        project.status=success
+        completion.status=success
+    else:
+        project.status=rejected
+        completion.status=rejected
+    project.update_date=now
+    completion.updated_date = now
+    project.save()
+    completion.save()
+    return render(request,'projects/superSuccess.html')
+
+# USER AUTHENTICATION
+def loginView(request):
+    return render( request, 'projects/login.html')
+
+@csrf_protect
+def my_view(request):
+    def errorHandle(error):
+        return render( request, 'projects/login.html',{'error':error})
+
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return render(request, 'projects/landing.html', {
+                'username': username,
+            })
+
+        else:
+            error = u'account disabled'
+            return errorHandle(error)
+    else:
+        error = u'invalid login'
+        return errorHandle(error)
+
+def pickGroup(g):
+    if g == 'Student':
+        group = 'Students'
+    elif g == 'Supervisor':
+        group = 'Supervisors'
+    elif g == 'Odyssey Staff':
+        group = 'Odyssey'
+    else:
+        group = None
+    return group
+
+@csrf_protect
+def signup(request):
+    if request.method=='POST':
+        data = request.POST
+        username = request.POST['username']
+        password = request.POST['password']
+        user = User.objects.create_user(
+                username,
+                password,
+                username # Username is also email
+            )
+        user.first_name = request.POST['firstname']
+        user.last_name  = request.POST['lastname']
+        g = pickGroup(request.POST['auth'])
+        if g is not None:
+            group = Group.objects.get(name=g)
+            group.user_set.add(user)
+        user.save()
+        return redirect('views.viewAs')    
+    else:
+        return render(request, 'projects/createUser.html')

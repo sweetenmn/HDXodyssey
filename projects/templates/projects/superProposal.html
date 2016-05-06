@@ -9,9 +9,9 @@
 
         Participant(s): <br>
         <div class="container">
-        {% for s in group %}
-        {{s.student.first_name}} {{s.student.last_name}}<br>
-        {% endfor %}
+            {% for s in group %}
+            <a href="mailto:{{s.student.email}}?Subject=Odyssey%20Project: {{project.title}}" target="_top">{{s.student.first_name}} {{s.student.last_name}}</a><br>
+            {% endfor %}
         </div>
         <br>
         Supervisor:  {{ project.advisor.first_name }} {{ project.advisor.last_name }} 
@@ -25,16 +25,20 @@
         <br><br>
         Narrative:
         <br>
-        <textarea rows="20" cols="50" id="narrative" placeholder="Here is an example narrative." readonly>
-        </textarea>
+        <textarea rows="20" cols="50" readonly id="narrative" placeholder="Here is an example narrative.">
+        {{narrative}}</textarea>
         <br>
         <form action="{% url 'projects:superapp' project.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="submit" name="approve" class="btn btn-default btn-sm" value="Approve Proposal">
-        <button type="revise" name="propose" class="btn btn-default btn-sm" value="del">Request Revision</button>
-        <button type="reject" name="propose" class="btn btn-default btn-sm" value="del">Reject Proposal</button>
+        <input type="submit" name="approve" class="btn btn-default btn-sm" value="Request Revision">
+        <input type="submit" name="approve" class="btn btn-default btn-sm" value="Reject Proposal">
         </form>
         
     </div>
 </div>
+{% load static from staticfiles %}
+<script src="{% static "projects/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "projects/mammoth.browser.min.js" %}"></script>
+<script src="{% static "projects/proposal.js" %}"></script>
 {% endblock %}
