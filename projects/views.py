@@ -14,7 +14,8 @@ import pypandoc
 from io import *
 from docx import Document
 from django.core.mail import send_mail
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 
 import logging
 logger = logging.getLogger(__name__)
@@ -37,8 +38,6 @@ status_dict = {revise:-1, rejected:-2, savestatus:0, sup_propsub:1, sup_propapp:
           sup_compsub:4, sup_compapp:5, ody_compapp:6}
 
 WORD_EXTENSION = '.docx'
-
-
 def viewProposal(request):
     supervisors = User.objects.filter(groups__name='Supervisors')
     return render(request, 'projects/proposal.html', {'supervisors':supervisors,
@@ -46,8 +45,11 @@ def viewProposal(request):
 
 def status(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
-    return render(request, 'projects/status.html', {'project':project,
-                                                    'statusNum':status_dict.get(project.status)})
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/status.html',
+                  {'project':project,
+                   'statusNum':status_dict.get(project.status),
+                   'group':grp})
 
 @login_required(login_url='/odyssey/accounts/login/')
 def viewAs(request):
@@ -58,6 +60,9 @@ def superLanding(request):
     proposals = projects.filter(status=sup_propsub)
     completions = projects.filter(status=sup_compsub)
     inprogress = projects.exclude(status=sup_propsub).exclude(status=sup_compsub).exclude(status=ody_compapp)
+    appprops = projects.filter(status=sup_propapp)
+    appcomps = projects.filter(status=sup_compapp)
+    odyprops = projects.filter(status=ody_propapp)
     odycomps = projects.filter(status=ody_compapp)
     groups = ProjectGroup.objects.filter(project__advisor__username="goadrich")
     return render(request, 'projects/superLanding.html', {'projects':projects,
@@ -216,7 +221,7 @@ def editProposal(request, project_id):
                    'categories':categories, 'startdate':project.start_date.isoformat(),
                    'enddate':project.end_date.isoformat()})
 
-@login_required
+
 def landing(request):
     projects = Project.objects.exclude(status=savestatus).exclude(status=revise).exclude(status=ody_compapp)
 
@@ -295,12 +300,41 @@ def reviewProposal(request, project_id):
     grp = ProjectGroup.objects.filter(project=project)
     return render(request, 'projects/superProposal.html',
                   {'project':project, 'group':grp})
+
 def odyReviewProposal(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     grp = ProjectGroup.objects.filter(project=project)
     return render(request, 'projects/odysseyproposal.html',
                   {'project':project, 'group':grp})
-    
+
+def supReviewComp(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/superCompletion.html',
+                  {'project':project, 'group':grp})
+
+def odyReviewComp(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/odysseyCompletion.html',
+                  {'project':project, 'group':grp})
+
+def supViewStatus(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/superStatus.html',
+                  {'project':project,
+                   'statusNum':status_dict.get(project.status),
+                   'group':grp
+                   })
+
+def odyViewStatus(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+    grp = ProjectGroup.objects.filter(project=project)
+    return render(request, 'projects/odysseyStatus.html',
+                  {'project':project,
+                   'statusNum':status_dict.get(project.status),
+                   'group':grp})  
 
 def odyAppProposal(request, project_id):
     return approve(request, project_id, ody_propapp)
@@ -328,3 +362,62 @@ def approve(request, project_id, success):
     project.save()
     proposal.save()
     return render(request,'projects/superSuccess.html')
+
+# USER AUTHENTICATION
+def loginView(request):
+    return render( request, 'projects/login.html')
+
+@csrf_protect
+def my_view(request):
+    def errorHandle(error):
+        return render( request, 'projects/login.html',{'error':error})
+
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return render(request, 'projects/landing.html', {
+                'username': username,
+            })
+
+        else:
+            error = u'account disabled'
+            return errorHandle(error)
+    else:
+        error = u'invalid login'
+        return errorHandle(error)
+
+def pickGroup(g):
+    if g == 'Student':
+        group = 'Students'
+    elif g == 'Supervisor':
+        group = 'Supervisors'
+    elif g == 'Odyssey Staff':
+        group = 'Odyssey'
+    else:
+        group = None
+    return group
+
+@csrf_protect
+def signup(request):
+    if request.method=='POST':
+        data = request.POST
+        username = request.POST['username']
+        password = request.POST['password']
+        user = User.objects.create_user(
+                username,
+                password,
+                username # Username is also email
+            )
+        user.first_name = request.POST['firstname']
+        user.last_name  = request.POST['lastname']
+        g = pickGroup(request.POST['auth'])
+        if g is not None:
+            group = Group.objects.get(name=g)
+            group.user_set.add(user)
+        user.save()
+        return redirect('views.viewAs')    
+    else:
+        return render(request, 'projects/createUser.html')
